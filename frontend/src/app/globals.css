@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════
+   DEFNIX — Design System Tokens (TailwindCSS v4)
+   ═══════════════════════════════════════════════════ */
+
+@theme inline {
+  /* Color System — PRD Section 11 */
+  --color-bg-primary: #0A0F1C;
+  --color-bg-surface: #111827;
+  --color-bg-elevated: #1A2235;
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+  --color-accent: #00D4FF;
+  --color-accent-dim: rgba(0, 212, 255, 0.15);
+  --color-danger: #FF4757;
+  --color-success: #2ECC71;
+  --color-border: #1E293B;
+  --color-border-hover: #2D3B50;
+
+  /* Font Family */
+  --font-display: "Sora", sans-serif;
+  --font-heading: "DM Sans", sans-serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Custom spacing */
+  --spacing-section: 120px;
+  --spacing-section-sm: 80px;
+}
+
+/* ═══════════════════════════════════════════════════
+   Base Styles
+   ═══════════════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(0, 212, 255, 0.25);
+  color: var(--color-text-primary);
+}
+
+/* Scrollbar — subtle, industrial */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ═══════════════════════════════════════════════════
+   Typography Scale
+   ═══════════════════════════════════════════════════ */
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+h2, .h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+h3, .h3, h4, .h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+/* ═══════════════════════════════════════════════════
+   Custom Utilities
+   ═══════════════════════════════════════════════════ */
+
+/* Border-trace animation for buttons */
+@keyframes border-trace {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.btn-trace {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-trace::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-accent) 25%,
+    transparent 50%
+  );
+  background-size: 200% 100%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: border-trace 2s linear infinite;
+  z-index: -1;
+}
+
+.btn-trace:hover::before {
+  opacity: 1;
+}
+
+/* Cyan glow for cards */
+.card-glow {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid var(--color-border);
+}
+
+.card-glow:hover {
+  border-color: rgba(0, 212, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);
+}
+
+/* Terminal scan line */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.terminal-scan::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    transparent 0%,
+    rgba(0, 212, 255, 0.03) 50%,
+    transparent 100%
+  );
+  height: 40%;
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+}
+
+/* Section spacing */
+.section-gap {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+}
+
+@media (max-width: 768px) {
+  .section-gap {
+    padding-top: var(--spacing-section-sm);
+    padding-bottom: var(--spacing-section-sm);
+  }
+}

@@ -1,0 +1,327 @@
+Defnix
+Product Requirements Document (PRD)
+Version 1.1  —  Updated February 2026
+1. Project Overview
+The platform represents a startup engineering studio specializing in:
+SOC2 Failure Prevention (Compliance Readiness Engineering)
+Cloud Insurance (Cloud Risk Reduction & Incident Readiness)
+AI Enhanced SOC Analyst (AI-driven security automation)
+The platform must serve multiple purposes:
+Authority building through technical blogs
+Lead generation for engineering services
+Portfolio showcasing
+Future hosting of internal SaaS tools and client dashboards
+AdSense compliant content publishing
+Highly professional, non-generic UI suitable for international clients
+The system must be built with scalability and maintainability as primary architecture goals.
+
+2. Core Objectives
+Primary Objectives
+Convert visitors into engineering leads
+Showcase technical credibility
+Support long-form cybersecurity and cloud blogs
+Allow future SaaS module integration
+Provide SEO-optimized architecture
+Maintain AdSense compliance
+Be easy to maintain by a small team
+Secondary Objectives
+Admin dashboard for blog management
+Case study publishing
+Analytics tracking
+Newsletter capture
+Contact and lead management
+
+3. Target Users
+Startup founders (US/EU primarily)
+CTOs / Engineering Leads
+SaaS companies
+AI startups
+Developers seeking technical insights
+Security-conscious organizations
+
+4. Technology Stack
+Frontend
+Framework: React with Next.js (App Router) — required for SEO, SSR, and performance
+Language: TypeScript
+Styling: TailwindCSS (custom design tokens — see Section 25)
+Component Library: Radix UI primitives (unstyled; fully custom-styled per design system)
+Animations: Framer Motion
+Icons: Lucide Icons
+Charts: Recharts
+SEO: Next.js metadata API + JSON-LD structured schema
+Fonts: See Section 11 — UI/UX for specific typography direction
+Backend
+Primary: Node.js + NestJS
+Reason: Scalable, modular, enterprise-grade, TypeScript-native, SaaS-ready
+Alternative: FastAPI (Python) — acceptable if team has stronger Python expertise
+Database
+Primary: PostgreSQL via Supabase or managed AWS RDS
+Secondary: Redis (caching, sessions, queues)
+File Storage: AWS S3 or Cloudflare R2
+Hosting & Infrastructure
+Frontend: Vercel (recommended) or Cloudflare Pages
+Backend: AWS EC2 or ECS (containerized)
+Containerization: Docker
+CI/CD: GitHub Actions
+Monitoring: Sentry + optional Prometheus/Grafana
+
+5. System Architecture
+Style: Modular Monolith initially, with SaaS-ready modular boundaries
+Modules
+Auth module (future SaaS)
+Blog module
+Engineering Solutions module
+Lead management module
+Admin dashboard
+Analytics module
+Case studies module
+Newsletter module
+Future SaaS modules must plug in cleanly without requiring core refactoring.
+
+6. Website Pages
+Public Pages
+Home
+Engineering Solutions (overview)
+SOC2 Failure Prevention (individual solution)
+Cloud Insurance (individual solution)
+AI Enhanced SOC Analyst (individual solution)
+Blog (listing)
+Blog Detail Page
+Case Studies
+About Us
+Contact Us
+Privacy Policy
+Terms of Service
+Disclaimer
+Footer must include links to all legal pages.
+
+7. Engineering Solutions Content Structure
+Each solution page must include the following sections in order:
+Problem statement
+Who this is for
+Risks of ignoring
+Our approach
+Technical capabilities
+Deliverables
+Engagement model
+CTA — Book a consultation
+
+8. Blog System Requirements
+Core Features
+Rich text editor with Markdown support
+Syntax-highlighted code blocks
+Table support
+Image embedding with optimization
+Tags and categories
+SEO meta fields per post
+Author profiles
+Related posts (algorithmic or manual)
+Reading time calculation
+Social sharing buttons
+Full-text search
+AdSense Compliance Requirements
+Original, human-quality content only
+Minimum 800 words per published article
+Clear site navigation
+About, Contact, Privacy Policy pages present
+Mobile responsive layout
+Fast page loading (<2 seconds)
+No copyrighted third-party material
+
+9. Admin Dashboard
+Features
+Blog CRUD (create, read, update, delete, publish)
+Case study CRUD
+Lead management and CRM view
+Newsletter subscriber list
+Analytics overview
+SEO metadata control per page/post
+Media upload and management
+Authentication
+Method: JWT-based secure login
+Access: Admin-only, not publicly accessible
+
+10. Lead Generation Features
+Contact form with validation
+Consultation booking request flow
+Email capture popup (timed or exit-intent)
+Downloadable lead magnets (future phase)
+CRM-ready data structure for export or integration
+
+11. UI / UX Requirements
+Aesthetic Direction
+The visual identity must feel like a premium engineering firm — the intersection of ruthless technical precision and understated confidence. Think: the quiet power of a well-written technical paper meets the visual tension of a modern defense contractor's brand. Not 'startup colorful', not 'boring enterprise'. Something that makes a CTO trust you in the first 5 seconds.
+Design Principles (Binding)
+Tension over polish: Use deliberate visual contrast (large type against fine detail, open space against dense data) to create energy.
+Signal over noise: Every visual element must serve conversion or credibility. No decorative gradients that mean nothing.
+Restraint with purpose: Animations are surgical. A single well-timed reveal is worth 10 subtle hover states.
+Industrial precision: Grid systems should feel engineered, not designed. Asymmetry is allowed only when intentional.
+Color System
+Primary Background: #0A0F1C — Deep navy-black (not pure black; avoids harsh contrast)
+Surface: #111827 — Slightly lighter for card surfaces
+Primary Text: #F1F5F9 — Off-white (warmer than pure white)
+Secondary Text: #94A3B8 — Muted slate
+Accent / CTA: #00D4FF — Electric cyan (single accent only — do not dilute with secondary colors)
+Danger / Alert: #FF4757 — Crisp red for warnings and risk callouts
+Success: #2ECC71 — Terminal green (references security tooling aesthetics)
+Border / Divider: #1E293B — Subtle, low-contrast
+Note: The agent may extract updated primary/accent colors from the logo if provided. The palette above is the fallback default.
+Typography (Binding)
+Display / Hero: Sora — geometric, slightly technical, not over-used
+Headings: DM Sans — clean, modern authority
+Body: IBM Plex Sans — technical credibility without being cold
+Monospace / Code: JetBrains Mono — for code blocks, terminal elements, metrics
+Do NOT use: Inter, Roboto, Arial, Poppins, Nunito, Space Grotesk, or any Google Fonts default. These are overused and signal generic AI-generated output.
+Layout Philosophy
+Hero section: Full-width, dark, with a single high-contrast headline (60-80px). No hero images of people. No stock photography. Abstract, geometric, or data-driven visual motif only.
+Solution cards: Horizontal layout on desktop, not a simple 3-column grid. Use offset positioning and varied card heights to create rhythm.
+Blog previews: Editorial magazine style. Feature one prominent post, then 2-3 secondary in a compact list.
+Whitespace: Generous vertical rhythm. Min 120px between major sections.
+Mobile: Strict single-column. Navigation becomes a full-screen overlay (not a hamburger dropdown).
+Micro-interactions & Animation
+Page load: Staggered content reveal using Framer Motion (not a loading spinner). Elements enter from bottom with opacity fade, 80ms stagger.
+Buttons: Subtle border-trace animation on hover (not scale/shadow transforms which are cliché).
+Cards: On hover, a faint cyan glow on the border only. No card lifts or dramatic shadows.
+Navigation: Fixed header that reduces in height on scroll (80px → 52px), with backdrop blur.
+NO: Parallax scroll effects, floating particles, animated gradient backgrounds, or typing animations.
+Key UI Sections
+Hero: Strong value proposition in 2 lines max. Subheadline in 1 sentence. Single CTA button. Supporting element: a subtle technical diagram or terminal-style data readout (not stock art).
+Solution cards with problem/risk framing
+Technical credibility indicators (specific numbers, not vague claims)
+Metrics / stats bar (e.g., '98% SOC2 pass rate' — use real or placeholder specifics)
+Blog previews (editorial layout)
+Testimonials section (placeholder — slot for future real quotes)
+CTA section: Dark panel, single headline, one button. No confetti.
+What This UI Must NOT Look Like
+No purple-to-pink gradients on white backgrounds
+No Notion-style card grids with rounded-xl and drop shadows everywhere
+No hero section with a SaaS dashboard screenshot behind glass
+No animated blob backgrounds
+No stock photography of people in offices
+No 3-column feature grids with emoji icons
+No generic 'trusted by 500+ companies' logo carousels unless real logos are provided
+
+12. Branding
+If a logo is provided, automatically extract the primary, secondary, and accent colors and apply them as overrides to the color system defined in Section 11. If no logo is provided, use the Section 11 color palette as the canonical default.
+Typography (See Section 11)
+Display: Sora
+Headings: DM Sans
+Body: IBM Plex Sans
+Code: JetBrains Mono
+
+13. SEO Requirements
+JSON-LD structured schema (Organization, BlogPosting, FAQPage where applicable)
+OpenGraph and Twitter Card metadata
+Sitemap generation (dynamic, auto-updated on new posts)
+robots.txt configuration
+Clean, descriptive URL slugs (no numeric IDs)
+Canonical tags on all pages
+Page load time <2 seconds (Lighthouse)
+
+14. Performance Requirements
+Lighthouse score >90 across all categories
+Image optimization via Next.js Image component (WebP, lazy loading)
+CDN delivery for static assets
+API response caching via Redis
+No render-blocking scripts
+
+15. Security Requirements
+HTTPS enforced (HSTS headers)
+Rate limiting on all API endpoints
+Input validation and sanitization (server-side)
+CSRF protection on forms
+Secure HTTP headers (CSP, X-Frame-Options, etc.)
+Environment variables never exposed to client
+
+16. Future SaaS Expansion Capability
+The architecture must support the following without major refactoring:
+User accounts and authentication (OAuth + email)
+Subscription billing (Stripe integration)
+Multi-tenant architecture
+API gateway layer
+Role-based access control (RBAC)
+
+17. Analytics
+Google Analytics 4 (GA4)
+PostHog or Plausible (optional, privacy-first alternative)
+Custom event tracking (CTA clicks, form submissions, blog reads)
+Conversion tracking (lead form → email → consultation booked)
+
+18. Standard Legal Page Content
+Privacy Policy
+We collect limited personal information including name, email address, and message content submitted through contact forms. This data is used solely for communication and service delivery purposes. We do not sell personal information to third parties.
+Terms of Service
+By using this website, you agree to use the services lawfully. We provide engineering consulting and informational content. We are not liable for damages resulting from misuse of information.
+Disclaimer
+All technical information provided is for educational and informational purposes only. Implementation of security or cloud configurations is the responsibility of the user or organization.
+About Us
+We are an engineering-focused team specializing in cloud security, compliance readiness, and AI-driven automation for modern startups.
+Contact
+Email contact form with clearly stated response time expectations (e.g., within 1 business day).
+
+19. AdSense Compliance SOP
+Publish minimum 20 high-quality original articles before applying
+No AI-generated spam content — all posts must read as expert human writing
+Clear site navigation on all pages
+All legal pages present and linked from footer
+Mobile optimization verified on multiple screen sizes
+Consistent publishing schedule (minimum 2 posts/month)
+
+20. Deliverables Expected from the Agent
+The agent (Claude Opus 4.6) should generate the following:
+Full frontend code (Next.js + TypeScript + TailwindCSS)
+Backend API (NestJS)
+Database schema (PostgreSQL migrations)
+Admin dashboard
+Deployment instructions (Vercel + AWS)
+Environment configuration (.env.example files)
+Technical documentation (README + API docs)
+SEO configuration (sitemap, robots.txt, schema templates)
+Sample blog content (3 articles, 800+ words each, technically accurate)
+
+21. Code Quality Requirements
+Clean architecture with clear separation of concerns
+Full TypeScript type safety — no 'any' types in production code
+Modular structure with index barrel exports
+Inline comments on complex logic
+Production-ready standards (error handling, logging, graceful degradation)
+[FIXED: Typographic error 'archit\necture' in v1.0 has been corrected to 'architecture' above.]
+
+22. Deployment
+Frontend: Vercel (primary)
+Backend: AWS EC2 or ECS
+Database: Managed PostgreSQL (Supabase or AWS RDS)
+Cache: Redis (Upstash or AWS ElastiCache)
+CDN: Cloudflare or Vercel Edge Network
+
+23. Success Criteria
+Professional UI comparable to Stripe, Vercel, or Linear in quality and distinctiveness
+Easy blog publishing workflow (non-technical team member can publish in <5 min)
+Lead capture forms functional and CRM-ready
+Lighthouse performance score >90
+Scalable architecture ready for SaaS expansion
+UI passes the 'not AI-generated' test: a designer shown the site would not identify it as a template
+
+
+25. Anti-Generic UI Mandate [NEW]
+Prohibited Patterns (Never Implement)
+gradient-to-r from-purple-500 to-pink-500 or any rainbow gradient on a primary surface
+rounded-3xl shadow-2xl card components as the default card style
+Hero sections with a blurred SaaS dashboard screenshot as a background
+Animated floating blobs or mesh gradients as page backgrounds
+Three-column feature grids with icon + title + two-line description as the sole content block
+Stock photography (Unsplash people, office scenes, handshakes)
+'Trusted by X companies' ticker with placeholder gray rectangles
+Testimonial carousels with 5-star ratings and circular avatars as the primary social proof
+Font: Inter, Roboto, Poppins, Nunito, or Space Grotesk
+Color: Any version of #6366F1 (Indigo-500) as the primary brand color
+Required Differentiators (Must Implement At Least 4)
+Typography scale with visible hierarchy: Display text 64px+, with a clear 3-level type system
+A custom geometric or data-driven visual motif in the hero (not stock art, not a gradient blob)
+At least one layout section that breaks the standard 12-column grid
+A technical data visualization or terminal-style element used as a design feature (not a screenshot)
+Micro-animation that is unique to the brand (not a generic hover scale)
+A color accent used sparingly enough that it retains impact (appears in <10% of UI surface area)
+Review Gate
+Before delivering any frontend code, the agent must answer: 'Could this UI be mistaken for a Webflow template or a ChatGPT-generated landing page?' If the answer is yes or maybe, revise. The target answer is an unambiguous no.
+
