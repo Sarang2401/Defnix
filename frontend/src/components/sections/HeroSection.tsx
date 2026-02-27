@@ -29,9 +29,14 @@ function TerminalMotif() {
     }, []);
 
     useEffect(() => {
-        updateTime();
+        const initTimer = setTimeout(() => {
+            updateTime();
+        }, 0);
         const timer = setInterval(updateTime, 1000);
-        return () => clearInterval(timer);
+        return () => {
+            clearTimeout(initTimer);
+            clearInterval(timer);
+        };
     }, [updateTime]);
 
     useEffect(() => {

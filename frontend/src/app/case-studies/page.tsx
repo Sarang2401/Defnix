@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
 import { Button } from "@/components/ui/Button";
 import { ArrowRight, Building2, TrendingUp } from "lucide-react";

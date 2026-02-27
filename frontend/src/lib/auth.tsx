@@ -30,8 +30,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Hydrate token from localStorage on mount
     useEffect(() => {
         const stored = localStorage.getItem("defnix_token");
-        setToken(stored);
-        setIsLoading(false);
+        const timer = setTimeout(() => {
+            setToken(stored);
+            setIsLoading(false);
+        }, 0);
+        return () => clearTimeout(timer);
     }, []);
 
     // Redirect to login if unauthenticated (except on login page)
