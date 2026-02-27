@@ -31,17 +31,33 @@ import { SeoModule } from './modules/seo/seo.module';
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
-            useFactory: (configService: ConfigService) => ({
-                type: 'postgres' as const,
-                host: configService.get<string>('DB_HOST', 'localhost'),
-                port: configService.get<number>('DB_PORT', 5432),
-                username: configService.get<string>('DB_USERNAME', 'defnix'),
-                password: configService.get<string>('DB_PASSWORD', 'defnix_dev'),
-                database: configService.get<string>('DB_NAME', 'defnix'),
-                autoLoadEntities: true,
-                synchronize: configService.get<string>('NODE_ENV') !== 'production',
-                logging: configService.get<string>('NODE_ENV') !== 'production',
-            }),
+            useFactory: (configService: ConfigService) => {
+                const databaseUrl = configService.get<string>('DATABASE_URL');
+                const isProduction = configService.get<string>('NODE_ENV') === 'production';
+
+                if (databaseUrl) {
+                    return {
+                        type: 'postgres' as const,
+                        url: databaseUrl,
+                        autoLoadEntities: true,
+                        synchronize: !isProduction,
+                        logging: !isProduction,
+                        ssl: { rejectUnauthorized: false }, // Render/Neon requires SSL
+                    };
+                }
+
+                return {
+                    type: 'postgres' as const,
+                    host: configService.get<string>('DB_HOST', 'localhost'),
+                    port: configService.get<number>('DB_PORT', 5432),
+                    username: configService.get<string>('DB_USERNAME', 'defnix'),
+                    password: configService.get<string>('DB_PASSWORD', 'defnix_dev'),
+                    database: configService.get<string>('DB_NAME', 'defnix'),
+                    autoLoadEntities: true,
+                    synchronize: !isProduction,
+                    logging: !isProduction,
+                };
+            },
         }),
 
         // Feature modules
