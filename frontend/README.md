@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Defnix — Frontend
+
+The public-facing website for [Defnix](https://defnix.com), built with **Next.js 16** and **React 19**.
+
+---
+
+## Tech Stack
+
+| Technology        | Version  | Purpose                              |
+|-------------------|----------|--------------------------------------|
+| Next.js           | 16.1.6   | React framework with App Router      |
+| React             | 19       | UI library                           |
+| TypeScript        | 5        | Type safety                          |
+| Tailwind CSS      | 4        | Utility-first styling                |
+| Framer Motion     | 12       | Page transitions and animations      |
+| Lucide React      | 0.575    | Icon library                         |
+| Radix UI          | —        | Accessible UI primitives             |
+| Recharts          | 3        | Charts (admin dashboard)             |
+
+---
+
+## Pages
+
+| Route                  | Description                              |
+|------------------------|------------------------------------------|
+| `/`                    | Homepage                                 |
+| `/about`               | About Defnix                             |
+| `/solutions`           | Solutions overview                       |
+| `/solutions/soc2-failure-prevention` | SOC2 Compliance Readiness  |
+| `/solutions/cloud-insurance`         | Cloud Risk Reduction       |
+| `/solutions/ai-soc-analyst`          | AI-Driven Security Ops     |
+| `/case-studies`        | Engineering case studies                 |
+| `/blog`                | Technical blog                           |
+| `/contact`             | Contact form                             |
+| `/disclaimer`          | Disclaimer                               |
+| `/privacy-policy`      | Privacy Policy                           |
+| `/terms-of-service`    | Terms of Service                         |
+| `/admin`               | Admin dashboard (protected)              |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js v20+
+- npm
+
+### Installation
+
+```bash
+cd frontend
+npm install
+```
+
+### Environment Variables
+
+The frontend reads the backend API URL from an environment variable. Create a `.env.local` file in the `frontend/` directory:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3001
+```
+
+For production, set this to your deployed backend URL.
+
+### Running Locally
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The app will be available at [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+| Command         | Description                          |
+|-----------------|--------------------------------------|
+| `npm run dev`   | Start development server (Turbopack) |
+| `npm run build` | Build for production                 |
+| `npm run start` | Start production server              |
+| `npm run lint`  | Run ESLint                           |
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+frontend/src/
+├── app/                  # Next.js App Router pages
+│   ├── page.tsx          # Homepage
+│   ├── layout.tsx        # Root layout
+│   ├── about/
+│   ├── blog/
+│   ├── case-studies/
+│   ├── contact/
+│   ├── solutions/
+│   ├── admin/            # Admin area (authenticated)
+│   └── ...               # Legal pages
+├── components/
+│   ├── sections/         # Page-level sections (Hero, Metrics, etc.)
+│   ├── ui/               # Reusable UI components
+│   └── layout/           # Header, Footer, Navigation
+└── lib/                  # Utility functions and API clients
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The frontend is designed for deployment on **Vercel**:
+
+1. Connect your GitHub repository to Vercel
+2. Set `NEXT_PUBLIC_API_URL` in Vercel environment variables
+3. Vercel handles builds automatically on every push to `main`
+
+---
+
+## Notes
+
+- The admin section at `/admin` requires valid credentials managed through the backend API. Do not expose admin credentials in any client-side code.
+- The frontend supports static fallback data for pages like Case Studies if the backend API is unavailable.
