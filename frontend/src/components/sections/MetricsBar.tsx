@@ -11,10 +11,10 @@ interface Metric {
 }
 
 const metrics: Metric[] = [
-    { value: 98, suffix: "%", label: "SOC2 Pass Rate" },
-    { value: 73, suffix: "%", label: "First-Audit Failure Prevention" },
-    { value: 4.45, suffix: "M", label: "Avg. Breach Cost Mitigated" },
-    { value: 45, suffix: "%", label: "SOC Alert Noise Reduced" },
+    { value: 100, suffix: "%", label: "Client Audit Pass Rate" },
+    { value: 3, suffix: "+", label: "Compliance Frameworks" },
+    { value: 48, suffix: "hr", label: "Avg. IR Setup Time" },
+    { value: 10, suffix: "+", label: "Security Controls Built" },
 ];
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {

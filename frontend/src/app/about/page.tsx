@@ -133,10 +133,10 @@ export default function AboutPage() {
                 <PageTransition>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                         {[
-                            { value: "98%", label: "SOC2 pass rate" },
-                            { value: "50+", label: "Engagements" },
-                            { value: "<15min", label: "Avg MTTR achieved" },
-                            { value: "12wk", label: "Avg time to SOC2" },
+                            { value: "100%", label: "Audit pass rate" },
+                            { value: "5+", label: "Projects delivered" },
+                            { value: "<1hr", label: "Avg response time" },
+                            { value: "10wk", label: "Avg time to compliance" },
                         ].map((stat) => (
                             <div key={stat.label} className="text-center">
                                 <p className="text-3xl lg:text-4xl font-[var(--font-mono)] font-bold text-[var(--color-accent)] mb-1">

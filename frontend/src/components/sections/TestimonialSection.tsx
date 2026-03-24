@@ -13,17 +13,17 @@ interface Testimonial {
 const placeholders: Testimonial[] = [
     {
         quote:
-            "Defnix took us from zero SOC2 readiness to passing our audit in under 8 weeks. Their engineering-first approach meant we didn't just check boxes — we built real controls.",
+            "Working with Defnix felt like adding a senior security engineer to our team. They helped us structure our compliance process properly from the start instead of scrambling before the audit.",
         name: "Engineering Lead",
         title: "VP Engineering",
-        company: "Series A SaaS Startup",
+        company: "Seed-Stage SaaS Startup",
     },
     {
         quote:
-            "Their cloud insurance engagement uncovered three critical misconfigurations in our AWS infrastructure that our internal team had missed for months.",
+            "Their team was thorough and transparent throughout the engagement. They documented everything clearly and made sure we understood every control they implemented in our cloud setup.",
         name: "CTO",
         title: "Chief Technology Officer",
-        company: "AI Platform Company",
+        company: "Early-Stage AI Company",
     },
 ];
 
