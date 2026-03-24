@@ -25,6 +25,20 @@ const placeholders: Testimonial[] = [
         title: "Chief Technology Officer",
         company: "Early-Stage AI Company",
     },
+    {
+        quote:
+            "They built our cafe's website in under two weeks and it already shows up when people search for coffee shops in our area. Very happy with the result and the ongoing support.",
+        name: "Owner",
+        title: "Cafe Owner",
+        company: "Independent Cafe · Melbourne, AU",
+    },
+    {
+        quote:
+            "Defnix automated our entire client onboarding workflow — what used to take us 3 hours per client now happens automatically. Huge time saver for a small team like ours.",
+        name: "Founder",
+        title: "Agency Founder",
+        company: "Digital Marketing Agency · London, UK",
+    },
 ];
 
 export function TestimonialSection() {
@@ -36,7 +50,7 @@ export function TestimonialSection() {
                         Client Feedback
                     </p>
                     <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)] mb-12">
-                        What teams say
+                        What clients say
                     </h2>
                 </PageTransition>
 

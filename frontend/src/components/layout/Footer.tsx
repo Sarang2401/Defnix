@@ -11,6 +11,9 @@ const footerSections = [
             { href: "/solutions/soc2-failure-prevention", label: "SOC2 Failure Prevention" },
             { href: "/solutions/cloud-insurance", label: "Cloud Insurance" },
             { href: "/solutions/ai-soc-analyst", label: "AI SOC Analyst" },
+            { href: "/solutions/website-development", label: "Website Development" },
+            { href: "/solutions/mobile-development", label: "Mobile App Development" },
+            { href: "/solutions/business-automation", label: "Business Automation" },
         ],
     },
     {
@@ -70,8 +73,8 @@ export function Footer() {
                             </span>
                         </Link>
                         <p className="text-sm text-[var(--color-text-secondary)] max-w-xs leading-relaxed mb-6">
-                            Engineering studio specializing in SOC2 compliance, cloud security,
-                            and AI-driven security operations for modern startups.
+                            Engineering studio specializing in cloud security, compliance, AI automation,
+                            website development, and mobile apps — for startups and small businesses worldwide.
                         </p>
 
                         {/* Newsletter */}
