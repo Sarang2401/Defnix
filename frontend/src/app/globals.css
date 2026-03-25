@@ -5,7 +5,7 @@
    ═══════════════════════════════════════════════════ */
 
 @theme inline {
-  /* Color System — PRD Section 11 */
+  /* Color System */
   --color-bg-primary: #0A0F1C;
   --color-bg-surface: #111827;
   --color-bg-elevated: #1A2235;
@@ -14,6 +14,7 @@
   --color-text-muted: #64748B;
   --color-accent: #00D4FF;
   --color-accent-dim: rgba(0, 212, 255, 0.15);
+  --color-accent-secondary: #7C3AED;
   --color-danger: #FF4757;
   --color-success: #2ECC71;
   --color-border: #1E293B;
@@ -35,7 +36,7 @@
    ═══════════════════════════════════════════════════ */
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -54,7 +55,7 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Scrollbar — subtle, industrial */
+/* Scrollbar — subtle */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -99,17 +100,111 @@ code, pre, .mono {
 }
 
 /* ═══════════════════════════════════════════════════
-   Custom Utilities
+   Gradient Text
    ═══════════════════════════════════════════════════ */
 
-/* Border-trace animation for buttons */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #7C3AED 50%, #EC4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cyan {
+  background: linear-gradient(135deg, var(--color-accent) 0%, #38BDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ═══════════════════════════════════════════════════
+   Animated Gradient Blobs (Hero Background)
+   ═══════════════════════════════════════════════════ */
+
+@keyframes blob-morph-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(30px, -50px) scale(1.1); }
+  50% { transform: translate(-20px, 20px) scale(0.9); }
+  75% { transform: translate(40px, 30px) scale(1.05); }
+}
+
+@keyframes blob-morph-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(-40px, 30px) scale(0.95); }
+  50% { transform: translate(30px, -40px) scale(1.1); }
+  75% { transform: translate(-20px, -20px) scale(1); }
+}
+
+@keyframes blob-morph-3 {
+  0%, 100% { transform: translate(0, 0) scale(1.05); }
+  25% { transform: translate(20px, 40px) scale(0.9); }
+  50% { transform: translate(-40px, -30px) scale(1.1); }
+  75% { transform: translate(30px, -10px) scale(0.95); }
+}
+
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.3;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-blob-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--color-accent) 0%, transparent 70%);
+  top: -10%;
+  left: 10%;
+  animation: blob-morph-1 15s ease-in-out infinite;
+}
+
+.hero-blob-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #7C3AED 0%, transparent 70%);
+  top: 20%;
+  right: 5%;
+  animation: blob-morph-2 18s ease-in-out infinite;
+}
+
+.hero-blob-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, #EC4899 0%, transparent 70%);
+  bottom: 5%;
+  left: 30%;
+  animation: blob-morph-3 20s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════
+   Glassmorphism Cards
+   ═══════════════════════════════════════════════════ */
+
+.glass-card {
+  background: rgba(17, 24, 39, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  background: rgba(17, 24, 39, 0.75);
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.06),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════
+   Border-trace animation for buttons
+   ═══════════════════════════════════════════════════ */
+
 @keyframes border-trace {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 200% 0%;
-  }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
 }
 
 .btn-trace {
@@ -128,7 +223,8 @@ code, pre, .mono {
     90deg,
     transparent 0%,
     var(--color-accent) 25%,
-    transparent 50%
+    #7C3AED 50%,
+    transparent 75%
   );
   background-size: 200% 100%;
   -webkit-mask:
@@ -146,18 +242,140 @@ code, pre, .mono {
   opacity: 1;
 }
 
-/* Cyan glow for cards */
+/* ═══════════════════════════════════════════════════
+   Card Glow (upgraded)
+   ═══════════════════════════════════════════════════ */
+
 .card-glow {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
   border: 1px solid var(--color-border);
+  will-change: transform;
 }
 
 .card-glow:hover {
-  border-color: rgba(0, 212, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.25);
+  box-shadow:
+    0 0 30px rgba(0, 212, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
 }
 
-/* Terminal scan line */
+/* ═══════════════════════════════════════════════════
+   Marquee Animation
+   ═══════════════════════════════════════════════════ */
+
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.marquee-left {
+  animation: marquee-scroll-left var(--marquee-speed, 30s) linear infinite;
+}
+
+.marquee-right {
+  animation: marquee-scroll-right var(--marquee-speed, 30s) linear infinite;
+}
+
+@keyframes marquee-scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@keyframes marquee-scroll-right {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-hover-pause:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ═══════════════════════════════════════════════════
+   Glow Pulse (for metrics)
+   ═══════════════════════════════════════════════════ */
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.25); }
+}
+
+.glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════
+   Animated Gradient Border
+   ═══════════════════════════════════════════════════ */
+
+@keyframes gradient-rotate {
+  0% { --gradient-angle: 0deg; }
+  100% { --gradient-angle: 360deg; }
+}
+
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--gradient-angle, 0deg),
+    var(--color-accent),
+    #7C3AED,
+    #EC4899,
+    var(--color-accent)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: gradient-rotate 4s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════
+   CTA Gradient Mesh
+   ═══════════════════════════════════════════════════ */
+
+@keyframes cta-gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.cta-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.08) 0%,
+    rgba(124, 58, 237, 0.08) 33%,
+    rgba(236, 72, 153, 0.05) 66%,
+    rgba(0, 212, 255, 0.08) 100%
+  );
+  background-size: 300% 300%;
+  animation: cta-gradient-shift 8s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════
+   Terminal scan line
+   ═══════════════════════════════════════════════════ */
+
 @keyframes scanline {
   0% { transform: translateY(-100%); }
   100% { transform: translateY(100%); }
@@ -177,7 +395,51 @@ code, pre, .mono {
   pointer-events: none;
 }
 
-/* Section spacing */
+/* ═══════════════════════════════════════════════════
+   Scroll Progress Bar
+   ═══════════════════════════════════════════════════ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent), #7C3AED, #EC4899);
+  z-index: 9999;
+  transform-origin: left;
+  will-change: transform;
+}
+
+/* ═══════════════════════════════════════════════════
+   Link hover slide-up effect
+   ═══════════════════════════════════════════════════ */
+
+.link-hover-slide {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.link-hover-slide::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.link-hover-slide:hover::after {
+  transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════════════
+   Section spacing
+   ═══════════════════════════════════════════════════ */
+
 .section-gap {
   padding-top: var(--spacing-section);
   padding-bottom: var(--spacing-section);
@@ -188,4 +450,32 @@ code, pre, .mono {
     padding-top: var(--spacing-section-sm);
     padding-bottom: var(--spacing-section-sm);
   }
+
+  .hero-blob-1,
+  .hero-blob-2,
+  .hero-blob-3 {
+    opacity: 0.15;
+    filter: blur(80px);
+  }
+
+  .hero-blob-1 { width: 300px; height: 300px; }
+  .hero-blob-2 { width: 250px; height: 250px; }
+  .hero-blob-3 { width: 200px; height: 200px; }
+}
+
+/* ═══════════════════════════════════════════════════
+   Gradient Divider
+   ═══════════════════════════════════════════════════ */
+
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-accent) 20%,
+    #7C3AED 50%,
+    var(--color-accent) 80%,
+    transparent 100%
+  );
+  opacity: 0.3;
 }
