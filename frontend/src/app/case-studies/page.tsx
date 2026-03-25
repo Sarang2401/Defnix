@@ -77,6 +77,60 @@ const staticCaseStudies: CaseStudyShape[] = [
         metric: "35%",
         metricLabel: "Alert reduction",
     },
+    {
+        slug: "cafe-website-melbourne",
+        client: "Independent Cafe · Melbourne, AU",
+        industry: "Food & Beverage",
+        title: "From No Online Presence to Google Local Pack in 6 Weeks",
+        challenge:
+            "A cafe with two locations in Melbourne had no website and relied entirely on foot traffic and Instagram. Competitors with basic websites were appearing in local search results while this cafe was invisible online.",
+        solution:
+            "We built a mobile-first website with an online menu, Google Maps integration, click-to-call, and local SEO configured for 'best coffee near me' style searches. Google Business Profile was set up and optimised alongside the site.",
+        results: [
+            "Website live within 12 days of kickoff",
+            "Appeared in Google local search results within 6 weeks",
+            "Owner reported approximately 40% increase in new customer walk-ins over 3 months",
+            "Online contact form generating regular enquiries for event bookings",
+        ],
+        metric: "12 days",
+        metricLabel: "To go live",
+    },
+    {
+        slug: "dental-clinic-booking-app",
+        client: "Family Dental Practice · Austin, TX",
+        industry: "Healthcare",
+        title: "Booking App Reduced No-Shows by 30% for a Dental Practice",
+        challenge:
+            "A family dental practice was managing all appointments by phone, experiencing frequent no-shows and missed calls outside of business hours. Front desk staff were spending hours per week on scheduling and manual reminders.",
+        solution:
+            "We built a cross-platform iOS and Android booking app with automated SMS and email appointment reminders, online rescheduling, and a simple patient portal. Staff could manage the schedule through a companion admin dashboard.",
+        results: [
+            "No-show rate dropped from approximately 18% to around 12% within 2 months",
+            "Over 60% of appointments now booked through the app without phone calls",
+            "Front desk phone time for scheduling reduced by roughly 5 hours per week",
+            "App Store and Google Play listings live within 10 weeks of project start",
+        ],
+        metric: "30%",
+        metricLabel: "Fewer no-shows",
+    },
+    {
+        slug: "creator-automation-pipeline",
+        client: "Content Creator & Coach · London, UK",
+        industry: "Personal Brand & Creator Economy",
+        title: "Automated Client Pipeline Saved 12+ Hours Per Week",
+        challenge:
+            "A UK-based content creator with a growing coaching business was manually responding to enquiries, scheduling discovery calls, sending invoices, and managing email follow-ups. Most of the week was spent on admin rather than creating content or coaching.",
+        solution:
+            "We built an end-to-end automation workflow using n8n: enquiry form submission triggered CRM entry, personalised email sequence, calendar booking link, and automatic invoice generation on payment. Social media content was queued via a scheduling pipeline.",
+        results: [
+            "Reclaimed 12+ hours per week previously spent on manual admin tasks",
+            "Lead response time dropped from 24 hours to under 5 minutes via automated replies",
+            "Discovery call bookings increased 20% in the first month after automation went live",
+            "Zero missed follow-ups since workflows launched — previously a regular problem",
+        ],
+        metric: "12hr",
+        metricLabel: "Saved per week",
+    },
 ];
 
 /* ---------- Server-side data fetching ---------- */

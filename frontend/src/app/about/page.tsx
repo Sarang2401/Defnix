@@ -65,9 +65,10 @@ export default function AboutPage() {
                 </PageTransition>
                 <PageTransition delay={0.2}>
                     <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        We are an engineering-focused team specializing in cloud
-                        security, compliance readiness, and AI-driven automation for
-                        modern startups. We don&apos;t consult — we build.
+                        We are an engineering-focused team that builds across cloud
+                        security, compliance readiness, AI automation, website development,
+                        and mobile apps — for startups and small businesses worldwide.
+                        We don&apos;t consult — we build.
                     </p>
                 </PageTransition>
             </section>
@@ -80,15 +81,14 @@ export default function AboutPage() {
                             Our Mission
                         </p>
                         <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4 leading-snug">
-                            Make security engineering accessible to every startup
-                            that ships software.
+                            Make great engineering accessible to every startup and
+                            small business that has real problems to solve.
                         </h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-                            Enterprise-grade security shouldn&apos;t require an
-                            enterprise budget. We bring the tooling, automation, and
-                            engineering discipline of large security teams to
-                            startups with 5-50 engineers — at a fraction of the cost
-                            of building it in-house.
+                            Whether you need SOC2 compliance, cloud security, AI-driven
+                            automation, a website that wins local search, or a mobile app
+                            your customers actually love — we build it. No consultants,
+                            no slide decks. Just engineering that works.
                         </p>
                     </div>
                 </PageTransition>
@@ -133,10 +133,10 @@ export default function AboutPage() {
                 <PageTransition>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
                         {[
-                            { value: "100%", label: "Audit pass rate" },
-                            { value: "5+", label: "Projects delivered" },
+                            { value: "100%", label: "Client satisfaction" },
+                            { value: "15+", label: "Projects delivered" },
                             { value: "<1hr", label: "Avg response time" },
-                            { value: "10wk", label: "Avg time to compliance" },
+                            { value: "2wk", label: "Avg delivery time" },
                         ].map((stat) => (
                             <div key={stat.label} className="text-center">
                                 <p className="text-3xl lg:text-4xl font-[var(--font-mono)] font-bold text-[var(--color-accent)] mb-1">

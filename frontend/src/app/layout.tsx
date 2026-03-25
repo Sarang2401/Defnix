@@ -33,17 +33,21 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Defnix — Engineering Studio for Security & Cloud Infrastructure",
+    default: "Defnix — Engineering Studio for Security, Web & Mobile Development",
     template: "%s | Defnix",
   },
   description:
-    "Defnix is an engineering studio specializing in SOC2 compliance, cloud security, and AI-driven security operations for modern startups.",
+    "Defnix is an engineering studio specializing in SOC2 compliance, cloud security, AI automation, website development, mobile apps, and business workflow automation for startups and small businesses.",
   keywords: [
     "SOC2 compliance",
     "cloud security",
     "AI SOC analyst",
-    "security engineering",
-    "cloud insurance",
+    "website development",
+    "mobile app development",
+    "business automation",
+    "n8n automation",
+    "React Native apps",
+    "small business website",
     "compliance readiness",
   ],
   authors: [{ name: "Defnix Engineering" }],
@@ -51,15 +55,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Defnix",
-    title: "Defnix — Engineering Studio for Security & Cloud Infrastructure",
+    title: "Defnix — Engineering Studio for Security, Web & Mobile Development",
     description:
-      "SOC2 compliance, cloud security, and AI-driven security operations for modern startups.",
+      "SOC2 compliance, cloud security, AI automation, web development, mobile apps, and workflow automation for startups.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Defnix — Engineering Studio",
     description:
-      "SOC2 compliance, cloud security, and AI-driven security operations.",
+      "Security, cloud, AI, web, mobile, and automation engineering.",
   },
   robots: {
     index: true,

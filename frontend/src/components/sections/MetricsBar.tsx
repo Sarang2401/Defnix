@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import { useInView } from "framer-motion";
-import { PageTransition } from "../ui/PageTransition";
+import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Metric {
     value: number;
@@ -11,64 +14,75 @@ interface Metric {
 }
 
 const metrics: Metric[] = [
-    { value: 100, suffix: "%", label: "Client Audit Pass Rate" },
-    { value: 3, suffix: "+", label: "Compliance Frameworks" },
-    { value: 48, suffix: "hr", label: "Avg. IR Setup Time" },
-    { value: 10, suffix: "+", label: "Security Controls Built" },
+    { value: 100, suffix: "%", label: "Client Satisfaction" },
+    { value: 6, suffix: "", label: "Solutions Offered" },
+    { value: 2, suffix: "wk", label: "Avg. Delivery Time" },
+    { value: 15, suffix: "+", label: "Projects Delivered" },
 ];
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
-    const [current, setCurrent] = useState(0);
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
+    const numberRef = useRef<HTMLSpanElement>(null);
+    const hasAnimated = useRef(false);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInView = useInView(containerRef, { once: true, margin: "-50px" });
 
     useEffect(() => {
-        if (!isInView) return;
+        if (!isInView || hasAnimated.current || !numberRef.current) return;
+        hasAnimated.current = true;
 
-        const duration = 1500;
-        const startTime = Date.now();
-        const isDecimal = value % 1 !== 0;
-
-        const animate = () => {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            // ease-out cubic
-            const eased = 1 - Math.pow(1 - progress, 3);
-            const next = eased * value;
-            setCurrent(isDecimal ? parseFloat(next.toFixed(2)) : Math.floor(next));
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            }
-        };
-
-        requestAnimationFrame(animate);
-    }, [isInView, value]);
+        const obj = { val: 0 };
+        gsap.to(obj, {
+            val: value,
+            duration: 2,
+            ease: "power2.out",
+            onUpdate: () => {
+                if (numberRef.current) {
+                    numberRef.current.textContent = `${Math.round(obj.val)}${suffix}`;
+                }
+            },
+        });
+    }, [isInView, value, suffix]);
 
     return (
-        <span ref={ref} className="font-[var(--font-mono)] text-4xl lg:text-5xl font-bold text-[var(--color-text-primary)]">
-            {value % 1 !== 0 ? `$${current}` : current}
-            <span className="text-[var(--color-accent)]">{suffix}</span>
-        </span>
+        <div ref={containerRef}>
+            <span ref={numberRef} className="font-[var(--font-mono)] text-4xl lg:text-5xl font-bold gradient-text">
+                0{suffix}
+            </span>
+        </div>
     );
 }
 
 export function MetricsBar() {
     return (
-        <section className="relative border-y border-[var(--color-border)] bg-[var(--color-bg-surface)]">
-            <div className="max-w-7xl mx-auto px-6 py-16 lg:py-20">
-                <PageTransition>
-                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
-                        {metrics.map((metric) => (
-                            <div key={metric.label} className="text-center">
-                                <AnimatedNumber value={metric.value} suffix={metric.suffix} />
-                                <p className="mt-2 text-xs text-[var(--color-text-muted)] font-[var(--font-heading)] uppercase tracking-wider">
+        <section className="section-gap relative">
+            <div className="max-w-7xl mx-auto px-6">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-50px" }}
+                    transition={{ duration: 0.8 }}
+                    className="glass-card rounded-2xl p-10 lg:p-14"
+                >
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                        {metrics.map((metric, i) => (
+                            <motion.div
+                                key={metric.label}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: i * 0.1 }}
+                                className="text-center"
+                            >
+                                <div className="mb-3">
+                                    <AnimatedNumber value={metric.value} suffix={metric.suffix} />
+                                </div>
+                                <p className="text-sm text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider">
                                     {metric.label}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
-                </PageTransition>
+                </motion.div>
             </div>
         </section>
     );

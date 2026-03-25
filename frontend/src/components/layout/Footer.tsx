@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { Marquee } from "../ui/Marquee";
 
 const footerSections = [
     {
@@ -11,6 +13,9 @@ const footerSections = [
             { href: "/solutions/soc2-failure-prevention", label: "SOC2 Failure Prevention" },
             { href: "/solutions/cloud-insurance", label: "Cloud Insurance" },
             { href: "/solutions/ai-soc-analyst", label: "AI SOC Analyst" },
+            { href: "/solutions/website-development", label: "Website Development" },
+            { href: "/solutions/mobile-development", label: "Mobile App Development" },
+            { href: "/solutions/business-automation", label: "Business Automation" },
         ],
     },
     {
@@ -30,6 +35,8 @@ const footerSections = [
         ],
     },
 ];
+
+const brandWords = ["Sophisticated", "Dynamic", "Elegant", "Modern", "Engineered", "Innovative"];
 
 export function Footer() {
     const [email, setEmail] = useState("");
@@ -53,7 +60,25 @@ export function Footer() {
     };
 
     return (
-        <footer className="border-t border-[var(--color-border)] bg-[var(--color-bg-primary)]">
+        <footer className="relative bg-[var(--color-bg-primary)]">
+            {/* Brand marquee above footer */}
+            <div className="py-8 overflow-hidden">
+                <Marquee speed={25} pauseOnHover={false}>
+                    {brandWords.map((word) => (
+                        <span
+                            key={word}
+                            className="font-[var(--font-display)] text-4xl lg:text-6xl font-bold text-[var(--color-border)] uppercase mx-8 whitespace-nowrap select-none"
+                        >
+                            {word}
+                            <span className="mx-8 text-[var(--color-accent)] opacity-20">✦</span>
+                        </span>
+                    ))}
+                </Marquee>
+            </div>
+
+            {/* Gradient divider */}
+            <div className="gradient-divider" />
+
             <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
                 {/* Top grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
@@ -70,8 +95,8 @@ export function Footer() {
                             </span>
                         </Link>
                         <p className="text-sm text-[var(--color-text-secondary)] max-w-xs leading-relaxed mb-6">
-                            Engineering studio specializing in SOC2 compliance, cloud security,
-                            and AI-driven security operations for modern startups.
+                            Engineering studio specializing in cloud security, compliance, AI automation,
+                            website development, and mobile apps — for startups and small businesses worldwide.
                         </p>
 
                         {/* Newsletter */}
@@ -90,7 +115,7 @@ export function Footer() {
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder="your@email.com"
-                                        className="flex-1 px-3 py-2 bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
+                                        className="flex-1 px-3 py-2 glass-card rounded text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
                                         required
                                     />
                                     <button
@@ -116,7 +141,7 @@ export function Footer() {
                                     <li key={link.href}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200"
+                                            className="link-hover-slide text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200"
                                         >
                                             {link.label}
                                         </Link>
@@ -128,26 +153,26 @@ export function Footer() {
                 </div>
 
                 {/* Bottom bar */}
-                <div className="mt-16 pt-6 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="mt-16 pt-6 border-t border-[rgba(30,41,59,0.5)] flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-[var(--color-text-muted)]">
                         © {new Date().getFullYear()} Defnix. All rights reserved.
                     </p>
                     <div className="flex items-center gap-6">
                         <Link
                             href="/privacy-policy"
-                            className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
+                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
                         >
                             Privacy
                         </Link>
                         <Link
                             href="/terms-of-service"
-                            className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
+                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
                         >
                             Terms
                         </Link>
                         <Link
                             href="/contact"
-                            className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
+                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
                         >
                             Contact
                         </Link>

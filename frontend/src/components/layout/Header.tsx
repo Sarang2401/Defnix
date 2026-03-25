@@ -16,15 +16,19 @@ const navLinks = [
 
 export function Header() {
     const [mobileOpen, setMobileOpen] = useState(false);
-    const { scrollY } = useScroll();
+    const { scrollY, scrollYProgress } = useScroll();
 
-    // Shrink header: 80px → 52px
+    // Shrink header
     const headerHeight = useTransform(scrollY, [0, 100], [80, 52]);
     const headerBg = useTransform(
         scrollY,
         [0, 50],
-        ["rgba(10, 15, 28, 0)", "rgba(10, 15, 28, 0.85)"]
+        ["rgba(10, 15, 28, 0)", "rgba(10, 15, 28, 0.7)"]
     );
+    const headerBlur = useTransform(scrollY, [0, 50], [0, 20]);
+
+    // Scroll progress bar
+    const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
     // Lock body scroll when mobile nav is open
     useEffect(() => {
@@ -36,21 +40,33 @@ export function Header() {
 
     return (
         <>
+            {/* Scroll progress bar */}
+            <motion.div
+                style={{ scaleX }}
+                className="scroll-progress"
+            />
+
             <motion.header
                 style={{
                     height: headerHeight,
                     backgroundColor: headerBg,
+                    backdropFilter: useTransform(headerBlur, (v) => `blur(${v}px)`),
+                    WebkitBackdropFilter: useTransform(headerBlur, (v) => `blur(${v}px)`),
                 }}
-                className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-[var(--color-border)] transition-colors"
+                className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(30,41,59,0.5)] transition-colors"
             >
                 <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2 group">
-                        <div className="w-8 h-8 rounded bg-[var(--color-accent)] flex items-center justify-center">
+                        <motion.div
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                            className="w-8 h-8 rounded bg-[var(--color-accent)] flex items-center justify-center"
+                        >
                             <span className="font-[var(--font-display)] text-[var(--color-bg-primary)] font-bold text-sm">
                                 D
                             </span>
-                        </div>
+                        </motion.div>
                         <span className="font-[var(--font-display)] text-[var(--color-text-primary)] font-bold text-xl tracking-tight">
                             defnix
                         </span>
@@ -62,7 +78,7 @@ export function Header() {
                             <Link
                                 key={link.href}
                                 href={link.href}
-                                className="font-[var(--font-body)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200 tracking-wide"
+                                className="link-hover-slide font-[var(--font-body)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200 tracking-wide"
                             >
                                 {link.label}
                             </Link>

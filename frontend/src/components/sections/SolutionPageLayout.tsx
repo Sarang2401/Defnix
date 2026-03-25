@@ -14,6 +14,10 @@ import {
     Shield,
     Cloud,
     Brain,
+    Globe,
+    Smartphone,
+    Workflow,
+    Zap,
     type LucideIcon,
 } from "lucide-react";
 
@@ -27,6 +31,10 @@ const iconMap: Record<string, LucideIcon> = {
     Shield,
     Cloud,
     Brain,
+    Globe,
+    Smartphone,
+    Workflow,
+    Zap,
 };
 
 interface SectionBlock {

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { SmoothScroll } from "../ui/SmoothScroll";
 
 export function LayoutContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -13,10 +14,10 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
     }
 
     return (
-        <>
+        <SmoothScroll>
             <Header />
             <main className="min-h-screen">{children}</main>
             <Footer />
-        </>
+        </SmoothScroll>
     );
 }

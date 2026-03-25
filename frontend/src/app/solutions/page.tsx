@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Shield, Cloud, Brain, ArrowRight } from "lucide-react";
+import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight } from "lucide-react";
 import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "Engineering Solutions",
+    title: "Solutions",
     description:
-        "SOC2 compliance readiness, cloud risk reduction, and AI-driven security operations — engineered for startups that ship fast.",
+        "Security engineering, SOC2 compliance, cloud resilience, AI-driven automation, website development, mobile apps, and business workflow automation for startups and small businesses.",
 };
 
 const solutions = [
@@ -56,6 +56,51 @@ const solutions = [
             "SOC productivity analytics",
         ],
     },
+    {
+        icon: <Globe size={28} />,
+        title: "Website Development",
+        subtitle: "Websites for Small Businesses",
+        risk: "46% of small businesses still have no website",
+        description:
+            "Fast, mobile-first websites built to rank on Google and convert local searches into real customers — for cafes, clinics, restaurants, and local businesses across USA, UK, and Australia.",
+        href: "/solutions/website-development",
+        capabilities: [
+            "Mobile-first responsive design",
+            "Local SEO & Google Business optimisation",
+            "Online booking & menu integration",
+            "CMS setup for self-management",
+        ],
+    },
+    {
+        icon: <Smartphone size={28} />,
+        title: "Mobile App Development",
+        subtitle: "iOS & Android Apps",
+        risk: "85% of consumers prefer apps for local services",
+        description:
+            "Cross-platform mobile apps with booking systems, push notifications, and payment integration — built for dental practices, restaurants, clinics, and service businesses.",
+        href: "/solutions/mobile-development",
+        capabilities: [
+            "Cross-platform iOS & Android (React Native)",
+            "Appointment booking & patient portals",
+            "Push notifications & loyalty features",
+            "App Store & Play Store publishing",
+        ],
+    },
+    {
+        icon: <Workflow size={28} />,
+        title: "Business Automation",
+        subtitle: "Workflow Automation with n8n, Make & Zapier",
+        risk: "Teams lose 15+ hours/week to repetitive manual tasks",
+        description:
+            "Custom automation pipelines that handle lead follow-ups, onboarding, invoicing, and social media publishing — so your team focuses on work that actually moves the needle.",
+        href: "/solutions/business-automation",
+        capabilities: [
+            "n8n, Make & Zapier workflow design",
+            "Lead capture & CRM automation",
+            "Email sequences & client onboarding",
+            "Invoice & payment automation",
+        ],
+    },
 ];
 
 function SolutionCard({
@@ -65,11 +110,13 @@ function SolutionCard({
     solution: (typeof solutions)[0];
     index: number;
 }) {
+    const offset = index % 3;
     return (
         <Link href={solution.href} className="block group">
             <div
-                className={`card-glow rounded-lg bg-[var(--color-bg-surface)] p-8 lg:p-10 transition-all duration-300 ${index === 1 ? "lg:ml-12" : index === 2 ? "lg:ml-24" : ""
-                    }`}
+                className={`card-glow rounded-lg bg-[var(--color-bg-surface)] p-8 lg:p-10 transition-all duration-300 ${
+                    offset === 1 ? "lg:ml-12" : offset === 2 ? "lg:ml-24" : ""
+                }`}
             >
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Left column */}
@@ -123,23 +170,23 @@ export default function SolutionsPage() {
             <section className="max-w-7xl mx-auto px-6 mb-20">
                 <PageTransition>
                     <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                        Engineering Solutions
+                        What We Do
                     </p>
                 </PageTransition>
                 <PageTransition delay={0.1}>
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
-                        Three problems.
+                        Six disciplines.
                         <br />
                         <span className="text-[var(--color-text-secondary)]">
-                            Three engineering solutions.
+                            One engineering studio.
                         </span>
                     </h1>
                 </PageTransition>
                 <PageTransition delay={0.2}>
                     <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        We don&apos;t sell software. We engineer the infrastructure,
-                        controls, and automation that make your organization
-                        audit-ready, incident-resilient, and operationally sharp.
+                        From SOC2 compliance to mobile apps to business automation —
+                        we engineer the systems that help startups, small businesses,
+                        and creators operate smarter and grow faster.
                     </p>
                 </PageTransition>
             </section>
@@ -165,11 +212,11 @@ export default function SolutionsPage() {
                             Not sure which solution fits?
                         </h2>
                         <p className="text-[var(--color-text-secondary)] max-w-lg mx-auto mb-8">
-                            Book a 30-minute assessment call. We&apos;ll map your current
-                            security posture and recommend next steps — no strings.
+                            Book a 30-minute call. We&apos;ll understand your goals and
+                            recommend the right approach — no pressure, no strings.
                         </p>
                         <Button variant="primary" size="lg" href="/contact">
-                            Book a Free Assessment
+                            Book a Free Consultation
                             <ArrowRight size={18} />
                         </Button>
                     </div>
