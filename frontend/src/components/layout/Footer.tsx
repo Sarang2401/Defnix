@@ -1,4 +1,4 @@
-"use client";
+ï»¿"use client";
 
 import Link from "next/link";
 import { useState } from "react";
@@ -13,8 +13,8 @@ const footerSections = [
       { href: "/solutions/ai-soc-analyst", label: "AI SOC" },
       { href: "/solutions/website-development", label: "Web Development" },
       { href: "/solutions/mobile-development", label: "Mobile Apps" },
-      { href: "/solutions/business-automation", label: "Automation" },
-    ],
+      { href: "/solutions/business-automation", label: "Automation" }
+    ]
   },
   {
     title: "Company",
@@ -22,9 +22,9 @@ const footerSections = [
       { href: "/case-studies", label: "Case Studies" },
       { href: "/blog", label: "Engineering Insights" },
       { href: "/about", label: "About" },
-      { href: "/contact", label: "Contact" },
-    ],
-  },
+      { href: "/contact", label: "Contact" }
+    ]
+  }
 ];
 
 export function Footer() {
@@ -39,7 +39,7 @@ export function Footer() {
       await fetch(`${apiUrl}/newsletter/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email })
       });
       setSubscribed(true);
       setEmail("");
@@ -112,7 +112,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 border-t border-[rgba(159,176,200,0.18)] pt-5 text-xs text-[var(--color-text-muted)]">
-          © {new Date().getFullYear()} Defnix. Built for conversion, speed, and trust.
+          (c) {new Date().getFullYear()} Defnix. Built for conversion, speed, and trust.
         </div>
       </div>
     </footer>
