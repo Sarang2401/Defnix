@@ -76,15 +76,27 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Defnix",
+    url: "https://defnix.in",
+    sameAs: ["https://www.linkedin.com"],
+    description: "Engineering studio for SOC2 compliance, cloud security, and automation.",
+  };
+
   return (
     <html
       lang="en"
       className={`${sora.variable} ${dmSans.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );
 }
-
