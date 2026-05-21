@@ -94,6 +94,28 @@ export default function AboutPage() {
                 </PageTransition>
             </section>
 
+            <section className="max-w-4xl mx-auto px-6 mb-24">
+                <PageTransition>
+                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
+                        Founders
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        {[
+                            { name: "Founder 1", role: "Security Engineer" },
+                            { name: "Founder 2", role: "Cloud & Product Engineer" },
+                        ].map((founder) => (
+                            <div key={founder.name} className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-6">
+                                <div className="h-36 rounded bg-[var(--color-bg-primary)] border border-[var(--color-border)] mb-4 flex items-center justify-center text-xs text-[var(--color-text-muted)]">
+                                    Add real founder photo
+                                </div>
+                                <h3 className="text-lg text-[var(--color-text-primary)]">{founder.name}</h3>
+                                <p className="text-sm text-[var(--color-text-secondary)]">{founder.role}</p>
+                            </div>
+                        ))}
+                    </div>
+                </PageTransition>
+            </section>
+
             {/* Values */}
             <section className="max-w-4xl mx-auto px-6 mb-24">
                 <PageTransition>
