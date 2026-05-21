@@ -199,6 +199,7 @@ function CompactPost({ post }: { post: BlogPost }) {
 
 export default async function BlogPage() {
     const posts = await getPosts();
+    const categories = ["All", ...new Set(posts.flatMap((post) => post.tags).slice(0, 6))];
 
     // First post is featured, rest are secondary
     const featured = posts[0] ? { ...posts[0], featured: true } : null;
@@ -233,6 +234,16 @@ export default async function BlogPage() {
 
             {/* Editorial layout: featured + secondary */}
             <section className="max-w-7xl mx-auto px-6">
+                <div className="mb-8 flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                        <span
+                            key={category}
+                            className="rounded border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)]"
+                        >
+                            {category}
+                        </span>
+                    ))}
+                </div>
                 {/* Featured post */}
                 {featured && (
                     <PageTransition className="mb-8">
@@ -246,6 +257,19 @@ export default async function BlogPage() {
                         <CompactPost key={post.slug} post={post} />
                     ))}
                 </StaggerContainer>
+
+                <PageTransition delay={0.2}>
+                    <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-6">
+                        <h3 className="text-lg text-[var(--color-text-primary)] mb-2">Get engineering insights - no spam</h3>
+                        <p className="text-sm text-[var(--color-text-secondary)]">Subscribe from the contact page and we will share practical security, cloud, and automation playbooks.</p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                            <Link href="/blog/pillars/soc2-compliance" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">SOC2 Pillar</Link>
+                            <Link href="/blog/pillars/cloud-security-for-startups" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Cloud Pillar</Link>
+                            <Link href="/blog/pillars/business-automation" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Automation Pillar</Link>
+                            <Link href="/blog/pillars/website-development-small-business" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Website Pillar</Link>
+                        </div>
+                    </div>
+                </PageTransition>
             </section>
         </div>
     );
