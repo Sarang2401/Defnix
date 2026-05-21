@@ -1,59 +1,29 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
 import { ArrowRight } from "lucide-react";
-import { TextReveal } from "../ui/TextReveal";
 
 export function CTASection() {
-    return (
-        <section className="section-gap relative">
-            <div className="max-w-7xl mx-auto px-6">
-                <motion.div
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.8 }}
-                    className="relative rounded-2xl overflow-hidden"
-                >
-                    {/* Animated gradient background */}
-                    <div className="absolute inset-0 cta-gradient-bg" />
-
-                    {/* Animated border */}
-                    <div className="absolute inset-0 rounded-2xl animated-border" />
-
-                    {/* Content */}
-                    <div className="relative z-10 glass-card rounded-2xl p-12 lg:p-20 text-center border-0">
-                        <TextReveal
-                            as="h2"
-                            className="text-3xl sm:text-4xl lg:text-5xl text-[var(--color-text-primary)] mb-6"
-                        >
-                            Ready to build something great?
-                        </TextReveal>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                            className="text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto mb-10"
-                        >
-                            Whether it&apos;s SOC2 compliance, a website for your cafe, a booking app,
-                            or automating your workflows — book a free consultation and let&apos;s talk.
-                        </motion.p>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.4 }}
-                        >
-                            <Button variant="primary" size="lg" href="/contact">
-                                Book a Consultation
-                                <ArrowRight size={18} />
-                            </Button>
-                        </motion.div>
-                    </div>
-                </motion.div>
-            </div>
-        </section>
-    );
+  return (
+    <section className="section-gap">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="relative overflow-hidden rounded-2xl border border-[rgba(159,176,200,0.22)] bg-[linear-gradient(120deg,rgba(17,213,255,0.12),rgba(6,9,15,0.9)_45%,rgba(17,213,255,0.08))] p-10 text-center lg:p-16">
+          <p className="mb-3 font-[var(--font-mono)] text-xs uppercase tracking-[0.2em] text-[var(--color-accent)]">Final Step</p>
+          <h2 className="mb-4 text-3xl sm:text-4xl lg:text-5xl">Ready to turn this quarter into momentum?</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-[var(--color-text-secondary)]">
+            Book your free consultation and get a practical execution plan for security, product delivery, and automation wins.
+          </p>
+          <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Button variant="primary" size="lg" href="/contact">
+              Book Free Consultation
+              <ArrowRight size={18} />
+            </Button>
+            <Button variant="outline" size="lg" href="/case-studies">
+              View Case Studies
+            </Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }

@@ -102,7 +102,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                                     onClick={onClose}
                                     className="block w-full text-center py-4 rounded border border-[var(--color-accent)] text-[var(--color-accent)] font-[var(--font-heading)] font-semibold text-lg hover:bg-[var(--color-accent-dim)] transition-colors"
                                 >
-                                    Book a Consultation
+                                    Book Free Consultation
                                 </Link>
                             </motion.div>
                         </div>

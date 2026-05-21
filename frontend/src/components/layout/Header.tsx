@@ -7,111 +7,72 @@ import { Menu } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 
 const navLinks = [
-    { href: "/solutions", label: "Solutions" },
-    { href: "/blog", label: "Blog" },
-    { href: "/case-studies", label: "Case Studies" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+  { href: "/solutions", label: "Solutions" },
+  { href: "/case-studies", label: "Case Studies" },
+  { href: "/blog", label: "Insights" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
-    const [mobileOpen, setMobileOpen] = useState(false);
-    const { scrollY, scrollYProgress } = useScroll();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { scrollY, scrollYProgress } = useScroll();
 
-    // Shrink header
-    const headerHeight = useTransform(scrollY, [0, 100], [80, 52]);
-    const headerBg = useTransform(
-        scrollY,
-        [0, 50],
-        ["rgba(10, 15, 28, 0)", "rgba(10, 15, 28, 0.7)"]
-    );
-    const headerBlur = useTransform(scrollY, [0, 50], [0, 20]);
+  const headerHeight = useTransform(scrollY, [0, 90], [84, 60]);
+  const headerBg = useTransform(scrollY, [0, 50], ["rgba(6,9,15,0.3)", "rgba(6,9,15,0.9)"]);
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-    // Scroll progress bar
-    const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
-    // Lock body scroll when mobile nav is open
-    useEffect(() => {
-        document.body.style.overflow = mobileOpen ? "hidden" : "";
-        return () => {
-            document.body.style.overflow = "";
-        };
-    }, [mobileOpen]);
+  return (
+    <>
+      <motion.div style={{ scaleX }} className="scroll-progress" />
 
-    return (
-        <>
-            {/* Scroll progress bar */}
-            <motion.div
-                style={{ scaleX }}
-                className="scroll-progress"
-            />
+      <motion.header
+        style={{ height: headerHeight, backgroundColor: headerBg }}
+        className="fixed left-0 right-0 top-0 z-50 border-b border-[rgba(159,176,200,0.2)] backdrop-blur-xl"
+      >
+        <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
+          <Link href="/" className="group flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded border border-[rgba(17,213,255,0.45)] bg-[rgba(17,213,255,0.09)] text-sm font-bold text-[var(--color-accent)]">
+              DX
+            </div>
+            <span className="font-[var(--font-display)] text-xl font-bold tracking-tight text-[var(--color-text-primary)]">Defnix</span>
+          </Link>
 
-            <motion.header
-                style={{
-                    height: headerHeight,
-                    backgroundColor: headerBg,
-                    backdropFilter: useTransform(headerBlur, (v) => `blur(${v}px)`),
-                    WebkitBackdropFilter: useTransform(headerBlur, (v) => `blur(${v}px)`),
-                }}
-                className="fixed top-0 left-0 right-0 z-50 border-b border-[rgba(30,41,59,0.5)] transition-colors"
+          <nav className="hidden items-center gap-8 lg:flex">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="nav-link text-sm tracking-wide text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="hidden items-center gap-4 lg:flex">
+            <Link
+              href="/contact"
+              className="btn-trace rounded border border-[var(--color-accent)] px-5 py-2 text-sm font-semibold text-[var(--color-accent)] hover:bg-[var(--color-accent-dim)]"
             >
-                <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2 group">
-                        <motion.div
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
-                            className="w-8 h-8 rounded bg-[var(--color-accent)] flex items-center justify-center"
-                        >
-                            <span className="font-[var(--font-display)] text-[var(--color-bg-primary)] font-bold text-sm">
-                                D
-                            </span>
-                        </motion.div>
-                        <span className="font-[var(--font-display)] text-[var(--color-text-primary)] font-bold text-xl tracking-tight">
-                            defnix
-                        </span>
-                    </Link>
+              Book Free Consultation
+            </Link>
+          </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden lg:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link
-                                key={link.href}
-                                href={link.href}
-                                className="nav-link font-[var(--font-body)] text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200 tracking-wide"
-                            >
-                                {link.label}
-                            </Link>
-                        ))}
-                    </nav>
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] lg:hidden"
+            aria-label="Open menu"
+          >
+            <Menu size={24} />
+          </button>
+        </div>
+      </motion.header>
 
-                    {/* Desktop CTA */}
-                    <div className="hidden lg:flex items-center gap-4">
-                        <Link
-                            href="/contact"
-                            className="btn-trace px-5 py-2 rounded text-sm font-[var(--font-heading)] font-semibold text-[var(--color-accent)] border border-[var(--color-accent)] hover:bg-[var(--color-accent-dim)] transition-colors duration-200"
-                        >
-                            Book a Consultation
-                        </Link>
-                    </div>
-
-                    {/* Mobile Menu Toggle */}
-                    <button
-                        onClick={() => setMobileOpen(true)}
-                        className="lg:hidden p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-                        aria-label="Open menu"
-                    >
-                        <Menu size={24} />
-                    </button>
-                </div>
-            </motion.header>
-
-            {/* Mobile Navigation Overlay */}
-            <MobileNav
-                isOpen={mobileOpen}
-                onClose={() => setMobileOpen(false)}
-                links={navLinks}
-            />
-        </>
-    );
+      <MobileNav isOpen={mobileOpen} onClose={() => setMobileOpen(false)} links={navLinks} />
+    </>
+  );
 }

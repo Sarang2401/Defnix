@@ -2,183 +2,119 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { Marquee } from "../ui/Marquee";
 
 const footerSections = [
-    {
-        title: "Solutions",
-        links: [
-            { href: "/solutions/soc2-failure-prevention", label: "SOC2 Failure Prevention" },
-            { href: "/solutions/cloud-insurance", label: "Cloud Insurance" },
-            { href: "/solutions/ai-soc-analyst", label: "AI SOC Analyst" },
-            { href: "/solutions/website-development", label: "Website Development" },
-            { href: "/solutions/mobile-development", label: "Mobile App Development" },
-            { href: "/solutions/business-automation", label: "Business Automation" },
-        ],
-    },
-    {
-        title: "Resources",
-        links: [
-            { href: "/blog", label: "Blog" },
-            { href: "/case-studies", label: "Case Studies" },
-            { href: "/about", label: "About Us" },
-        ],
-    },
-    {
-        title: "Legal",
-        links: [
-            { href: "/privacy-policy", label: "Privacy Policy" },
-            { href: "/terms-of-service", label: "Terms of Service" },
-            { href: "/disclaimer", label: "Disclaimer" },
-        ],
-    },
+  {
+    title: "Solutions",
+    links: [
+      { href: "/solutions/soc2-failure-prevention", label: "SOC2 Readiness" },
+      { href: "/solutions/cloud-insurance", label: "Cloud Security" },
+      { href: "/solutions/ai-soc-analyst", label: "AI SOC" },
+      { href: "/solutions/website-development", label: "Web Development" },
+      { href: "/solutions/mobile-development", label: "Mobile Apps" },
+      { href: "/solutions/business-automation", label: "Automation" },
+    ],
+  },
+  {
+    title: "Company",
+    links: [
+      { href: "/case-studies", label: "Case Studies" },
+      { href: "/blog", label: "Engineering Insights" },
+      { href: "/about", label: "About" },
+      { href: "/contact", label: "Contact" },
+    ],
+  },
 ];
 
-const brandWords = ["Sophisticated", "Dynamic", "Elegant", "Modern", "Engineered", "Innovative"];
-
 export function Footer() {
-    const [email, setEmail] = useState("");
-    const [subscribed, setSubscribed] = useState(false);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
-    const handleSubscribe = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!email) return;
-        try {
-            const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
-            await fetch(`${apiUrl}/newsletter/subscribe`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email }),
-            });
-            setSubscribed(true);
-            setEmail("");
-        } catch {
-            // Silently fail — newsletter is non-critical
-        }
-    };
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+      await fetch(`${apiUrl}/newsletter/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      setSubscribed(true);
+      setEmail("");
+    } catch {
+      setSubscribed(false);
+    }
+  };
 
-    return (
-        <footer className="relative bg-[var(--color-bg-primary)]">
-            {/* Brand marquee above footer */}
-            <div className="py-8 overflow-hidden">
-                <Marquee speed={25} pauseOnHover={false}>
-                    {brandWords.map((word) => (
-                        <span
-                            key={word}
-                            className="font-[var(--font-display)] text-4xl lg:text-6xl font-bold text-[var(--color-border)] uppercase mx-8 whitespace-nowrap select-none"
-                        >
-                            {word}
-                            <span className="mx-8 text-[var(--color-accent)] opacity-20">✦</span>
-                        </span>
-                    ))}
-                </Marquee>
+  return (
+    <footer className="border-t border-[rgba(159,176,200,0.2)] bg-[rgba(6,9,15,0.85)]">
+      <div className="mx-auto max-w-7xl px-6 pb-9 pt-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <div className="mb-4 flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded border border-[rgba(17,213,255,0.45)] bg-[rgba(17,213,255,0.09)] text-sm font-bold text-[var(--color-accent)]">DX</div>
+              <span className="font-[var(--font-display)] text-xl font-bold">Defnix</span>
             </div>
+            <p className="mb-6 max-w-sm text-sm text-[var(--color-text-secondary)]">
+              We build secure digital infrastructure for startups and small businesses - from compliance systems to customer-facing products.
+            </p>
+            <Link href="/contact" className="mb-6 inline-flex items-center gap-2 rounded border border-[var(--color-accent)] px-4 py-2 text-sm text-[var(--color-accent)] hover:bg-[var(--color-accent-dim)]">
+              Book Free Consultation <ArrowRight size={14} />
+            </Link>
 
-            {/* Gradient divider */}
-            <div className="gradient-divider" />
-
-            <div className="max-w-7xl mx-auto px-6 pt-16 pb-8">
-                {/* Top grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
-                    {/* Brand column */}
-                    <div className="lg:col-span-2">
-                        <Link href="/" className="inline-flex items-center gap-2 mb-4">
-                            <div className="w-7 h-7 rounded bg-[var(--color-accent)] flex items-center justify-center">
-                                <span className="font-[var(--font-display)] text-[var(--color-bg-primary)] font-bold text-xs">
-                                    D
-                                </span>
-                            </div>
-                            <span className="font-[var(--font-display)] text-[var(--color-text-primary)] font-bold text-lg tracking-tight">
-                                defnix
-                            </span>
-                        </Link>
-                        <p className="text-sm text-[var(--color-text-secondary)] max-w-xs leading-relaxed mb-6">
-                            Engineering studio specializing in cloud security, compliance, AI automation,
-                            website development, and mobile apps — for startups and small businesses worldwide.
-                        </p>
-
-                        {/* Newsletter */}
-                        <div>
-                            <p className="text-xs font-[var(--font-heading)] font-semibold text-[var(--color-text-muted)] uppercase tracking-widest mb-3">
-                                Newsletter
-                            </p>
-                            {subscribed ? (
-                                <p className="text-sm text-[var(--color-success)]">
-                                    ✓ Subscribed successfully
-                                </p>
-                            ) : (
-                                <form onSubmit={handleSubscribe} className="flex gap-2">
-                                    <input
-                                        type="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="your@email.com"
-                                        className="flex-1 px-3 py-2 glass-card rounded text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
-                                        required
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="px-3 py-2 bg-[var(--color-accent)] text-[var(--color-bg-primary)] rounded hover:opacity-90 transition-opacity"
-                                        aria-label="Subscribe"
-                                    >
-                                        <ArrowRight size={16} />
-                                    </button>
-                                </form>
-                            )}
-                        </div>
-                    </div>
-
-                    {/* Link columns */}
-                    {footerSections.map((section) => (
-                        <div key={section.title}>
-                            <p className="text-xs font-[var(--font-heading)] font-semibold text-[var(--color-text-muted)] uppercase tracking-widest mb-4">
-                                {section.title}
-                            </p>
-                            <ul className="space-y-3">
-                                {section.links.map((link) => (
-                                    <li key={link.href}>
-                                        <Link
-                                            href={link.href}
-                                            className="link-hover-slide text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors duration-200"
-                                        >
-                                            {link.label}
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Bottom bar */}
-                <div className="mt-16 pt-6 border-t border-[rgba(30,41,59,0.5)] flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <p className="text-xs text-[var(--color-text-muted)]">
-                        © {new Date().getFullYear()} Defnix. All rights reserved.
-                    </p>
-                    <div className="flex items-center gap-6">
-                        <Link
-                            href="/privacy-policy"
-                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
-                        >
-                            Privacy
-                        </Link>
-                        <Link
-                            href="/terms-of-service"
-                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
-                        >
-                            Terms
-                        </Link>
-                        <Link
-                            href="/contact"
-                            className="link-hover-slide text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
-                        >
-                            Contact
-                        </Link>
-                    </div>
-                </div>
+            <div>
+              <p className="mb-2 text-xs uppercase tracking-[0.18em] text-[var(--color-text-muted)]">No-spam updates</p>
+              {subscribed ? (
+                <p className="text-sm text-[var(--color-success)]">Subscribed successfully.</p>
+              ) : (
+                <form onSubmit={handleSubscribe} className="flex max-w-sm gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="founder@company.com"
+                    className="flex-1 rounded border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-3 py-2 text-sm text-[var(--color-text-primary)]"
+                  />
+                  <button type="submit" className="rounded bg-[var(--color-accent)] px-3 text-[var(--color-bg-primary)]">
+                    <ArrowRight size={14} />
+                  </button>
+                </form>
+              )}
             </div>
-        </footer>
-    );
+          </div>
+
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)]">{section.title}</p>
+              <ul className="space-y-2.5">
+                {section.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          <div>
+            <p className="mb-3 text-xs uppercase tracking-[0.16em] text-[var(--color-text-muted)]">Trust</p>
+            <ul className="space-y-2.5 text-sm text-[var(--color-text-secondary)]">
+              <li>Fast response within 24h</li>
+              <li>Clear fixed-scope milestones</li>
+              <li>Execution-first delivery model</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-12 border-t border-[rgba(159,176,200,0.18)] pt-5 text-xs text-[var(--color-text-muted)]">
+          � {new Date().getFullYear()} Defnix. Built for conversion, speed, and trust.
+        </div>
+      </div>
+    </footer>
+  );
 }

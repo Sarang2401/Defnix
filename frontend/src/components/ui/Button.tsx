@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ReactNode, useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 type ButtonVariant = "primary" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
@@ -27,7 +27,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
     primary:
-        "bg-[var(--color-accent)] text-[var(--color-bg-primary)] font-semibold hover:shadow-[0_0_30px_rgba(0,212,255,0.3)]",
+        "bg-[var(--color-accent)] text-[var(--color-bg-primary)] font-semibold hover:shadow-[0_14px_38px_rgba(17,213,255,0.34)]",
     outline:
         "btn-trace border border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[var(--color-accent-dim)]",
     ghost:
