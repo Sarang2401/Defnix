@@ -174,19 +174,22 @@ export default async function CaseStudiesPage() {
                 </PageTransition>
                 <PageTransition delay={0.1}>
                     <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
-                        Real results.
-                        <br />
-                        <span className="text-[var(--color-text-secondary)]">
-                            Real engineering.
-                        </span>
+                        Proof, not promises.
                     </h1>
                 </PageTransition>
                 <PageTransition delay={0.2}>
                     <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        Detailed breakdowns of how we&apos;ve helped organizations
-                        achieve compliance, build resilience, and automate security
-                        operations.
+                        Delivery stories across security, web, mobile, and automation projects.
                     </p>
+                </PageTransition>
+                <PageTransition delay={0.3}>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                        {["All", "Security", "Web", "Mobile", "Automation"].map((filter) => (
+                            <span key={filter} className="rounded border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)]">
+                                {filter}
+                            </span>
+                        ))}
+                    </div>
                 </PageTransition>
             </section>
 
