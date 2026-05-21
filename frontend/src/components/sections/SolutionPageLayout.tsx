@@ -163,6 +163,31 @@ export function SolutionPageLayout({
             {/* CTA */}
             <section className="max-w-4xl mx-auto px-6 mt-20">
                 <PageTransition>
+                    <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-8 lg:p-10">
+                        <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-wider uppercase mb-4">
+                            Engagement Options
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="rounded border border-[var(--color-border)] p-4">
+                                <h3 className="text-base text-[var(--color-text-primary)] mb-1">Starter Sprint</h3>
+                                <p className="text-sm text-[var(--color-text-secondary)]">2-week scoped assessment and roadmap.</p>
+                            </div>
+                            <div className="rounded border border-[var(--color-border)] p-4">
+                                <h3 className="text-base text-[var(--color-text-primary)] mb-1">Implementation</h3>
+                                <p className="text-sm text-[var(--color-text-secondary)]">4-8 week build focused on controls and delivery outcomes.</p>
+                            </div>
+                            <div className="rounded border border-[var(--color-border)] p-4">
+                                <h3 className="text-base text-[var(--color-text-primary)] mb-1">Ongoing Support</h3>
+                                <p className="text-sm text-[var(--color-text-secondary)]">Monthly hardening, monitoring, and optimization.</p>
+                            </div>
+                        </div>
+                    </div>
+                </PageTransition>
+            </section>
+
+            {/* CTA */}
+            <section className="max-w-4xl mx-auto px-6 mt-20">
+                <PageTransition>
                     <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-10 lg:p-14 text-center">
                         <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4">
                             Ready to get started?
@@ -171,7 +196,7 @@ export function SolutionPageLayout({
                             Book a no-obligation consultation call. We&apos;ll assess your current posture and outline a clear path forward.
                         </p>
                         <Button variant="primary" size="lg" href="/contact">
-                            Book a Consultation
+                            Book Free Consultation
                             <ArrowRight size={18} />
                         </Button>
                     </div>

@@ -216,7 +216,7 @@ export default function SolutionsPage() {
                             recommend the right approach — no pressure, no strings.
                         </p>
                         <Button variant="primary" size="lg" href="/contact">
-                            Book a Free Consultation
+                            Book Free Consultation
                             <ArrowRight size={18} />
                         </Button>
                     </div>
