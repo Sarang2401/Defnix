@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { PageTransition } from "../ui/PageTransition";
+import { TiltCard } from "../ui/TiltCard";
 
 const studies = [
   {
@@ -46,11 +47,13 @@ export function PortfolioPreviewSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
           {studies.map((study, index) => (
             <PageTransition key={study.title} delay={index * 0.06}>
-              <article className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-6 h-full">
-                <span className="font-[var(--font-mono)] text-[10px] uppercase tracking-wider text-[var(--color-accent)]">{study.service}</span>
-                <h3 className="text-base text-[var(--color-text-primary)] mt-3 mb-3 leading-snug">{study.title}</h3>
-                <p className="text-sm text-[var(--color-text-secondary)]">{study.metric}</p>
-              </article>
+              <TiltCard tiltAmount={6} className="h-full block">
+                <article className="card-glow rounded-xl bg-[rgba(9,9,11,0.7)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl p-6 h-full flex flex-col justify-between hover:border-[rgba(255,255,255,0.15)] transition-colors">
+                  <span className="font-[var(--font-mono)] text-[10px] uppercase tracking-wider text-[var(--color-accent-secondary)]">{study.service}</span>
+                  <h3 className="text-base text-[var(--color-text-primary)] mt-3 mb-3 leading-snug">{study.title}</h3>
+                  <p className="text-sm text-[var(--color-text-secondary)]">{study.metric}</p>
+                </article>
+              </TiltCard>
             </PageTransition>
           ))}
         </div>

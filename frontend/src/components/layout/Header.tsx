@@ -18,8 +18,9 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { scrollY, scrollYProgress } = useScroll();
 
-  const headerHeight = useTransform(scrollY, [0, 90], [84, 60]);
-  const headerBg = useTransform(scrollY, [0, 50], ["rgba(6,9,15,0.3)", "rgba(6,9,15,0.9)"]);
+  const headerHeight = useTransform(scrollY, [0, 90], [90, 70]);
+  const headerBg = useTransform(scrollY, [0, 50], ["rgba(10, 10, 12, 0.4)", "rgba(10, 10, 12, 0.95)"]);
+  const headerBorder = useTransform(scrollY, [0, 50], ["rgba(255,255,255,0)", "rgba(255,255,255,0.05)"]);
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   useEffect(() => {
@@ -31,23 +32,23 @@ export function Header() {
 
   return (
     <>
-      <motion.div style={{ scaleX }} className="scroll-progress" />
+      <motion.div style={{ scaleX }} className="scroll-progress bg-[var(--color-accent)] shadow-[0_0_10px_var(--color-accent)]" />
 
       <motion.header
-        style={{ height: headerHeight, backgroundColor: headerBg }}
-        className="fixed left-0 right-0 top-0 z-50 border-b border-[rgba(159,176,200,0.2)] backdrop-blur-xl"
+        style={{ height: headerHeight, backgroundColor: headerBg, borderBottomColor: headerBorder }}
+        className="fixed left-0 right-0 top-0 z-50 border-b backdrop-blur-2xl transition-colors duration-300"
       >
         <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded border border-[rgba(17,213,255,0.45)] bg-[rgba(17,213,255,0.09)] text-sm font-bold text-[var(--color-accent)]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[var(--color-accent)] text-sm font-bold text-white shadow-md">
               DX
             </div>
-            <span className="font-[var(--font-display)] text-xl font-bold tracking-tight text-[var(--color-text-primary)]">Defnix</span>
+            <span className="font-[var(--font-display)] text-2xl font-bold tracking-tight text-white">Defnix</span>
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="nav-link text-sm tracking-wide text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+              <Link key={link.href} href={link.href} className="nav-link text-sm font-medium tracking-wide text-[var(--color-text-secondary)] hover:text-white">
                 {link.label}
               </Link>
             ))}
@@ -56,18 +57,19 @@ export function Header() {
           <div className="hidden items-center gap-4 lg:flex">
             <Link
               href="/contact"
-              className="btn-trace rounded border border-[var(--color-accent)] px-5 py-2 text-sm font-semibold text-[var(--color-accent)] hover:bg-[var(--color-accent-dim)]"
+              className="group relative flex items-center justify-center overflow-hidden rounded-md bg-[var(--color-accent)] px-6 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
             >
-              Book Free Consultation
+              <span className="relative z-10">Book Consultation</span>
+              <div className="absolute inset-0 z-0 bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent-secondary)] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </Link>
           </div>
 
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] lg:hidden"
+            className="p-2 text-[var(--color-text-secondary)] hover:text-white lg:hidden"
             aria-label="Open menu"
           >
-            <Menu size={24} />
+            <Menu size={28} />
           </button>
         </div>
       </motion.header>

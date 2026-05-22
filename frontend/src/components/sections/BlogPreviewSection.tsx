@@ -12,6 +12,7 @@ interface BlogPost {
     category: string;
     readingTime: number;
     date: string;
+    image: string;
 }
 
 // Placeholder posts — will be replaced with API data
@@ -24,6 +25,7 @@ const samplePosts: BlogPost[] = [
         category: "SOC2 Compliance",
         readingTime: 8,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&w=1200&q=80",
     },
     {
         slug: "cloud-insurance-engineering-discipline",
@@ -33,6 +35,7 @@ const samplePosts: BlogPost[] = [
         category: "Cloud Security",
         readingTime: 7,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
     },
     {
         slug: "ai-augmented-soc-analyst",
@@ -42,6 +45,7 @@ const samplePosts: BlogPost[] = [
         category: "AI & Automation",
         readingTime: 9,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
     },
 ];
 
@@ -86,35 +90,37 @@ export function BlogPreviewSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="lg:col-span-3"
                     >
-                        <TiltCard tiltAmount={4}>
+                        <TiltCard tiltAmount={4} className="h-full block">
                             <Link
                                 href={`/blog/${featured.slug}`}
-                                className="block rounded-xl glass-card p-8 h-full group relative overflow-hidden"
+                                className="block rounded-2xl p-14 h-full group relative overflow-hidden min-h-[450px] flex flex-col justify-end shadow-lg"
                             >
-                                {/* Gradient accent bar */}
-                                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[var(--color-accent)] via-[#7C3AED] to-[#EC4899] opacity-60" />
+                                <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.9)] via-[rgba(0,0,0,0.4)] to-transparent" />
 
-                                <p className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent)] tracking-wider uppercase mb-4 mt-2">
-                                    {featured.category}
-                                </p>
-                                <h3 className="text-xl lg:text-2xl text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors mb-4 leading-tight">
-                                    {featured.title}
-                                </h3>
-                                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed mb-6">
-                                    {featured.excerpt}
-                                </p>
-                                <div className="flex items-center gap-4 text-xs text-[var(--color-text-muted)]">
-                                    <span>{featured.date}</span>
-                                    <span className="flex items-center gap-1">
-                                        <Clock size={12} /> {featured.readingTime} min read
-                                    </span>
+                                <div className="relative z-10">
+                                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent-secondary)] tracking-wider uppercase mb-6 mt-2">
+                                        {featured.category}
+                                    </p>
+                                    <h3 className="text-3xl lg:text-5xl font-semibold text-white group-hover:text-blue-200 transition-colors mb-6 leading-[1.1]">
+                                        {featured.title}
+                                    </h3>
+                                    <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                                        {featured.excerpt}
+                                    </p>
+                                    <div className="flex items-center gap-6 text-sm text-gray-400 font-medium">
+                                        <span>{featured.date}</span>
+                                        <span className="flex items-center gap-2">
+                                            <Clock size={16} /> {featured.readingTime} min read
+                                        </span>
+                                    </div>
                                 </div>
                             </Link>
                         </TiltCard>
                     </motion.div>
 
                     {/* Secondary posts */}
-                    <div className="lg:col-span-2 flex flex-col gap-4">
+                    <div className="lg:col-span-2 flex flex-col gap-6">
                         {secondary.map((post, i) => (
                             <motion.div
                                 key={post.slug}
@@ -122,23 +128,29 @@ export function BlogPreviewSection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+                                className="flex-1"
                             >
-                                <TiltCard tiltAmount={3}>
+                                <TiltCard tiltAmount={3} className="h-full block">
                                     <Link
                                         href={`/blog/${post.slug}`}
-                                        className="block rounded-xl glass-card p-6 group"
+                                        className="block rounded-2xl glass-card bg-[rgba(10,10,12,0.7)] backdrop-blur-xl border border-[var(--color-border)] hover:border-[var(--color-accent)] shadow-xl group h-full flex flex-col overflow-hidden transition-colors"
                                     >
-                                        <p className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent)] tracking-wider uppercase mb-2">
-                                            {post.category}
-                                        </p>
-                                        <h4 className="text-base text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors mb-2 leading-snug">
-                                            {post.title}
-                                        </h4>
-                                        <div className="flex items-center gap-4 text-xs text-[var(--color-text-muted)]">
-                                            <span>{post.date}</span>
-                                            <span className="flex items-center gap-1">
-                                                <Clock size={12} /> {post.readingTime} min
-                                            </span>
+                                        <div className="h-44 overflow-hidden relative">
+                                            <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                                        </div>
+                                        <div className="p-8 flex flex-col flex-1">
+                                            <p className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent-secondary)] tracking-wider uppercase mb-3">
+                                                {post.category}
+                                            </p>
+                                            <h4 className="text-xl text-[var(--color-text-primary)] font-semibold group-hover:text-[var(--color-accent)] transition-colors mb-4 leading-snug">
+                                                {post.title}
+                                            </h4>
+                                            <div className="flex items-center gap-4 text-xs text-[var(--color-text-muted)] mt-auto font-medium">
+                                                <span>{post.date}</span>
+                                                <span className="flex items-center gap-1.5">
+                                                    <Clock size={14} /> {post.readingTime} min
+                                                </span>
+                                            </div>
                                         </div>
                                     </Link>
                                 </TiltCard>

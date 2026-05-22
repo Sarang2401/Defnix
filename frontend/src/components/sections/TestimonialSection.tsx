@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
-import { Marquee } from "../ui/Marquee";
 
 interface Testimonial {
     quote: string;
@@ -42,40 +41,16 @@ const testimonials: Testimonial[] = [
     },
 ];
 
-function TestimonialCard({ item }: { item: Testimonial }) {
-    return (
-        <div className="flex-shrink-0 w-[400px] md:w-[450px]">
-            <div className="glass-card rounded-xl p-8 h-full flex flex-col mx-3 group hover:border-[rgba(0,212,255,0.3)] transition-all duration-400">
-                <Quote
-                    size={24}
-                    className="text-[var(--color-accent)] opacity-30 mb-4 group-hover:opacity-60 transition-opacity"
-                />
-                <p className="text-[var(--color-text-secondary)] leading-relaxed flex-1 mb-6 text-sm">
-                    &ldquo;{item.quote}&rdquo;
-                </p>
-                <div className="border-t border-[rgba(0,212,255,0.1)] pt-4">
-                    <p className="text-sm text-[var(--color-text-primary)] font-medium">
-                        {item.name}
-                    </p>
-                    <p className="text-xs text-[var(--color-text-muted)]">
-                        {item.title}, {item.company}
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export function TestimonialSection() {
     return (
-        <section className="section-gap overflow-hidden">
-            <div className="max-w-7xl mx-auto px-6 mb-12">
+        <section className="section-gap relative" id="testimonials">
+            <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-24">
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4"
+                    className="font-[var(--font-mono)] text-xs text-[var(--color-accent-secondary)] tracking-[0.2em] uppercase mb-4"
                 >
                     Client Feedback
                 </motion.p>
@@ -84,26 +59,60 @@ export function TestimonialSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-3xl sm:text-4xl text-[var(--color-text-primary)]"
+                    className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)]"
                 >
-                    What clients say
+                    Proof of execution.
                 </motion.h2>
             </div>
 
-            {/* Auto-scrolling testimonial carousel */}
-            <Marquee speed={50} pauseOnHover={true}>
-                {testimonials.map((item) => (
-                    <TestimonialCard key={item.company} item={item} />
-                ))}
-            </Marquee>
-
-            {/* Second row scrolling opposite direction */}
-            <div className="mt-6">
-                <Marquee speed={45} direction="right" pauseOnHover={true}>
-                    {[...testimonials].reverse().map((item) => (
-                        <TestimonialCard key={`rev-${item.company}`} item={item} />
-                    ))}
-                </Marquee>
+            <div className="max-w-5xl mx-auto px-6 pb-32">
+                {testimonials.map((item, index) => {
+                    // Stacking calculations
+                    const topOffset = `calc(120px + ${index * 30}px)`;
+                    const zIndex = index;
+                    
+                    return (
+                        <motion.div
+                            key={index}
+                            className="sticky"
+                            style={{ top: topOffset, zIndex }}
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                        >
+                            <div className="glass-card rounded-3xl p-10 sm:p-16 mb-12 sm:mb-16 border border-[var(--color-border)] bg-[rgba(10,10,12,0.95)] shadow-xl hover:border-[var(--color-accent)] transition-all duration-500">
+                                <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-start">
+                                    <div className="flex-shrink-0">
+                                        <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-[var(--color-accent-dim)] bg-[var(--color-accent-dim)] text-[var(--color-accent)] shadow-sm">
+                                            <Quote size={36} />
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex-1">
+                                        <p className="text-[var(--color-text-primary)] text-2xl sm:text-3xl md:text-4xl leading-[1.3] md:leading-[1.3] mb-12 font-[var(--font-display)] font-medium">
+                                            &ldquo;{item.quote}&rdquo;
+                                        </p>
+                                        
+                                        <div className="flex items-center justify-between border-t border-[var(--color-border)] pt-8">
+                                            <div>
+                                                <p className="text-lg text-[var(--color-text-primary)] font-semibold mb-1">
+                                                    {item.name}
+                                                </p>
+                                                <p className="text-base text-[var(--color-text-secondary)]">
+                                                    {item.title}, {item.company}
+                                                </p>
+                                            </div>
+                                            <div className="hidden sm:block text-[var(--color-accent-secondary)] font-[var(--font-mono)] text-sm uppercase tracking-widest">
+                                                0{index + 1}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    );
+                })}
             </div>
         </section>
     );

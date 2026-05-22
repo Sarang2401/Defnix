@@ -5,35 +5,22 @@ import { motion } from "framer-motion";
 import { Button } from "../ui/Button";
 import { ArrowRight } from "lucide-react";
 
-const terminalLines = [
-  "SOC2 controls mapped and automated",
-  "Cloud hardening completed for production",
-  "Mobile booking app shipped in 6 weeks",
-  "n8n workflow cut onboarding time by 80%",
-];
 
-function TerminalMotif() {
-  const [line, setLine] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setLine((prev) => (prev + 1) % terminalLines.length);
-    }, 1800);
-    return () => clearInterval(t);
-  }, []);
-
-  return (
-    <div className="glass-card rounded-2xl p-6">
-      <p className="mb-4 font-[var(--font-mono)] text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Live Delivery Feed</p>
-      <p className="font-[var(--font-mono)] text-sm text-[var(--color-accent)]">&gt; {terminalLines[line]}</p>
-    </div>
-  );
-}
 
 export function HeroSection() {
   return (
-    <section className="relative flex min-h-screen items-center pt-24">
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-14 px-6 lg:grid-cols-2 lg:items-center">
+    <section className="relative flex min-h-screen items-center pt-24 overflow-hidden">
+      {/* Background Animated Tech Image */}
+      <motion.div
+        className="absolute inset-0 z-0 h-full w-full opacity-35 bg-cover bg-center origin-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80')" }}
+        animate={{ scale: [1, 1.05, 1] }}
+        transition={{ duration: 20, ease: "linear", repeat: Infinity }}
+      />
+      {/* Overlay to ensure text readability */}
+      <div className="absolute inset-0 z-0 bg-[var(--color-bg-primary)] opacity-60" />
+      
+      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-14 px-6 lg:grid-cols-2 lg:items-center relative z-10">
         <div>
           <motion.p
             initial={{ opacity: 0, y: 14 }}
@@ -52,7 +39,7 @@ export function HeroSection() {
           >
             Build once.
             <br />
-            <span className="gradient-text-cyan">Scale securely.</span>
+            <span className="text-[var(--color-text-secondary)]">Scale securely.</span>
           </motion.h1>
 
           <motion.p
@@ -94,14 +81,14 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.22 }}
-          className="space-y-4"
+          className="space-y-4 hidden lg:block"
         >
-          <TerminalMotif />
-          <div className="card-glow rounded-2xl bg-[var(--color-bg-surface)] p-6">
+          {/* We can place additional stats or trust badges here if needed */}
+          <div className="card-glow rounded-2xl bg-[var(--color-bg-surface)] p-6 shadow-xl border-t border-l border-white">
             <p className="mb-2 font-[var(--font-mono)] text-xs uppercase tracking-[0.2em] text-[var(--color-text-muted)]">Trusted Stack</p>
-            <div className="flex flex-wrap gap-2 text-xs text-[var(--color-text-secondary)]">
+            <div className="flex flex-wrap gap-2 text-xs text-[var(--color-text-secondary)] font-medium">
               {["AWS", "GCP", "Next.js", "React Native", "n8n", "Terraform"].map((tool) => (
-                <span key={tool} className="rounded border border-[var(--color-border)] px-2.5 py-1">{tool}</span>
+                <span key={tool} className="rounded-md border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-3 py-1.5">{tool}</span>
               ))}
             </div>
           </div>

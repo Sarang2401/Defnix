@@ -1,23 +1,23 @@
 import type { Metadata } from "next";
-import { Sora, DM_Sans, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
-const sora = Sora({
+const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const dmSans = DM_Sans({
+const inter = Inter({
   variable: "--font-heading",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700"],
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
+const interBody = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
@@ -88,7 +88,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${sora.variable} ${dmSans.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${inter.variable} ${interBody.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased">
         <script
