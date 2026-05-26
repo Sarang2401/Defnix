@@ -139,7 +139,7 @@ export function HeroSection() {
                 style={{
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.09)",
-                  backdropFilter: "blur(8px)",
+                  backdropFilter: "blur(8px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                 }}
               >
                 <span className="text-[var(--color-accent-secondary)]">{s.icon}</span>
@@ -161,7 +161,7 @@ export function HeroSection() {
             className="relative rounded-2xl overflow-hidden"
             style={{
               background: "rgba(255, 255, 255, 0.04)",
-              backdropFilter: "blur(24px)",
+              backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
               border: "1px solid rgba(255, 255, 255, 0.09)",
               boxShadow: "0 0 0 1px rgba(124,58,237,0.15) inset, 0 24px 80px -16px rgba(0,0,0,0.8), 0 0 60px -20px rgba(124,58,237,0.2)",
             }}
@@ -222,7 +222,7 @@ export function HeroSection() {
                 style={{
                   background: "rgba(255,255,255,0.04)",
                   border: "1px solid rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(12px)",
+                  backdropFilter: "blur(12px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                 }}
               >
                 <p className="text-xl font-bold font-[var(--font-display)]" style={{ color: m.color }}>{m.value}</p>

@@ -73,7 +73,7 @@ export function TestimonialSection() {
             className="shrink-0 flex items-center gap-3 rounded-2xl px-5 py-4"
             style={{
               background: "rgba(255,255,255,0.05)",
-              backdropFilter: "blur(16px)",
+              backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
               border: "1px solid rgba(255,255,255,0.09)",
             }}
           >
@@ -101,7 +101,7 @@ export function TestimonialSection() {
               className="group rounded-2xl p-8 flex flex-col transition-all duration-400"
               style={{
                 background: "rgba(255,255,255,0.04)",
-                backdropFilter: "blur(20px)",
+                backdropFilter: "blur(20px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                 border: "1px solid rgba(255,255,255,0.08)",
                 boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset",
               }}

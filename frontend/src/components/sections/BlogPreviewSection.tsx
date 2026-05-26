@@ -136,7 +136,7 @@ export function BlogPreviewSection() {
                                         className="block rounded-2xl group h-full flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
                                         style={{
                                           background: "rgba(255,255,255,0.04)",
-                                          backdropFilter: "blur(20px)",
+                                          backdropFilter: "blur(20px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                                           border: "1px solid rgba(255,255,255,0.08)",
                                         }}
                                     >

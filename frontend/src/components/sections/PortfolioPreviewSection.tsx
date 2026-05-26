@@ -76,7 +76,7 @@ export function PortfolioPreviewSection() {
                 className="group rounded-2xl p-6 h-full flex flex-col justify-between cursor-pointer transition-all duration-350"
                 style={{
                   background: "rgba(255,255,255,0.04)",
-                  backdropFilter: "blur(16px)",
+                  backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                   border: "1px solid rgba(255,255,255,0.08)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset",
                 }}

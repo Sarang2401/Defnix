@@ -162,7 +162,7 @@ export default function SolutionsPage() {
                                             "--hover-color": `${solution.color}40`,
                                             "--hover-shadow": `0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.8), 0 0 50px -15px ${solution.color}30`,
                                             background: "rgba(255, 255, 255, 0.03)",
-                                            backdropFilter: "blur(24px)",
+                                            backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                                             border: "1px solid rgba(255, 255, 255, 0.08)",
                                             boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset",
                                         } as React.CSSProperties}

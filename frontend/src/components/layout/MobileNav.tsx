@@ -32,7 +32,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
             className="fixed inset-x-4 top-4 z-[70] rounded-2xl overflow-hidden"
             style={{
               background: "rgba(8, 8, 16, 0.95)",
-              backdropFilter: "blur(24px)",
+              backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
               border: "1px solid rgba(255,255,255,0.1)",
               boxShadow: "0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(124,58,237,0.2)",
             }}

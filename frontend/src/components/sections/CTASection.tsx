@@ -16,7 +16,7 @@ export function CTASection() {
           className="relative overflow-hidden rounded-3xl text-center px-8 py-24 lg:px-20"
           style={{
             background: "rgba(255,255,255,0.04)",
-            backdropFilter: "blur(32px)",
+            backdropFilter: "blur(32px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
             border: "1px solid rgba(255,255,255,0.09)",
             boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 100px -30px rgba(0,0,0,0.8)",
           }}

@@ -80,7 +80,7 @@ export default function AboutPage() {
                     className="rounded-3xl p-10 lg:p-16 relative overflow-hidden"
                     style={{
                         background: "rgba(255, 255, 255, 0.04)",
-                        backdropFilter: "blur(24px)",
+                        backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                         border: "1px solid rgba(255, 255, 255, 0.08)",
                         boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.7)"
                     }}
@@ -126,7 +126,7 @@ export default function AboutPage() {
                             className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.35)]"
                             style={{
                                 background: "rgba(255,255,255,0.03)",
-                                backdropFilter: "blur(16px)",
+                                backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                                 border: "1px solid rgba(255,255,255,0.08)",
                                 boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset"
                             }}
@@ -173,7 +173,7 @@ export default function AboutPage() {
                             style={{
                                 "--hover-color": `${value.color}40`,
                                 background: "rgba(255,255,255,0.03)",
-                                backdropFilter: "blur(16px)",
+                                backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                                 border: "1px solid rgba(255,255,255,0.08)"
                             } as React.CSSProperties}
                         >
@@ -206,7 +206,7 @@ export default function AboutPage() {
                     className="rounded-3xl p-12 lg:p-16 text-center relative overflow-hidden"
                     style={{
                         background: "rgba(255,255,255,0.04)",
-                        backdropFilter: "blur(24px)",
+                        backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                         border: "1px solid rgba(255,255,255,0.08)",
                         boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 40px 100px -30px rgba(0,0,0,0.8)"
                     }}

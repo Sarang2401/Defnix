@@ -73,7 +73,7 @@ export function HowWeWorkSection() {
                 className="rounded-2xl p-8 h-full flex flex-col transition-all duration-400 group-hover:-translate-y-1"
                 style={{
                   background: "rgba(255,255,255,0.04)",
-                  backdropFilter: "blur(20px)",
+                  backdropFilter: "blur(20px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                   border: "1px solid rgba(255,255,255,0.08)",
                   boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset",
                 }}
@@ -145,7 +145,7 @@ export function HowWeWorkSection() {
                 className="rounded-2xl p-5 mb-4 flex-1"
                 style={{
                   background: "rgba(255,255,255,0.04)",
-                  backdropFilter: "blur(16px)",
+                  backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
               >

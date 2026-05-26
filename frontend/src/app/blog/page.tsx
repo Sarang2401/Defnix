@@ -110,7 +110,7 @@ function FeaturedPost({ post }: { post: BlogPost }) {
                 className="rounded-3xl p-10 lg:p-14 relative overflow-hidden transition-all duration-500 hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.3)] hover:-translate-y-1 hover:shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_32px_80px_-20px_rgba(0,0,0,0.6)]"
                 style={{
                     background: "rgba(255, 255, 255, 0.03)",
-                    backdropFilter: "blur(24px)",
+                    backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                     border: "1px solid rgba(255, 255, 255, 0.08)",
                     boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
                 }}
@@ -172,7 +172,7 @@ function CompactPost({ post, index }: { post: BlogPost; index: number }) {
                     className="rounded-2xl p-8 h-full flex flex-col transition-all duration-400 relative overflow-hidden hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.3)] hover:-translate-y-[3px] hover:shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_20px_40px_-10px_rgba(0,0,0,0.4)]"
                     style={{
                         background: "rgba(255, 255, 255, 0.03)",
-                        backdropFilter: "blur(16px)",
+                        backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                         border: "1px solid rgba(255, 255, 255, 0.08)",
                         boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset"
                     }}
@@ -279,7 +279,7 @@ export default async function BlogPage() {
                     className="mt-16 rounded-3xl p-10 relative overflow-hidden"
                     style={{
                         background: "rgba(255, 255, 255, 0.03)",
-                        backdropFilter: "blur(24px)",
+                        backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                         border: "1px solid rgba(255, 255, 255, 0.08)",
                         boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
                     }}

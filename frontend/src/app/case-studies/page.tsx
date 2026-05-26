@@ -228,7 +228,7 @@ export default async function CaseStudiesPage() {
                                     className="rounded-3xl p-8 lg:p-12 transition-all duration-500 relative overflow-hidden"
                                     style={{
                                         background: "rgba(255, 255, 255, 0.03)",
-                                        backdropFilter: "blur(24px)",
+                                        backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                                         border: "1px solid rgba(255, 255, 255, 0.08)",
                                         boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
                                     }}

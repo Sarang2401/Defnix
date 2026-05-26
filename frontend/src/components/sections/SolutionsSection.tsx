@@ -120,7 +120,7 @@ export function SolutionsSection() {
                 }`}
                 style={active === i ? {
                   background: "rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(12px)",
+                  backdropFilter: "blur(12px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                   borderColor: "rgba(255,255,255,0.1)",
                 } : {
                   background: "transparent",
@@ -157,7 +157,7 @@ export function SolutionsSection() {
             className="relative rounded-2xl overflow-hidden"
             style={{
               background: "rgba(255, 255, 255, 0.04)",
-              backdropFilter: "blur(24px)",
+              backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
               border: "1px solid rgba(255, 255, 255, 0.08)",
               boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 24px 80px -20px rgba(0,0,0,0.7)",
             }}
@@ -223,7 +223,7 @@ export function SolutionsSection() {
               className="rounded-2xl p-6"
               style={{
                 background: "rgba(255,255,255,0.04)",
-                backdropFilter: "blur(16px)",
+                backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
             >
