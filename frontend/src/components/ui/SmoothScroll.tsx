@@ -12,9 +12,10 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            lerp: 0.06, // Physics-based smoothing (lower = smoother/heavier)
+            wheelMultiplier: 1,
             touchMultiplier: 2,
+            smoothWheel: true,
         });
 
         lenisRef.current = lenis;
