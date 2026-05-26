@@ -121,7 +121,7 @@ export default function SolutionsPage() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
                 >
                     <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
                         What We Do
@@ -152,7 +152,7 @@ export default function SolutionsPage() {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                                transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] as const }}
                                 className={`lg:w-[85%] ${offset === 1 ? "lg:ml-[7.5%]" : offset === 2 ? "lg:ml-[15%]" : ""}`}
                             >
                                 <Link href={solution.href} className="block group">

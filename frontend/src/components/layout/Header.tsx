@@ -40,7 +40,7 @@ export function Header() {
         <motion.header
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
           className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between gap-4 px-5 py-3 rounded-2xl transition-all duration-500 ${
             scrolled
               ? "navbar-glass shadow-[0_8px_40px_rgba(0,0,0,0.5)]"

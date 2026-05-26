@@ -63,7 +63,7 @@ const stats = [
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
 export function HeroSection() {
@@ -153,7 +153,7 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
           className="hidden lg:block"
         >
           {/* Terminal card — Muks glassmorphic style */}
