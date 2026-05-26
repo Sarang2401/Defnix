@@ -123,22 +123,12 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: i * 0.1 }}
-                            className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group"
+                            className="rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 group hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.35)]"
                             style={{
                                 background: "rgba(255,255,255,0.03)",
                                 backdropFilter: "blur(16px)",
                                 border: "1px solid rgba(255,255,255,0.08)",
                                 boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset"
-                            }}
-                            onMouseEnter={(e) => {
-                                const el = e.currentTarget;
-                                el.style.background = "rgba(255,255,255,0.05)";
-                                el.style.borderColor = "rgba(124,58,237,0.35)";
-                            }}
-                            onMouseLeave={(e) => {
-                                const el = e.currentTarget;
-                                el.style.background = "rgba(255,255,255,0.03)";
-                                el.style.borderColor = "rgba(255,255,255,0.08)";
                             }}
                         >
                             <div className="h-40 rounded-xl mb-5 flex items-center justify-center text-xs text-[rgba(245,247,249,0.3)] font-mono border border-dashed border-[rgba(255,255,255,0.1)] group-hover:border-[rgba(124,58,237,0.4)] transition-colors">
@@ -179,24 +169,13 @@ export default function AboutPage() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: i * 0.08 }}
-                            className="rounded-2xl p-8 h-full transition-all duration-300"
+                            className="rounded-2xl p-8 h-full transition-all duration-300 hover:bg-[rgba(255,255,255,0.05)] hover:-translate-y-[2px] hover:[border-color:var(--hover-color)]"
                             style={{
+                                "--hover-color": `${value.color}40`,
                                 background: "rgba(255,255,255,0.03)",
                                 backdropFilter: "blur(16px)",
                                 border: "1px solid rgba(255,255,255,0.08)"
-                            }}
-                            onMouseEnter={(e) => {
-                                const el = e.currentTarget;
-                                el.style.background = "rgba(255,255,255,0.05)";
-                                el.style.borderColor = `${value.color}40`;
-                                el.style.transform = "translateY(-2px)";
-                            }}
-                            onMouseLeave={(e) => {
-                                const el = e.currentTarget;
-                                el.style.background = "rgba(255,255,255,0.03)";
-                                el.style.borderColor = "rgba(255,255,255,0.08)";
-                                el.style.transform = "translateY(0)";
-                            }}
+                            } as React.CSSProperties}
                         >
                             <div
                                 className="w-11 h-11 rounded-xl flex items-center justify-center mb-6 transition-colors"

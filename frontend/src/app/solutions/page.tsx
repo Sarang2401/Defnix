@@ -157,25 +157,15 @@ export default function SolutionsPage() {
                             >
                                 <Link href={solution.href} className="block group">
                                     <div
-                                        className="rounded-3xl p-8 lg:p-12 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
+                                        className="rounded-3xl p-8 lg:p-12 transition-all duration-500 hover:-translate-y-2 relative overflow-hidden hover:bg-[rgba(255,255,255,0.05)] hover:[border-color:var(--hover-color)] hover:[box-shadow:var(--hover-shadow)]"
                                         style={{
+                                            "--hover-color": `${solution.color}40`,
+                                            "--hover-shadow": `0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.8), 0 0 50px -15px ${solution.color}30`,
                                             background: "rgba(255, 255, 255, 0.03)",
                                             backdropFilter: "blur(24px)",
                                             border: "1px solid rgba(255, 255, 255, 0.08)",
                                             boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset",
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            const el = e.currentTarget;
-                                            el.style.background = "rgba(255, 255, 255, 0.05)";
-                                            el.style.borderColor = `${solution.color}40`;
-                                            el.style.boxShadow = `0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.8), 0 0 50px -15px ${solution.color}30`;
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            const el = e.currentTarget;
-                                            el.style.background = "rgba(255, 255, 255, 0.03)";
-                                            el.style.borderColor = "rgba(255, 255, 255, 0.08)";
-                                            el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset";
-                                        }}
+                                        } as React.CSSProperties}
                                     >
                                         <div className="flex flex-col lg:flex-row gap-10 relative z-10">
                                             {/* Left column */}

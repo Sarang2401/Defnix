@@ -107,26 +107,12 @@ function FeaturedPost({ post }: { post: BlogPost }) {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="rounded-3xl p-10 lg:p-14 relative overflow-hidden transition-all duration-500"
+                className="rounded-3xl p-10 lg:p-14 relative overflow-hidden transition-all duration-500 hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.3)] hover:-translate-y-1 hover:shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_32px_80px_-20px_rgba(0,0,0,0.6)]"
                 style={{
                     background: "rgba(255, 255, 255, 0.03)",
                     backdropFilter: "blur(24px)",
                     border: "1px solid rgba(255, 255, 255, 0.08)",
                     boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
-                }}
-                onMouseEnter={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = "rgba(255, 255, 255, 0.05)";
-                    el.style.borderColor = "rgba(124,58,237,0.3)";
-                    el.style.transform = "translateY(-4px)";
-                    el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.6)";
-                }}
-                onMouseLeave={(e) => {
-                    const el = e.currentTarget;
-                    el.style.background = "rgba(255, 255, 255, 0.03)";
-                    el.style.borderColor = "rgba(255, 255, 255, 0.08)";
-                    el.style.transform = "translateY(0)";
-                    el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset";
                 }}
             >
                 {/* Subtle radial glow */}
@@ -183,26 +169,12 @@ function CompactPost({ post, index }: { post: BlogPost; index: number }) {
         >
             <Link href={`/blog/${post.slug}`} className="block group h-full">
                 <div
-                    className="rounded-2xl p-8 h-full flex flex-col transition-all duration-400 relative overflow-hidden"
+                    className="rounded-2xl p-8 h-full flex flex-col transition-all duration-400 relative overflow-hidden hover:bg-[rgba(255,255,255,0.05)] hover:border-[rgba(124,58,237,0.3)] hover:-translate-y-[3px] hover:shadow-[0_1px_0_rgba(255,255,255,0.06)_inset,0_20px_40px_-10px_rgba(0,0,0,0.4)]"
                     style={{
                         background: "rgba(255, 255, 255, 0.03)",
                         backdropFilter: "blur(16px)",
                         border: "1px solid rgba(255, 255, 255, 0.08)",
                         boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset"
-                    }}
-                    onMouseEnter={(e) => {
-                        const el = e.currentTarget;
-                        el.style.background = "rgba(255, 255, 255, 0.05)";
-                        el.style.borderColor = "rgba(124,58,237,0.3)";
-                        el.style.transform = "translateY(-3px)";
-                        el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 40px -10px rgba(0,0,0,0.4)";
-                    }}
-                    onMouseLeave={(e) => {
-                        const el = e.currentTarget;
-                        el.style.background = "rgba(255, 255, 255, 0.03)";
-                        el.style.borderColor = "rgba(255, 255, 255, 0.08)";
-                        el.style.transform = "translateY(0)";
-                        el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.05) inset";
                     }}
                 >
                     <div className="flex items-center gap-4 mb-4">
