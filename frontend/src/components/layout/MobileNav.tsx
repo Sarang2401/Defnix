@@ -2,113 +2,89 @@
 
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 
 interface MobileNavProps {
-    isOpen: boolean;
-    onClose: () => void;
-    links: { href: string; label: string }[];
+  isOpen: boolean;
+  onClose: () => void;
+  links: { href: string; label: string }[];
 }
 
-const overlayVariants = {
-    closed: { opacity: 0 },
-    open: { opacity: 1 },
-};
-
-const navVariants = {
-    closed: { x: "100%" },
-    open: { x: 0 },
-};
-
-const linkVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: (i: number) => ({
-        opacity: 1,
-        y: 0,
-        transition: { delay: 0.1 + i * 0.06, duration: 0.3 },
-    }),
-};
-
 export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
-    return (
-        <AnimatePresence>
-            {isOpen && (
-                <>
-                    {/* Backdrop */}
-                    <motion.div
-                        variants={overlayVariants}
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
-                        transition={{ duration: 0.25 }}
-                        className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
-                        onClick={onClose}
-                    />
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+            onClick={onClose}
+          />
 
-                    {/* Full-screen nav panel */}
-                    <motion.nav
-                        variants={navVariants}
-                        initial="closed"
-                        animate="open"
-                        exit="closed"
-                        transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 z-[70] bg-[var(--color-bg-primary)] flex flex-col"
-                    >
-                        {/* Header area */}
-                        <div className="flex items-center justify-between px-6 h-20 border-b border-[var(--color-border)]">
-                            <span className="font-[var(--font-display)] text-[var(--color-text-primary)] font-bold text-xl tracking-tight">
-                                defnix
-                            </span>
-                            <button
-                                onClick={onClose}
-                                className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-                                aria-label="Close menu"
-                            >
-                                <X size={24} />
-                            </button>
-                        </div>
+          <motion.nav
+            initial={{ opacity: 0, scale: 0.96, y: -8 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: -8 }}
+            transition={{ type: "spring", damping: 26, stiffness: 280 }}
+            className="fixed inset-x-4 top-4 z-[70] rounded-2xl overflow-hidden"
+            style={{
+              background: "rgba(8, 8, 16, 0.95)",
+              backdropFilter: "blur(24px)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(124,58,237,0.2)",
+            }}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[rgba(255,255,255,0.07)]">
+              <span className="font-[var(--font-display)] font-bold text-[16px] text-white tracking-tight">Defnix</span>
+              <button
+                onClick={onClose}
+                className="p-2 rounded-lg text-[rgba(245,247,249,0.5)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] transition-all"
+                aria-label="Close"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
-                        {/* Links */}
-                        <div className="flex-1 flex flex-col justify-center px-8 gap-6">
-                            {links.map((link, i) => (
-                                <motion.div
-                                    key={link.href}
-                                    variants={linkVariants}
-                                    initial="closed"
-                                    animate="open"
-                                    custom={i}
-                                >
-                                    <Link
-                                        href={link.href}
-                                        onClick={onClose}
-                                        className="font-[var(--font-display)] text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors duration-200"
-                                    >
-                                        {link.label}
-                                    </Link>
-                                </motion.div>
-                            ))}
-                        </div>
+            <div className="p-3 space-y-1">
+              {links.map((link, i) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.06 + i * 0.04, duration: 0.22 }}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={onClose}
+                    className="flex items-center px-4 py-3 rounded-xl text-[rgba(245,247,249,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] text-[15px] font-medium transition-all duration-150"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
 
-                        {/* CTA at bottom */}
-                        <div className="px-8 pb-12">
-                            <motion.div
-                                variants={linkVariants}
-                                initial="closed"
-                                animate="open"
-                                custom={links.length}
-                            >
-                                <Link
-                                    href="/contact"
-                                    onClick={onClose}
-                                    className="block w-full text-center py-4 rounded border border-[var(--color-accent)] text-[var(--color-accent)] font-[var(--font-heading)] font-semibold text-lg hover:bg-[var(--color-accent-dim)] transition-colors"
-                                >
-                                    Book Free Consultation
-                                </Link>
-                            </motion.div>
-                        </div>
-                    </motion.nav>
-                </>
-            )}
-        </AnimatePresence>
-    );
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+              className="p-4 border-t border-[rgba(255,255,255,0.07)]"
+            >
+              <Link
+                href="/contact"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-semibold text-[15px] text-white bg-[var(--color-accent)] shadow-[0_0_24px_rgba(124,58,237,0.5)] hover:shadow-[0_0_32px_rgba(124,58,237,0.7)] transition-shadow duration-300"
+              >
+                Book Free Consultation
+                <ArrowRight size={15} />
+              </Link>
+            </motion.div>
+          </motion.nav>
+        </>
+      )}
+    </AnimatePresence>
+  );
 }

@@ -64,12 +64,12 @@ export function BlogPreviewSection() {
                 >
                     <div className="flex items-end justify-between mb-12">
                         <div>
-                            <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                                Technical Blog
-                            </p>
-                            <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)]">
-                                Engineering insights
-                            </h2>
+                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
+                            Technical Blog
+                        </p>
+                        <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)] font-[var(--font-display)]">
+                            Engineering insights
+                        </h2>
                         </div>
                         <Link
                             href="/blog"
@@ -99,19 +99,19 @@ export function BlogPreviewSection() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.9)] via-[rgba(0,0,0,0.4)] to-transparent" />
 
                                 <div className="relative z-10">
-                                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent-secondary)] tracking-wider uppercase mb-6 mt-2">
+                                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-widest uppercase mb-5 mt-2">
                                         {featured.category}
                                     </p>
-                                    <h3 className="text-3xl lg:text-5xl font-semibold text-white group-hover:text-blue-200 transition-colors mb-6 leading-[1.1]">
+                                    <h3 className="text-3xl lg:text-[44px] font-bold text-white group-hover:text-[var(--color-accent-bright)] transition-colors mb-5 leading-[1.08] font-[var(--font-display)] tracking-tight">
                                         {featured.title}
                                     </h3>
-                                    <p className="text-lg text-gray-300 leading-relaxed mb-8">
+                                    <p className="text-base text-[rgba(245,247,249,0.7)] leading-relaxed mb-8">
                                         {featured.excerpt}
                                     </p>
-                                    <div className="flex items-center gap-6 text-sm text-gray-400 font-medium">
+                                    <div className="flex items-center gap-5 text-sm text-[rgba(245,247,249,0.45)] font-mono">
                                         <span>{featured.date}</span>
                                         <span className="flex items-center gap-2">
-                                            <Clock size={16} /> {featured.readingTime} min read
+                                            <Clock size={14} /> {featured.readingTime} min read
                                         </span>
                                     </div>
                                 </div>
@@ -133,22 +133,27 @@ export function BlogPreviewSection() {
                                 <TiltCard tiltAmount={3} className="h-full block">
                                     <Link
                                         href={`/blog/${post.slug}`}
-                                        className="block rounded-2xl glass-card bg-[rgba(10,10,12,0.7)] backdrop-blur-xl border border-[var(--color-border)] hover:border-[var(--color-accent)] shadow-xl group h-full flex flex-col overflow-hidden transition-colors"
+                                        className="block rounded-2xl group h-full flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
+                                        style={{
+                                          background: "rgba(255,255,255,0.04)",
+                                          backdropFilter: "blur(20px)",
+                                          border: "1px solid rgba(255,255,255,0.08)",
+                                        }}
                                     >
                                         <div className="h-44 overflow-hidden relative">
                                             <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                                         </div>
                                         <div className="p-8 flex flex-col flex-1">
-                                            <p className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent-secondary)] tracking-wider uppercase mb-3">
+                                            <p className="font-mono text-[10px] text-[var(--color-accent-secondary)] tracking-widest uppercase mb-3">
                                                 {post.category}
                                             </p>
-                                            <h4 className="text-xl text-[var(--color-text-primary)] font-semibold group-hover:text-[var(--color-accent)] transition-colors mb-4 leading-snug">
+                                            <h4 className="text-[17px] text-white font-bold group-hover:text-[var(--color-accent-bright)] transition-colors mb-4 leading-snug font-[var(--font-display)] tracking-tight">
                                                 {post.title}
                                             </h4>
-                                            <div className="flex items-center gap-4 text-xs text-[var(--color-text-muted)] mt-auto font-medium">
+                                            <div className="flex items-center gap-4 text-xs text-[rgba(245,247,249,0.35)] mt-auto font-mono">
                                                 <span>{post.date}</span>
                                                 <span className="flex items-center gap-1.5">
-                                                    <Clock size={14} /> {post.readingTime} min
+                                                    <Clock size={13} /> {post.readingTime} min
                                                 </span>
                                             </div>
                                         </div>

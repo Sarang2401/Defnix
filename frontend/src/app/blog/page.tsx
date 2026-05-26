@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
+import * as motion from "framer-motion/client";
 import { Clock, Tag, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -19,8 +19,6 @@ interface BlogPost {
     tags: string[];
     featured?: boolean;
 }
-
-/* ---------- Static fallback data (used when API is unreachable) ---------- */
 
 const staticPosts: BlogPost[] = [
     {
@@ -76,8 +74,6 @@ const staticPosts: BlogPost[] = [
     },
 ];
 
-/* ---------- Server-side data fetching ---------- */
-
 async function getPosts(): Promise<BlogPost[]> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
     try {
@@ -86,7 +82,6 @@ async function getPosts(): Promise<BlogPost[]> {
         });
         if (!res.ok) throw new Error("API error");
         const data = await res.json();
-        // Map API response to our BlogPost shape
         return (data.posts || []).map(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (p: any) => ({
@@ -101,175 +96,230 @@ async function getPosts(): Promise<BlogPost[]> {
             }),
         );
     } catch {
-        // API unreachable — use static fallback
         return staticPosts;
     }
 }
 
-/* ---------- Components ---------- */
-
 function FeaturedPost({ post }: { post: BlogPost }) {
     return (
-        <Link href={`/blog/${post.slug}`} className="block group">
-            <div className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-8 lg:p-10">
-                <div className="flex items-center gap-3 mb-4">
-                    <span className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent)] tracking-wider uppercase px-2 py-1 rounded bg-[var(--color-accent-dim)]">
-                        Featured
-                    </span>
-                    <span className="text-xs text-[var(--color-text-muted)]">
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                            month: "long",
-                            day: "numeric",
-                            year: "numeric",
-                        })}
-                    </span>
-                </div>
+        <Link href={`/blog/${post.slug}`} className="block group mb-8">
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="rounded-3xl p-10 lg:p-14 relative overflow-hidden transition-all duration-500"
+                style={{
+                    background: "rgba(255, 255, 255, 0.03)",
+                    backdropFilter: "blur(24px)",
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
+                }}
+                onMouseEnter={(e) => {
+                    const el = e.currentTarget;
+                    el.style.background = "rgba(255, 255, 255, 0.05)";
+                    el.style.borderColor = "rgba(124,58,237,0.3)";
+                    el.style.transform = "translateY(-4px)";
+                    el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.6)";
+                }}
+                onMouseLeave={(e) => {
+                    const el = e.currentTarget;
+                    el.style.background = "rgba(255, 255, 255, 0.03)";
+                    el.style.borderColor = "rgba(255, 255, 255, 0.08)";
+                    el.style.transform = "translateY(0)";
+                    el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset";
+                }}
+            >
+                {/* Subtle radial glow */}
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(124,58,237,0.1),transparent_60%)] pointer-events-none" />
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl text-[var(--color-text-primary)] mb-4 group-hover:text-[var(--color-accent)] transition-colors duration-200">
-                    {post.title}
-                </h2>
-
-                <p className="text-[var(--color-text-secondary)] leading-relaxed mb-6 max-w-3xl">
-                    {post.excerpt}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)]">
-                        <Clock size={14} />
-                        {post.readingTime}
+                <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-6">
+                        <span className="font-mono text-[10px] text-[var(--color-accent-bright)] tracking-widest uppercase px-3 py-1.5 rounded-full border border-[rgba(124,58,237,0.3)] bg-[rgba(124,58,237,0.1)] shadow-[0_0_12px_rgba(124,58,237,0.3)]">
+                            Featured
+                        </span>
+                        <span className="text-[13px] text-[rgba(245,247,249,0.4)] font-mono">
+                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </span>
                     </div>
-                    <div className="flex gap-2">
-                        {post.tags.map((tag) => (
+
+                    <h2 className="text-3xl lg:text-[44px] text-white mb-6 font-[var(--font-display)] leading-[1.08] tracking-tight group-hover:text-[var(--color-accent-bright)] transition-colors duration-300">
+                        {post.title}
+                    </h2>
+
+                    <p className="text-[17px] text-[rgba(245,247,249,0.65)] leading-relaxed mb-10 max-w-4xl">
+                        {post.excerpt}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-6 pt-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div className="flex items-center gap-2 text-[13px] text-[rgba(245,247,249,0.4)] font-mono">
+                            <Clock size={14} />
+                            {post.readingTime}
+                        </div>
+                        <div className="flex flex-wrap gap-2.5">
+                            {post.tags.map((tag) => (
+                                <span key={tag} className="flex items-center gap-1.5 text-[11px] text-[rgba(245,247,249,0.4)] font-mono uppercase tracking-widest">
+                                    <Tag size={10} />
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
+                        <span className="ml-auto inline-flex items-center gap-2 text-[15px] font-semibold text-[var(--color-accent-bright)] group-hover:gap-3 transition-all duration-300">
+                            Read article <ArrowRight size={16} />
+                        </span>
+                    </div>
+                </div>
+            </motion.div>
+        </Link>
+    );
+}
+
+function CompactPost({ post, index }: { post: BlogPost; index: number }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+        >
+            <Link href={`/blog/${post.slug}`} className="block group h-full">
+                <div
+                    className="rounded-2xl p-8 h-full flex flex-col transition-all duration-400 relative overflow-hidden"
+                    style={{
+                        background: "rgba(255, 255, 255, 0.03)",
+                        backdropFilter: "blur(16px)",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset"
+                    }}
+                    onMouseEnter={(e) => {
+                        const el = e.currentTarget;
+                        el.style.background = "rgba(255, 255, 255, 0.05)";
+                        el.style.borderColor = "rgba(124,58,237,0.3)";
+                        el.style.transform = "translateY(-3px)";
+                        el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.06) inset, 0 20px 40px -10px rgba(0,0,0,0.4)";
+                    }}
+                    onMouseLeave={(e) => {
+                        const el = e.currentTarget;
+                        el.style.background = "rgba(255, 255, 255, 0.03)";
+                        el.style.borderColor = "rgba(255, 255, 255, 0.08)";
+                        el.style.transform = "translateY(0)";
+                        el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.05) inset";
+                    }}
+                >
+                    <div className="flex items-center gap-4 mb-4">
+                        <span className="text-[12px] text-[rgba(245,247,249,0.4)] font-mono">
+                            {new Date(post.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
+                        </span>
+                        <span className="w-1 h-1 rounded-full bg-[rgba(255,255,255,0.15)]" />
+                        <span className="text-[12px] text-[rgba(245,247,249,0.4)] flex items-center gap-1.5 font-mono">
+                            <Clock size={12} />
+                            {post.readingTime}
+                        </span>
+                    </div>
+
+                    <h3 className="text-xl text-white mb-3 font-[var(--font-display)] font-semibold leading-[1.25] group-hover:text-[var(--color-accent-bright)] transition-colors duration-300">
+                        {post.title}
+                    </h3>
+                    
+                    <p className="text-[15px] text-[rgba(245,247,249,0.6)] leading-relaxed mb-6 line-clamp-3 flex-1">
+                        {post.excerpt}
+                    </p>
+
+                    <div className="mt-auto pt-5 flex gap-3" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                        {post.tags.slice(0, 2).map((tag) => (
                             <span
                                 key={tag}
-                                className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] font-[var(--font-mono)]"
+                                className="text-[10px] text-[var(--color-accent-secondary)] font-mono uppercase tracking-widest bg-[rgba(124,58,237,0.1)] border border-[rgba(124,58,237,0.2)] px-2 py-1 rounded"
                             >
-                                <Tag size={10} />
                                 {tag}
                             </span>
                         ))}
                     </div>
-                    <span className="ml-auto inline-flex items-center gap-2 text-sm text-[var(--color-accent)] font-[var(--font-heading)] font-medium group-hover:gap-3 transition-all duration-200">
-                        Read article <ArrowRight size={14} />
-                    </span>
                 </div>
-            </div>
-        </Link>
+            </Link>
+        </motion.div>
     );
 }
-
-function CompactPost({ post }: { post: BlogPost }) {
-    return (
-        <Link href={`/blog/${post.slug}`} className="block group">
-            <div className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-6">
-                <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs text-[var(--color-text-muted)]">
-                        {new Date(post.date).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                        })}
-                    </span>
-                    <span className="text-xs text-[var(--color-text-muted)] flex items-center gap-1">
-                        <Clock size={12} />
-                        {post.readingTime}
-                    </span>
-                </div>
-                <h3 className="text-lg text-[var(--color-text-primary)] mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-200 leading-snug">
-                    {post.title}
-                </h3>
-                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed line-clamp-2">
-                    {post.excerpt}
-                </p>
-                <div className="mt-3 flex gap-2">
-                    {post.tags.slice(0, 2).map((tag) => (
-                        <span
-                            key={tag}
-                            className="text-[10px] text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider"
-                        >
-                            {tag}
-                        </span>
-                    ))}
-                </div>
-            </div>
-        </Link>
-    );
-}
-
-/* ---------- Page ---------- */
 
 export default async function BlogPage() {
     const posts = await getPosts();
     const categories = ["All", ...new Set(posts.flatMap((post) => post.tags).slice(0, 6))];
 
-    // First post is featured, rest are secondary
     const featured = posts[0] ? { ...posts[0], featured: true } : null;
     const secondary = posts.slice(1);
 
     return (
-        <div className="pt-28 pb-20">
+        <div className="pt-32 pb-20 relative overflow-hidden">
+            {/* Background blob glows */}
+            <div className="blob-violet w-[800px] h-[800px] -top-60 -right-40 opacity-30 animate-float-slow" />
+            <div className="blob-pink w-[600px] h-[600px] top-[40%] -left-60 opacity-20 animate-float-slow" style={{ animationDelay: "-4s" }} />
+
             {/* Header */}
-            <section className="max-w-7xl mx-auto px-6 mb-16">
-                <PageTransition>
-                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
+            <section className="max-w-7xl mx-auto px-6 mb-16 relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
                         Technical Blog
                     </p>
-                </PageTransition>
-                <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
+                    <h1 className="text-4xl sm:text-5xl lg:text-7xl mb-7 font-[var(--font-display)] leading-[1.05] tracking-tight">
                         Engineering
                         <br />
-                        <span className="text-[var(--color-text-secondary)]">
+                        <span className="text-[rgba(245,247,249,0.4)]">
                             insights.
                         </span>
                     </h1>
-                </PageTransition>
-                <PageTransition delay={0.2}>
-                    <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
+                    <p className="text-lg text-[rgba(245,247,249,0.65)] max-w-2xl leading-relaxed mb-10">
                         Deep technical articles on SOC2 compliance, cloud security
                         architecture, and AI-driven security operations — written by
                         engineers, for engineers.
                     </p>
-                </PageTransition>
+
+                    <div className="flex flex-wrap gap-2.5">
+                        {categories.map((category) => (
+                            <button
+                                key={category}
+                                className="rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-md px-4 py-2 text-xs font-mono uppercase tracking-widest text-[rgba(245,247,249,0.5)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.15)] transition-all duration-200"
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+                </motion.div>
             </section>
 
-            {/* Editorial layout: featured + secondary */}
-            <section className="max-w-7xl mx-auto px-6">
-                <div className="mb-8 flex flex-wrap gap-2">
-                    {categories.map((category) => (
-                        <span
-                            key={category}
-                            className="rounded border border-[var(--color-border)] bg-[var(--color-bg-surface)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)]"
-                        >
-                            {category}
-                        </span>
+            {/* Editorial layout */}
+            <section className="max-w-7xl mx-auto px-6 relative z-10">
+                {featured && <FeaturedPost post={featured} />}
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {secondary.map((post, i) => (
+                        <CompactPost key={post.slug} post={post} index={i} />
                     ))}
                 </div>
-                {/* Featured post */}
-                {featured && (
-                    <PageTransition className="mb-8">
-                        <FeaturedPost post={featured} />
-                    </PageTransition>
-                )}
 
-                {/* Secondary posts — 2-column on desktop */}
-                <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {secondary.map((post) => (
-                        <CompactPost key={post.slug} post={post} />
-                    ))}
-                </StaggerContainer>
-
-                <PageTransition delay={0.2}>
-                    <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-6">
-                        <h3 className="text-lg text-[var(--color-text-primary)] mb-2">Get engineering insights - no spam</h3>
-                        <p className="text-sm text-[var(--color-text-secondary)]">Subscribe from the contact page and we will share practical security, cloud, and automation playbooks.</p>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                            <Link href="/blog/pillars/soc2-compliance" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">SOC2 Pillar</Link>
-                            <Link href="/blog/pillars/cloud-security-for-startups" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Cloud Pillar</Link>
-                            <Link href="/blog/pillars/business-automation" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Automation Pillar</Link>
-                            <Link href="/blog/pillars/website-development-small-business" className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">Website Pillar</Link>
-                        </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                    className="mt-16 rounded-3xl p-10 relative overflow-hidden"
+                    style={{
+                        background: "rgba(255, 255, 255, 0.03)",
+                        backdropFilter: "blur(24px)",
+                        border: "1px solid rgba(255, 255, 255, 0.08)",
+                        boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
+                    }}
+                >
+                    <h3 className="text-2xl text-white mb-3 font-[var(--font-display)] font-bold">Get engineering insights — no spam</h3>
+                    <p className="text-[16px] text-[rgba(245,247,249,0.6)] mb-8">Subscribe via the contact page and we&apos;ll share practical security, cloud, and automation playbooks.</p>
+                    <div className="flex flex-wrap gap-3">
+                        <Link href="/blog/pillars/soc2-compliance" className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.05)] px-4 py-2 text-xs font-mono uppercase tracking-widest text-[rgba(245,247,249,0.6)] hover:text-[var(--color-accent-bright)] hover:border-[rgba(124,58,237,0.3)] hover:bg-[rgba(124,58,237,0.1)] transition-all duration-200">SOC2 Pillar</Link>
+                        <Link href="/blog/pillars/cloud-security-for-startups" className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.05)] px-4 py-2 text-xs font-mono uppercase tracking-widest text-[rgba(245,247,249,0.6)] hover:text-[var(--color-accent-bright)] hover:border-[rgba(124,58,237,0.3)] hover:bg-[rgba(124,58,237,0.1)] transition-all duration-200">Cloud Pillar</Link>
+                        <Link href="/blog/pillars/business-automation" className="rounded-xl border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.05)] px-4 py-2 text-xs font-mono uppercase tracking-widest text-[rgba(245,247,249,0.6)] hover:text-[var(--color-accent-bright)] hover:border-[rgba(124,58,237,0.3)] hover:bg-[rgba(124,58,237,0.1)] transition-all duration-200">Automation Pillar</Link>
                     </div>
-                </PageTransition>
+                </motion.div>
             </section>
         </div>
     );

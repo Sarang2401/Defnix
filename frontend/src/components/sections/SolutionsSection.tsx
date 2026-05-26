@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "../ui/Button";
-import { TiltCard } from "../ui/TiltCard";
 import { ReactNode } from "react";
-import { PageTransition } from "../ui/PageTransition";
 
 interface Solution {
   icon: ReactNode;
@@ -15,217 +13,234 @@ interface Solution {
   impact: string;
   description: string;
   href: string;
-  image: string;
+  color: string;
 }
 
 const solutions: Solution[] = [
   {
-    icon: <Shield size={22} />,
+    icon: <Shield size={18} />,
     title: "SOC2 Failure Prevention",
     subtitle: "Compliance Readiness Engineering",
-    impact: "Faster audit readiness with fewer surprises",
-    description: "Control design, evidence automation, and audit workflows built into your operations.",
+    impact: "Faster audit readiness — fewer surprises",
+    description: "We design your control framework, automate evidence collection, and build audit workflows directly into your operations — so your first audit is your cleanest one.",
     href: "/solutions/soc2-failure-prevention",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80"
+    color: "#a78bfa",
   },
   {
-    icon: <Cloud size={22} />,
+    icon: <Cloud size={18} />,
     title: "Cloud Insurance",
     subtitle: "Cloud Risk Reduction",
-    impact: "Reduced blast radius & faster response",
-    description: "Architecture hardening, DR planning, and monitoring systems for stable growth.",
+    impact: "Reduced blast radius & faster incident response",
+    description: "Architecture hardening, disaster recovery planning, and monitoring systems that give your infrastructure real resilience — not just the appearance of it.",
     href: "/solutions/cloud-insurance",
-    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
+    color: "#22c55e",
   },
   {
-    icon: <Brain size={22} />,
+    icon: <Brain size={18} />,
     title: "AI Enhanced SOC Analyst",
     subtitle: "AI Security Automation",
-    impact: "Less alert noise and faster triage",
-    description: "Automated investigation pipelines and escalation logic that help teams focus on real threats.",
+    impact: "Less alert noise, faster threat triage",
+    description: "Automated investigation pipelines and escalation logic that help your security team focus on real threats — not false positives.",
     href: "/solutions/ai-soc-analyst",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=800&q=80"
+    color: "#e879f9",
   },
   {
-    icon: <Globe size={22} />,
+    icon: <Globe size={18} />,
     title: "Website Development",
-    subtitle: "Conversion Websites",
-    impact: "Higher trust, better lead flow",
-    description: "Performance-first websites engineered for ranking, clarity, and client bookings.",
+    subtitle: "Conversion-First Websites",
+    impact: "Higher trust signals, better lead flow",
+    description: "Performance-first websites built for search ranking, clarity, and client conversion. Not templates — engineered to work.",
     href: "/solutions/website-development",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80"
+    color: "#f59e0b",
   },
   {
-    icon: <Smartphone size={22} />,
+    icon: <Smartphone size={18} />,
     title: "Mobile App Development",
     subtitle: "Cross-Platform Product Builds",
-    impact: "Faster MVP-to-market outcomes",
-    description: "Reliable iOS and Android experiences with measurable business impact.",
+    impact: "Faster MVP-to-market delivery",
+    description: "Reliable iOS and Android experiences with measurable business impact — from wireframe to App Store in weeks.",
     href: "/solutions/mobile-development",
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80"
+    color: "#06b6d4",
   },
   {
-    icon: <Workflow size={22} />,
+    icon: <Workflow size={18} />,
     title: "Business Automation",
     subtitle: "n8n, Make, Zapier",
     impact: "Hours saved every single week",
-    description: "Workflow automation for onboarding, operations, and customer lifecycle tasks.",
+    description: "Workflow automation for onboarding, client operations, and customer lifecycle tasks.",
     href: "/solutions/business-automation",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
+    color: "#ec4899",
   },
 ];
 
 export function SolutionsSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % solutions.length);
-  };
-
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + solutions.length) % solutions.length);
-  };
+  const [active, setActive] = useState(0);
+  const sol = solutions[active];
 
   return (
-    <section className="section-gap overflow-hidden" id="solutions">
+    <section className="section-gap relative overflow-hidden" id="solutions">
+      {/* Blob glow */}
+      <div className="blob-violet w-[500px] h-[500px] top-1/2 -right-60 -translate-y-1/2 opacity-40" />
+
       <div className="mx-auto max-w-7xl px-6 relative z-10">
-        <PageTransition>
-          <p className="mb-4 font-[var(--font-mono)] text-xs uppercase tracking-[0.2em] text-[var(--color-accent-secondary)] text-center lg:text-left">
+        {/* Header */}
+        <div className="mb-16">
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-accent-secondary)]"
+          >
             What We Build
-          </p>
-          <h2 className="mb-12 text-3xl sm:text-4xl lg:text-5xl text-[var(--color-text-primary)] text-center lg:text-left">
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.08 }}
+            className="text-4xl sm:text-5xl max-w-xl font-[var(--font-display)]"
+          >
             Execution-led services for serious growth.
-          </h2>
-        </PageTransition>
-
-        {/* Mobile View (Grid Layout) */}
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:hidden mt-8">
-          {solutions.map((solution, index) => (
-            <motion.div
-              key={solution.title}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.45, delay: index * 0.04 }}
-              className="h-full"
-            >
-              <TiltCard tiltAmount={4} className="h-full block">
-                <article className="card-glow rounded-xl h-full flex flex-col bg-[rgba(10,10,12,0.7)] backdrop-blur-xl border border-[var(--color-border)] hover:border-[var(--color-accent)] transition-colors overflow-hidden shadow-sm">
-                  <img src={solution.image} alt={solution.title} className="w-full h-40 object-cover" />
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="mb-4 flex items-center gap-4">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[var(--color-accent-dim)] bg-[var(--color-accent-dim)] text-[var(--color-accent)] shadow-sm">
-                        {solution.icon}
-                      </div>
-                      <div>
-                        <h3 className="text-lg text-white font-semibold leading-tight">{solution.title}</h3>
-                        <p className="text-[10px] uppercase tracking-wider text-[var(--color-accent-secondary)] mt-1">{solution.subtitle}</p>
-                      </div>
-                    </div>
-
-                    <p className="mb-2 text-xs font-semibold text-[var(--color-accent)]">{solution.impact}</p>
-                    <p className="mb-6 text-sm text-[var(--color-text-secondary)] flex-1">{solution.description}</p>
-
-                    <div className="flex gap-2 mt-auto">
-                      <Button variant="outline" size="sm" href={solution.href}>
-                        Learn More <ArrowRight size={13} />
-                      </Button>
-                    </div>
-                  </div>
-                </article>
-              </TiltCard>
-            </motion.div>
-          ))}
+          </motion.h2>
         </div>
 
-        {/* Desktop View (3D Queue Carousel) */}
-        <div className="hidden lg:block relative mt-16 h-[600px]">
-          <div className="relative w-full h-full flex justify-center items-center">
-            <AnimatePresence initial={false}>
-              {solutions.map((solution, index) => {
-                // Calculate cyclic offset
-                const total = solutions.length;
-                let offset = index - activeIndex;
-                if (offset > total / 2) offset -= total;
-                if (offset < -total / 2) offset += total;
+        {/* ── Desktop: Tab panel ─────────────────── */}
+        <div className="hidden lg:grid lg:grid-cols-[360px_1fr] gap-5 min-h-[520px]">
+          {/* List */}
+          <div className="space-y-1.5 self-start">
+            {solutions.map((s, i) => (
+              <button
+                key={s.title}
+                onClick={() => setActive(i)}
+                className={`w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-left transition-all duration-250 group ${
+                  active === i
+                    ? "border"
+                    : "border border-transparent hover:border-[rgba(255,255,255,0.06)]"
+                }`}
+                style={active === i ? {
+                  background: "rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(12px)",
+                  borderColor: "rgba(255,255,255,0.1)",
+                } : {
+                  background: "transparent",
+                }}
+              >
+                {/* Icon */}
+                <div
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-250"
+                  style={{
+                    background: active === i ? `${s.color}18` : "rgba(255,255,255,0.04)",
+                    color: active === i ? s.color : "rgba(245,247,249,0.35)",
+                    border: `1px solid ${active === i ? `${s.color}35` : "rgba(255,255,255,0.06)"}`,
+                  }}
+                >
+                  {s.icon}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={`text-sm font-semibold truncate transition-colors duration-200 ${active === i ? "text-white" : "text-[rgba(245,247,249,0.55)] group-hover:text-white"}`}>
+                    {s.title}
+                  </p>
+                  <p className="text-xs text-[rgba(245,247,249,0.3)] truncate mt-0.5">{s.subtitle}</p>
+                </div>
+                <ChevronRight
+                  size={13}
+                  className={`shrink-0 transition-all duration-200 ${active === i ? "translate-x-0.5" : "opacity-0 group-hover:opacity-60"}`}
+                  style={{ color: active === i ? s.color : "inherit" }}
+                />
+              </button>
+            ))}
+          </div>
 
-                const isActive = offset === 0;
-                const absOffset = Math.abs(offset);
-                const direction = Math.sign(offset); // 1 = right, -1 = left
+          {/* Detail panel — Muks-style glassmorphic card */}
+          <div
+            className="relative rounded-2xl overflow-hidden"
+            style={{
+              background: "rgba(255, 255, 255, 0.04)",
+              backdropFilter: "blur(24px)",
+              border: "1px solid rgba(255, 255, 255, 0.08)",
+              boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 24px 80px -20px rgba(0,0,0,0.7)",
+            }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                className="h-full flex flex-col p-10"
+              >
+                {/* Ambient color glow in top-right */}
+                <div
+                  className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-[80px] pointer-events-none opacity-25 transition-colors duration-500"
+                  style={{ background: sol.color }}
+                />
 
-                // Calculate transforms
-                const xOffset = direction * absOffset * 280;
-                const scale = 1 - absOffset * 0.12; // 1, 0.88, 0.76
-                const zIndex = 30 - absOffset * 10; // 30, 20, 10
-                
-                let opacity = 0;
-                if (absOffset === 0) opacity = 1;
-                if (absOffset === 1) opacity = 0.5;
-                if (absOffset === 2) opacity = 0.15;
-
-                return (
-                  <motion.div
-                    key={solution.title}
-                    className="absolute top-1/2 left-1/2 w-[540px] h-auto origin-center -ml-[270px] -mt-[260px]"
-                    initial={false}
-                    animate={{
-                      x: xOffset,
-                      scale: scale,
-                      zIndex: zIndex,
-                      opacity: opacity,
-                    }}
-                    transition={{
-                      duration: 0.5,
-                      ease: [0.16, 1, 0.3, 1], // Custom bouncy ease out
-                    }}
-                    style={{ pointerEvents: isActive ? "auto" : "none" }}
+                <div className="flex items-center gap-3 mb-6 relative z-10">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center rounded-xl"
+                    style={{ background: `${sol.color}15`, color: sol.color, border: `1px solid ${sol.color}30` }}
                   >
-                    <TiltCard tiltAmount={isActive ? 6 : 0} className="w-full">
-                      <article className="card-glow rounded-2xl flex flex-col bg-[rgba(10,10,12,0.9)] backdrop-blur-2xl border border-[var(--color-border)] transition-colors shadow-2xl h-[520px] overflow-hidden">
-                        <img src={solution.image} alt={solution.title} className="w-full h-56 object-cover" />
-                        <div className="p-10 flex flex-col flex-1">
-                          <div className="mb-6 flex items-center gap-5">
-                            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-[var(--color-accent-dim)] bg-[var(--color-accent-dim)] text-[var(--color-accent)] shadow-sm">
-                              {solution.icon}
-                            </div>
-                            <div>
-                              <h3 className="text-2xl font-bold text-white leading-tight">{solution.title}</h3>
-                              <p className="text-xs font-semibold uppercase tracking-widest text-[var(--color-accent-secondary)] mt-1.5">{solution.subtitle}</p>
-                            </div>
-                          </div>
+                    {sol.icon}
+                  </div>
+                  <p className="text-xs font-mono uppercase tracking-widest" style={{ color: sol.color }}>
+                    {sol.subtitle}
+                  </p>
+                </div>
 
-                          <p className="mb-3 text-sm font-semibold text-[var(--color-accent)]">{solution.impact}</p>
-                          <p className="text-base text-[var(--color-text-secondary)] leading-relaxed flex-1">{solution.description}</p>
+                <h3 className="text-3xl font-bold text-white mb-4 font-[var(--font-display)] relative z-10">{sol.title}</h3>
 
-                          <div className="flex gap-4 mt-auto">
-                            <Button variant="outline" size="lg" href={solution.href}>
-                               View Solution <ArrowRight size={16} />
-                            </Button>
-                          </div>
-                        </div>
-                      </article>
-                    </TiltCard>
-                  </motion.div>
-                );
-              })}
+                <div className="inline-flex items-center gap-2 mb-6 relative z-10">
+                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: sol.color }} />
+                  <span className="text-sm font-medium" style={{ color: sol.color }}>{sol.impact}</span>
+                </div>
+
+                <p className="text-[rgba(245,247,249,0.6)] text-base leading-relaxed flex-1 relative z-10">
+                  {sol.description}
+                </p>
+
+                <div className="mt-8 relative z-10">
+                  <Button variant="primary" size="md" href={sol.href}>
+                    Explore Solution
+                    <ArrowRight size={15} />
+                  </Button>
+                </div>
+              </motion.div>
             </AnimatePresence>
           </div>
+        </div>
 
-          {/* Navigation Cursors */}
-          <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex justify-between px-4 lg:px-12 pointer-events-none z-50">
-             <button 
-                onClick={handlePrev} 
-                className="pointer-events-auto h-14 w-14 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] backdrop-blur-md shadow-lg flex justify-center items-center text-white hover:bg-[rgba(255,255,255,0.1)] hover:text-[var(--color-accent)] transition-all hover:scale-110 active:scale-95"
-             >
-                <ChevronLeft size={24} />
-             </button>
-             <button 
-                onClick={handleNext} 
-                className="pointer-events-auto h-14 w-14 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] backdrop-blur-md shadow-lg flex justify-center items-center text-white hover:bg-[rgba(255,255,255,0.1)] hover:text-[var(--color-accent)] transition-all hover:scale-110 active:scale-95"
-             >
-                <ChevronRight size={24} />
-             </button>
-          </div>
+        {/* ── Mobile: Grid cards ─────────────────── */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:hidden">
+          {solutions.map((s, i) => (
+            <motion.article
+              key={s.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.4, delay: i * 0.05 }}
+              className="rounded-2xl p-6"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              <div
+                className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl"
+                style={{ background: `${s.color}18`, color: s.color, border: `1px solid ${s.color}30` }}
+              >
+                {s.icon}
+              </div>
+              <h3 className="text-[15px] font-bold text-white mb-1 font-[var(--font-display)]">{s.title}</h3>
+              <p className="text-[10px] text-[rgba(245,247,249,0.35)] mb-3 uppercase tracking-wider font-mono">{s.subtitle}</p>
+              <p className="text-sm text-[rgba(245,247,249,0.55)] mb-5 leading-relaxed">{s.description}</p>
+              <a href={s.href} className="inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color: s.color }}>
+                Learn More <ArrowRight size={11} />
+              </a>
+            </motion.article>
+          ))}
         </div>
       </div>
     </section>

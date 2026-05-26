@@ -1,60 +1,136 @@
+"use client";
+
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { PageTransition } from "../ui/PageTransition";
-import { TiltCard } from "../ui/TiltCard";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
 
 const studies = [
   {
     title: "SaaS Startup achieved SOC2 Type I in 8 weeks",
     service: "Security",
     metric: "8 weeks to audit readiness",
+    color: "#a78bfa",
   },
   {
     title: "Local cafe website reached #1 for coffee shop in Melbourne",
     service: "Web",
-    metric: "#1 local ranking",
+    metric: "#1 local search ranking",
+    color: "#f59e0b",
   },
   {
     title: "Agency reduced onboarding from 3 hours to near zero",
     service: "Automation",
     metric: "~3 hours saved per client",
+    color: "#e879f9",
   },
   {
     title: "Dental booking app generated 200+ bookings in month one",
     service: "Mobile",
     metric: "200+ bookings in 30 days",
+    color: "#06b6d4",
   },
 ];
 
 export function PortfolioPreviewSection() {
   return (
-    <section className="section-gap border-t border-[var(--color-border)]">
-      <div className="max-w-7xl mx-auto px-6">
-        <PageTransition>
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                Portfolio Preview
-              </p>
-              <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)]">Proof, not promises.</h2>
-            </div>
-            <Link href="/case-studies" className="hidden sm:inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors">
-              View all case studies <ArrowRight size={14} />
-            </Link>
+    <section
+      className="section-gap relative overflow-hidden"
+      style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+    >
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="flex items-end justify-between mb-12"
+        >
+          <div>
+            <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-3">
+              Portfolio Preview
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-[var(--font-display)]">
+              Proof, not promises.
+            </h2>
           </div>
-        </PageTransition>
+          <Link
+            href="/case-studies"
+            className="hidden sm:inline-flex items-center gap-2 text-sm text-[rgba(245,247,249,0.45)] hover:text-white transition-colors duration-200"
+          >
+            View all <ArrowRight size={14} />
+          </Link>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
-          {studies.map((study, index) => (
-            <PageTransition key={study.title} delay={index * 0.06}>
-              <TiltCard tiltAmount={6} className="h-full block">
-                <article className="card-glow rounded-xl bg-[rgba(9,9,11,0.7)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl p-6 h-full flex flex-col justify-between hover:border-[rgba(255,255,255,0.15)] transition-colors">
-                  <span className="font-[var(--font-mono)] text-[10px] uppercase tracking-wider text-[var(--color-accent-secondary)]">{study.service}</span>
-                  <h3 className="text-base text-[var(--color-text-primary)] mt-3 mb-3 leading-snug">{study.title}</h3>
-                  <p className="text-sm text-[var(--color-text-secondary)]">{study.metric}</p>
-                </article>
-              </TiltCard>
-            </PageTransition>
+        {/* Glassmorphic case study cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+          {studies.map((study, i) => (
+            <motion.div
+              key={study.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.45, delay: i * 0.07 }}
+            >
+              <div
+                className="group rounded-2xl p-6 h-full flex flex-col justify-between cursor-pointer transition-all duration-350"
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  backdropFilter: "blur(16px)",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "0 1px 0 rgba(255,255,255,0.05) inset",
+                }}
+                onMouseEnter={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.background = `${study.color}0c`;
+                  el.style.borderColor = `${study.color}35`;
+                  el.style.transform = "translateY(-3px)";
+                  el.style.boxShadow = `0 0 30px -8px ${study.color}40, 0 1px 0 rgba(255,255,255,0.05) inset`;
+                }}
+                onMouseLeave={(e) => {
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.background = "rgba(255,255,255,0.04)";
+                  el.style.borderColor = "rgba(255,255,255,0.08)";
+                  el.style.transform = "translateY(0)";
+                  el.style.boxShadow = "0 1px 0 rgba(255,255,255,0.05) inset";
+                }}
+              >
+                {/* Service tag */}
+                <div>
+                  <span
+                    className="font-mono text-[10px] uppercase tracking-widest px-2.5 py-1 rounded-full"
+                    style={{
+                      color: study.color,
+                      background: `${study.color}12`,
+                      border: `1px solid ${study.color}28`,
+                    }}
+                  >
+                    {study.service}
+                  </span>
+                  <h3
+                    className="text-sm font-semibold text-white mt-4 mb-4 leading-snug font-[var(--font-display)]"
+                    style={{ letterSpacing: "-0.01em" }}
+                  >
+                    {study.title}
+                  </h3>
+                </div>
+
+                {/* Metric + link */}
+                <div className="flex items-center justify-between">
+                  <p
+                    className="text-xs font-mono font-semibold"
+                    style={{ color: study.color }}
+                  >
+                    {study.metric}
+                  </p>
+                  <ExternalLink
+                    size={12}
+                    className="opacity-0 group-hover:opacity-60 transition-opacity duration-200"
+                    style={{ color: study.color }}
+                  />
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

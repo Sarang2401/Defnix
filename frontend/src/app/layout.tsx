@@ -1,29 +1,32 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter, JetBrains_Mono } from "next/font/google";
+import { Syne, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+// Syne — for bold display headings (same as Muks Robotics)
+const syne = Syne({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700", "800"],
 });
 
+// Inter — for body, UI, labels
 const inter = Inter({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const interBody = Inter({
   variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
   weight: ["300", "400", "500", "600"],
 });
 
+const interHeading = Inter({
+  variable: "--font-heading",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+// JetBrains Mono — for code/mono text
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
@@ -62,20 +65,14 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Defnix — Engineering Studio",
-    description:
-      "Security, cloud, AI, web, mobile, and automation engineering.",
+    description: "Security, cloud, AI, web, mobile, and automation engineering.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -88,7 +85,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.variable} ${inter.variable} ${interBody.variable} ${jetbrainsMono.variable}`}
+      className={`${syne.variable} ${inter.variable} ${interHeading.variable} ${jetbrainsMono.variable}`}
     >
       <body className="antialiased">
         <script
