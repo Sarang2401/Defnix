@@ -260,9 +260,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
                     elements.push(
                         <pre
                             key={`code-${i}`}
-                            className="bg-[var(--color-bg-primary)] border border-[var(--color-border)] rounded-lg p-5 overflow-x-auto my-6"
+                            className="bg-neutral-900 border border-white/10 rounded-xl p-5 overflow-x-auto my-6"
                         >
-                            <code className="font-[var(--font-mono)] text-sm text-[var(--color-text-secondary)]">
+                            <code className="text-sm text-white/70">
                                 {codeLines.join("\n")}
                             </code>
                         </pre>
@@ -285,7 +285,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <h2
                         key={i}
-                        className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mt-12 mb-4"
+                        className="text-2xl sm:text-3xl text-white font-medium mt-12 mb-4"
                     >
                         {line.slice(3)}
                     </h2>
@@ -294,7 +294,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <h3
                         key={i}
-                        className="text-xl text-[var(--color-text-primary)] mt-8 mb-3"
+                        className="text-xl text-white font-medium mt-8 mb-3"
                     >
                         {line.slice(4)}
                     </h3>
@@ -305,9 +305,9 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <li
                         key={i}
-                        className="flex items-start gap-3 text-[var(--color-text-secondary)] leading-relaxed ml-1"
+                        className="flex items-start gap-3 text-white/60 leading-relaxed ml-1"
                     >
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] flex-shrink-0" />
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-white/40 flex-shrink-0" />
                         <span>{line.slice(2).replace(/\*\*(.*?)\*\*/g, "$1")}</span>
                     </li>
                 );
@@ -318,7 +318,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <li
                         key={i}
-                        className="text-[var(--color-text-secondary)] leading-relaxed ml-5 list-decimal"
+                        className="text-white/60 leading-relaxed ml-5 list-decimal"
                     >
                         {text.replace(/\*\*(.*?)\*\*/g, "$1")}
                     </li>
@@ -329,12 +329,12 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 // Handle inline code
                 const rendered = line.replace(
                     /`([^`]+)`/g,
-                    '<code class="font-mono text-[var(--color-accent)] text-sm bg-[var(--color-bg-primary)] px-1.5 py-0.5 rounded">$1</code>'
+                    '<code class="text-white text-sm bg-white/10 px-1.5 py-0.5 rounded">$1</code>'
                 );
                 elements.push(
                     <p
                         key={i}
-                        className="text-[var(--color-text-secondary)] leading-relaxed my-4"
+                        className="text-white/60 leading-relaxed my-4"
                         dangerouslySetInnerHTML={{ __html: rendered }}
                     />
                 );
@@ -351,10 +351,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 <PageTransition>
                     <Link
                         href="/blog"
-                        className="inline-flex items-center gap-2 text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors mb-8"
+                        className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors mb-8"
                     >
                         <ArrowLeft size={14} />
-                        Back to blog
+                        back to blog
                     </Link>
                 </PageTransition>
 
@@ -365,7 +365,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                             {post.tags.map((tag) => (
                                 <span
                                     key={tag}
-                                    className="flex items-center gap-1 text-xs text-[var(--color-accent)] font-[var(--font-mono)] tracking-wider uppercase px-2 py-1 rounded bg-[var(--color-accent-dim)]"
+                                    className="flex items-center gap-1 text-xs text-white tracking-wider uppercase px-3 py-1 rounded-full bg-white/10"
                                 >
                                     <Tag size={10} />
                                     {tag}
@@ -373,11 +373,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
                             ))}
                         </div>
 
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl text-[var(--color-text-primary)] mb-6 leading-tight">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl text-white font-medium mb-6 leading-tight">
                             {post.title}
                         </h1>
 
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--color-text-muted)] pb-8 border-b border-[var(--color-border)]">
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/40 pb-8 border-b border-white/10">
                             <span className="flex items-center gap-1.5">
                                 <User size={14} />
                                 {post.author}
@@ -404,18 +404,18 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
                 {/* Share + CTA */}
                 <PageTransition delay={0.3}>
-                    <div className="mt-16 pt-8 border-t border-[var(--color-border)]">
+                    <div className="mt-16 pt-8 border-t border-white/10">
                         {/* Share buttons */}
                         <div className="flex items-center gap-4 mb-10">
-                            <span className="text-sm text-[var(--color-text-muted)] flex items-center gap-2">
+                            <span className="text-sm text-white/40 flex items-center gap-2">
                                 <Share2 size={14} />
-                                Share
+                                share
                             </span>
                             <a
                                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded bg-[var(--color-bg-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-hover)] transition-colors"
+                                className="w-8 h-8 rounded-full bg-neutral-900 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors"
                             >
                                 <Twitter size={14} />
                             </a>
@@ -423,23 +423,23 @@ export default async function BlogDetailPage({ params }: PageProps) {
                                 href={`https://linkedin.com/sharing/share-offsite/`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded bg-[var(--color-bg-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-border-hover)] transition-colors"
+                                className="w-8 h-8 rounded-full bg-neutral-900 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors"
                             >
                                 <Linkedin size={14} />
                             </a>
                         </div>
 
                         {/* CTA */}
-                        <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-8 text-center">
-                            <h3 className="text-xl text-[var(--color-text-primary)] mb-3">
-                                Need help implementing this?
+                        <div className="rounded-xl bg-neutral-900 border border-white/10 p-8 text-center">
+                            <h3 className="text-xl text-white font-medium mb-3">
+                                need help implementing this?
                             </h3>
-                            <p className="text-sm text-[var(--color-text-secondary)] mb-6 max-w-md mx-auto">
-                                Our engineering team can help you build the controls,
+                            <p className="text-sm text-white/60 mb-6 max-w-md mx-auto">
+                                our engineering team can help you build the controls,
                                 automation, and infrastructure discussed in this article.
                             </p>
                             <Button variant="primary" size="md" href="/contact">
-                                Book a Consultation
+                                book a consultation
                             </Button>
                         </div>
                     </div>

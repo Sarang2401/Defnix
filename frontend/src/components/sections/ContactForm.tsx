@@ -43,18 +43,18 @@ export function ContactForm() {
     };
 
     const inputClasses =
-        "w-full px-4 py-3 bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded text-sm text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors font-[var(--font-body)]";
+        "w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors";
 
     if (status === "success") {
         return (
             <PageTransition>
                 <div className="text-center py-12">
-                    <CheckCircle size={48} className="text-[var(--color-success)] mx-auto mb-4" />
-                    <h3 className="text-xl text-[var(--color-text-primary)] mb-2">
-                        Message sent
+                    <CheckCircle size={48} className="text-white mx-auto mb-4" />
+                    <h3 className="text-xl text-white mb-2">
+                        message sent
                     </h3>
-                    <p className="text-sm text-[var(--color-text-secondary)]">
-                        We&apos;ll respond within 1 business day.
+                    <p className="text-sm text-white/60">
+                        we&apos;ll respond within 1 business day.
                     </p>
                 </div>
             </PageTransition>
@@ -67,9 +67,9 @@ export function ContactForm() {
                 <div>
                     <label
                         htmlFor="name"
-                        className="block text-xs font-[var(--font-heading)] text-[var(--color-text-muted)] uppercase tracking-wider mb-2"
+                        className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                     >
-                        Name *
+                        name *
                     </label>
                     <input
                         id="name"
@@ -78,16 +78,16 @@ export function ContactForm() {
                         required
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Jane Doe"
+                        placeholder="jane doe"
                         className={inputClasses}
                     />
                 </div>
                 <div>
                     <label
                         htmlFor="email"
-                        className="block text-xs font-[var(--font-heading)] text-[var(--color-text-muted)] uppercase tracking-wider mb-2"
+                        className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                     >
-                        Email *
+                        email *
                     </label>
                     <input
                         id="email"
@@ -105,9 +105,9 @@ export function ContactForm() {
             <div>
                 <label
                     htmlFor="company"
-                    className="block text-xs font-[var(--font-heading)] text-[var(--color-text-muted)] uppercase tracking-wider mb-2"
+                    className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                 >
-                    Company
+                    company
                 </label>
                 <input
                     id="company"
@@ -115,7 +115,7 @@ export function ContactForm() {
                     type="text"
                     value={form.company}
                     onChange={handleChange}
-                    placeholder="Acme Inc."
+                    placeholder="acme inc."
                     className={inputClasses}
                 />
             </div>
@@ -123,9 +123,9 @@ export function ContactForm() {
             <div>
                 <label
                     htmlFor="message"
-                    className="block text-xs font-[var(--font-heading)] text-[var(--color-text-muted)] uppercase tracking-wider mb-2"
+                    className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                 >
-                    Message *
+                    message *
                 </label>
                 <textarea
                     id="message"
@@ -134,15 +134,15 @@ export function ContactForm() {
                     rows={5}
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="Tell us about your project..."
+                    placeholder="tell us about your project..."
                     className={`${inputClasses} resize-none`}
                 />
             </div>
 
             {status === "error" && (
-                <div className="flex items-center gap-2 text-sm text-[var(--color-danger)]">
+                <div className="flex items-center gap-2 text-sm text-white/60">
                     <AlertCircle size={16} />
-                    Something went wrong. Please try again or email us directly.
+                    something went wrong. please try again or email us directly.
                 </div>
             )}
 
@@ -153,7 +153,7 @@ export function ContactForm() {
                 disabled={status === "submitting"}
                 className="w-full sm:w-auto"
             >
-                {status === "submitting" ? "Sending..." : "Send Message"}
+                {status === "submitting" ? "sending..." : "send message"}
                 <Send size={16} />
             </Button>
         </form>

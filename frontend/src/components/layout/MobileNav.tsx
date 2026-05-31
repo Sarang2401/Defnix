@@ -41,7 +41,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                         animate="open"
                         exit="closed"
                         transition={{ duration: 0.25 }}
-                        className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+                        className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
                         onClick={onClose}
                     />
 
@@ -52,16 +52,26 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                         animate="open"
                         exit="closed"
                         transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                        className="fixed inset-0 z-[70] bg-[var(--color-bg-primary)] flex flex-col"
+                        className="fixed inset-0 z-[70] bg-black flex flex-col"
                     >
                         {/* Header area */}
-                        <div className="flex items-center justify-between px-6 h-20 border-b border-[var(--color-border)]">
-                            <span className="font-[var(--font-display)] text-[var(--color-text-primary)] font-bold text-xl tracking-tight">
-                                defnix
-                            </span>
+                        <div className="flex items-center justify-between px-6 h-20 border-b border-white/10">
+                            <div className="flex items-center gap-2">
+                                <svg
+                                    viewBox="0 0 256 256"
+                                    className="h-5 w-5"
+                                    fill="#ffffff"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" />
+                                </svg>
+                                <span className="text-white text-sm font-normal tracking-tight">
+                                    defnix
+                                </span>
+                            </div>
                             <button
                                 onClick={onClose}
-                                className="p-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+                                className="p-2 text-white/60 hover:text-white transition-colors"
                                 aria-label="Close menu"
                             >
                                 <X size={24} />
@@ -81,7 +91,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                                     <Link
                                         href={link.href}
                                         onClick={onClose}
-                                        className="font-[var(--font-display)] text-3xl text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors duration-200"
+                                        className="text-3xl text-white hover:text-white/70 transition-colors duration-200"
                                     >
                                         {link.label}
                                     </Link>
@@ -100,9 +110,9 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                                 <Link
                                     href="/contact"
                                     onClick={onClose}
-                                    className="block w-full text-center py-4 rounded border border-[var(--color-accent)] text-[var(--color-accent)] font-[var(--font-heading)] font-semibold text-lg hover:bg-[var(--color-accent-dim)] transition-colors"
+                                    className="block w-full text-center py-4 rounded-full bg-white text-black font-medium text-lg hover:bg-neutral-200 transition-colors"
                                 >
-                                    Book a Consultation
+                                    get started
                                 </Link>
                             </motion.div>
                         </div>

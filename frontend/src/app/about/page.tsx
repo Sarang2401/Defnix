@@ -48,27 +48,27 @@ export default function AboutPage() {
             {/* Hero */}
             <section className="max-w-4xl mx-auto px-6 mb-24">
                 <PageTransition>
-                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                        About Defnix
+                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                        about defnix
                     </p>
                 </PageTransition>
                 <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
-                        We engineer the
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6">
+                        we engineer the
                         <br />
                         security infrastructure
                         <br />
-                        <span className="text-[var(--color-text-secondary)]">
+                        <span className="text-white/50">
                             that startups need.
                         </span>
                     </h1>
                 </PageTransition>
                 <PageTransition delay={0.2}>
-                    <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        We are an engineering-focused team that builds across cloud
-                        security, compliance readiness, AI automation, website development,
+                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+                        we are an engineering-focused team that builds across cloud
+                        security, compliance readiness, ai automation, website development,
                         and mobile apps — for startups and small businesses worldwide.
-                        We don&apos;t consult — we build.
+                        we don&apos;t consult — we build.
                     </p>
                 </PageTransition>
             </section>
@@ -76,19 +76,19 @@ export default function AboutPage() {
             {/* Mission */}
             <section className="max-w-4xl mx-auto px-6 mb-24">
                 <PageTransition>
-                    <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-8 lg:p-12">
-                        <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                            Our Mission
+                    <div className="rounded-xl bg-neutral-900 border border-white/10 p-8 lg:p-12">
+                        <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                            our mission
                         </p>
-                        <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4 leading-snug">
-                            Make great engineering accessible to every startup and
+                        <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4 leading-snug">
+                            make great engineering accessible to every startup and
                             small business that has real problems to solve.
                         </h2>
-                        <p className="text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-                            Whether you need SOC2 compliance, cloud security, AI-driven
+                        <p className="text-white/60 leading-relaxed max-w-2xl">
+                            whether you need soc2 compliance, cloud security, ai-driven
                             automation, a website that wins local search, or a mobile app
-                            your customers actually love — we build it. No consultants,
-                            no slide decks. Just engineering that works.
+                            your customers actually love — we build it. no consultants,
+                            no slide decks. just engineering that works.
                         </p>
                     </div>
                 </PageTransition>
@@ -97,13 +97,13 @@ export default function AboutPage() {
             {/* Values */}
             <section className="max-w-4xl mx-auto px-6 mb-24">
                 <PageTransition>
-                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                        How We Work
+                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                        how we work
                     </p>
-                    <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-10">
-                        Principles that guide
+                    <h2 className="text-2xl sm:text-3xl text-white font-medium mb-10">
+                        principles that guide
                         <br />
-                        <span className="text-[var(--color-text-secondary)]">
+                        <span className="text-white/50">
                             every engagement.
                         </span>
                     </h2>
@@ -112,14 +112,14 @@ export default function AboutPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {values.map((value, i) => (
                         <PageTransition key={value.title} delay={0.1 * i}>
-                            <div className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-6 h-full">
-                                <div className="w-10 h-10 rounded-lg bg-[var(--color-accent-dim)] flex items-center justify-center text-[var(--color-accent)] mb-4">
+                            <div className="card-glow rounded-xl bg-neutral-900 p-6 h-full">
+                                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white mb-4">
                                     {value.icon}
                                 </div>
-                                <h3 className="text-lg text-[var(--color-text-primary)] mb-2">
+                                <h3 className="text-lg text-white mb-2">
                                     {value.title}
                                 </h3>
-                                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                                <p className="text-sm text-white/60 leading-relaxed">
                                     {value.description}
                                 </p>
                             </div>
@@ -139,10 +139,10 @@ export default function AboutPage() {
                             { value: "2wk", label: "Avg delivery time" },
                         ].map((stat) => (
                             <div key={stat.label} className="text-center">
-                                <p className="text-3xl lg:text-4xl font-[var(--font-mono)] font-bold text-[var(--color-accent)] mb-1">
+                                <p className="text-3xl lg:text-4xl font-medium text-white mb-1">
                                     {stat.value}
                                 </p>
-                                <p className="text-xs text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider">
+                                <p className="text-xs text-white/40 uppercase tracking-wider">
                                     {stat.label}
                                 </p>
                             </div>
@@ -154,17 +154,17 @@ export default function AboutPage() {
             {/* CTA */}
             <section className="max-w-4xl mx-auto px-6">
                 <PageTransition>
-                    <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-10 lg:p-14 text-center">
-                        <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4">
-                            Let&apos;s build something secure.
+                    <div className="rounded-xl bg-neutral-900 border border-white/10 p-10 lg:p-14 text-center">
+                        <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4">
+                            let&apos;s build something secure.
                         </h2>
-                        <p className="text-[var(--color-text-secondary)] max-w-lg mx-auto mb-8">
-                            Whether you need SOC2 certification, cloud resilience
-                            engineering, or AI-driven security automation — we&apos;re
+                        <p className="text-white/60 max-w-lg mx-auto mb-8">
+                            whether you need soc2 certification, cloud resilience
+                            engineering, or ai-driven security automation — we&apos;re
                             here to help.
                         </p>
                         <Button variant="primary" size="lg" href="/contact">
-                            Get in Touch
+                            get in touch
                             <ArrowRight size={18} />
                         </Button>
                     </div>

@@ -45,19 +45,19 @@ const testimonials: Testimonial[] = [
 function TestimonialCard({ item }: { item: Testimonial }) {
     return (
         <div className="flex-shrink-0 w-[400px] md:w-[450px]">
-            <div className="glass-card rounded-xl p-8 h-full flex flex-col mx-3 group hover:border-[rgba(0,212,255,0.3)] transition-all duration-400">
+            <div className="rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-white/8 p-8 h-full flex flex-col mx-3 group hover:border-white/20 transition-all duration-400">
                 <Quote
                     size={24}
-                    className="text-[var(--color-accent)] opacity-30 mb-4 group-hover:opacity-60 transition-opacity"
+                    className="text-white/20 mb-4 group-hover:text-white/40 transition-opacity"
                 />
-                <p className="text-[var(--color-text-secondary)] leading-relaxed flex-1 mb-6 text-sm">
+                <p className="text-white/60 leading-relaxed flex-1 mb-6 text-sm">
                     &ldquo;{item.quote}&rdquo;
                 </p>
-                <div className="border-t border-[rgba(0,212,255,0.1)] pt-4">
-                    <p className="text-sm text-[var(--color-text-primary)] font-medium">
+                <div className="border-t border-white/10 pt-4">
+                    <p className="text-sm text-white font-medium">
                         {item.name}
                     </p>
-                    <p className="text-xs text-[var(--color-text-muted)]">
+                    <p className="text-xs text-white/40">
                         {item.title}, {item.company}
                     </p>
                 </div>
@@ -75,18 +75,18 @@ export function TestimonialSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4"
+                    className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
                 >
-                    Client Feedback
+                    client feedback
                 </motion.p>
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-3xl sm:text-4xl text-[var(--color-text-primary)]"
+                    className="text-3xl sm:text-4xl text-white font-medium"
                 >
-                    What clients say
+                    what clients say
                 </motion.h2>
             </div>
 

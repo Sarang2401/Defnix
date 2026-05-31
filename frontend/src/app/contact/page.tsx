@@ -17,68 +17,68 @@ export default function ContactPage() {
                     {/* Left — Info */}
                     <div>
                         <PageTransition>
-                            <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                                Contact Us
+                            <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                                contact us
                             </p>
                         </PageTransition>
                         <PageTransition delay={0.1}>
-                            <h1 className="text-4xl sm:text-5xl text-[var(--color-text-primary)] mb-6">
-                                Let&apos;s talk about
+                            <h1 className="text-4xl sm:text-5xl text-white font-medium mb-6">
+                                let&apos;s talk about
                                 <br />
-                                <span className="text-[var(--color-text-secondary)]">
-                                    your security.
+                                <span className="text-white/50">
+                                    your project.
                                 </span>
                             </h1>
                         </PageTransition>
                         <PageTransition delay={0.2}>
-                            <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed mb-10">
-                                Whether you need SOC2 compliance engineering, cloud
-                                resilience, or AI-driven security automation — we
-                                start every engagement with a no-obligation
-                                conversation. Tell us about your challenges.
+                            <p className="text-lg text-white/60 leading-relaxed mb-10">
+                                whether you need soc2 compliance engineering, cloud
+                                resilience, website development, mobile apps, or
+                                business automation — we start every engagement with a
+                                no-obligation conversation. tell us about your challenges.
                             </p>
                         </PageTransition>
 
                         <PageTransition delay={0.3}>
                             <div className="space-y-6">
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
                                         <Mail size={18} />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[var(--color-text-primary)] font-[var(--font-heading)] font-medium mb-0.5">
-                                            Email
+                                        <p className="text-sm text-white font-medium mb-0.5">
+                                            email
                                         </p>
-                                        <p className="text-sm text-[var(--color-text-secondary)]">
+                                        <p className="text-sm text-white/60">
                                             hello@defnix.com
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
                                         <Clock size={18} />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[var(--color-text-primary)] font-[var(--font-heading)] font-medium mb-0.5">
-                                            Response Time
+                                        <p className="text-sm text-white font-medium mb-0.5">
+                                            response time
                                         </p>
-                                        <p className="text-sm text-[var(--color-text-secondary)]">
-                                            Within 1 business day
+                                        <p className="text-sm text-white/60">
+                                            within 1 business day
                                         </p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-start gap-4">
-                                    <div className="w-10 h-10 rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] flex-shrink-0">
+                                    <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
                                         <MapPin size={18} />
                                     </div>
                                     <div>
-                                        <p className="text-sm text-[var(--color-text-primary)] font-[var(--font-heading)] font-medium mb-0.5">
-                                            Location
+                                        <p className="text-sm text-white font-medium mb-0.5">
+                                            location
                                         </p>
-                                        <p className="text-sm text-[var(--color-text-secondary)]">
-                                            Remote-first · Serving clients globally
+                                        <p className="text-sm text-white/60">
+                                            remote-first · serving clients globally
                                         </p>
                                     </div>
                                 </div>
@@ -89,9 +89,9 @@ export default function ContactPage() {
                     {/* Right — Form */}
                     <div>
                         <PageTransition delay={0.3}>
-                            <div className="rounded-lg bg-[var(--color-bg-surface)] border border-[var(--color-border)] p-8 lg:p-10">
-                                <h2 className="text-xl text-[var(--color-text-primary)] mb-6">
-                                    Send us a message
+                            <div className="rounded-xl bg-neutral-900 border border-white/10 p-8 lg:p-10">
+                                <h2 className="text-xl text-white font-medium mb-6">
+                                    send us a message
                                 </h2>
                                 <ContactForm />
                             </div>

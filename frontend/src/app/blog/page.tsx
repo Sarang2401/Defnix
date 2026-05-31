@@ -111,12 +111,12 @@ async function getPosts(): Promise<BlogPost[]> {
 function FeaturedPost({ post }: { post: BlogPost }) {
     return (
         <Link href={`/blog/${post.slug}`} className="block group">
-            <div className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-8 lg:p-10">
+            <div className="card-glow rounded-xl bg-neutral-900 p-8 lg:p-10">
                 <div className="flex items-center gap-3 mb-4">
-                    <span className="font-[var(--font-mono)] text-[10px] text-[var(--color-accent)] tracking-wider uppercase px-2 py-1 rounded bg-[var(--color-accent-dim)]">
-                        Featured
+                    <span className="text-[10px] text-white tracking-wider uppercase px-3 py-1 rounded-full bg-white/10">
+                        featured
                     </span>
-                    <span className="text-xs text-[var(--color-text-muted)]">
+                    <span className="text-xs text-white/40">
                         {new Date(post.date).toLocaleDateString("en-US", {
                             month: "long",
                             day: "numeric",
@@ -125,16 +125,16 @@ function FeaturedPost({ post }: { post: BlogPost }) {
                     </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl text-[var(--color-text-primary)] mb-4 group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl text-white font-medium mb-4 group-hover:text-white/80 transition-colors duration-200">
                     {post.title}
                 </h2>
 
-                <p className="text-[var(--color-text-secondary)] leading-relaxed mb-6 max-w-3xl">
+                <p className="text-white/60 leading-relaxed mb-6 max-w-3xl">
                     {post.excerpt}
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-1.5 text-sm text-[var(--color-text-muted)]">
+                    <div className="flex items-center gap-1.5 text-sm text-white/40">
                         <Clock size={14} />
                         {post.readingTime}
                     </div>
@@ -142,15 +142,15 @@ function FeaturedPost({ post }: { post: BlogPost }) {
                         {post.tags.map((tag) => (
                             <span
                                 key={tag}
-                                className="flex items-center gap-1 text-xs text-[var(--color-text-muted)] font-[var(--font-mono)]"
+                                className="flex items-center gap-1 text-xs text-white/40"
                             >
                                 <Tag size={10} />
                                 {tag}
                             </span>
                         ))}
                     </div>
-                    <span className="ml-auto inline-flex items-center gap-2 text-sm text-[var(--color-accent)] font-[var(--font-heading)] font-medium group-hover:gap-3 transition-all duration-200">
-                        Read article <ArrowRight size={14} />
+                    <span className="ml-auto inline-flex items-center gap-2 text-sm text-white/70 font-medium group-hover:gap-3 group-hover:text-white transition-all duration-200">
+                        read article <ArrowRight size={14} />
                     </span>
                 </div>
             </div>
@@ -161,30 +161,30 @@ function FeaturedPost({ post }: { post: BlogPost }) {
 function CompactPost({ post }: { post: BlogPost }) {
     return (
         <Link href={`/blog/${post.slug}`} className="block group">
-            <div className="card-glow rounded-lg bg-[var(--color-bg-surface)] p-6">
+            <div className="card-glow rounded-xl bg-neutral-900 p-6">
                 <div className="flex items-center gap-3 mb-3">
-                    <span className="text-xs text-[var(--color-text-muted)]">
+                    <span className="text-xs text-white/40">
                         {new Date(post.date).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
                         })}
                     </span>
-                    <span className="text-xs text-[var(--color-text-muted)] flex items-center gap-1">
+                    <span className="text-xs text-white/40 flex items-center gap-1">
                         <Clock size={12} />
                         {post.readingTime}
                     </span>
                 </div>
-                <h3 className="text-lg text-[var(--color-text-primary)] mb-2 group-hover:text-[var(--color-accent)] transition-colors duration-200 leading-snug">
+                <h3 className="text-lg text-white mb-2 group-hover:text-white/70 transition-colors duration-200 leading-snug">
                     {post.title}
                 </h3>
-                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed line-clamp-2">
+                <p className="text-sm text-white/60 leading-relaxed line-clamp-2">
                     {post.excerpt}
                 </p>
                 <div className="mt-3 flex gap-2">
                     {post.tags.slice(0, 2).map((tag) => (
                         <span
                             key={tag}
-                            className="text-[10px] text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider"
+                            className="text-[10px] text-white/30 uppercase tracking-wider"
                         >
                             {tag}
                         </span>
@@ -209,23 +209,23 @@ export default async function BlogPage() {
             {/* Header */}
             <section className="max-w-7xl mx-auto px-6 mb-16">
                 <PageTransition>
-                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                        Technical Blog
+                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                        technical blog
                     </p>
                 </PageTransition>
                 <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
-                        Engineering
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6">
+                        engineering
                         <br />
-                        <span className="text-[var(--color-text-secondary)]">
+                        <span className="text-white/50">
                             insights.
                         </span>
                     </h1>
                 </PageTransition>
                 <PageTransition delay={0.2}>
-                    <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        Deep technical articles on SOC2 compliance, cloud security
-                        architecture, and AI-driven security operations — written by
+                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+                        deep technical articles on soc2 compliance, cloud security
+                        architecture, and ai-driven security operations — written by
                         engineers, for engineers.
                     </p>
                 </PageTransition>

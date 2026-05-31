@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import { Shield, Cloud, Brain, Globe, Smartphone, Workflow } from "lucide-react";
 import { Button } from "../ui/Button";
 import { ArrowRight } from "lucide-react";
-import { ReactNode, useRef } from "react";
+import { ReactNode } from "react";
 import { TiltCard } from "../ui/TiltCard";
-import { TextReveal } from "../ui/TextReveal";
 
 interface Solution {
     icon: ReactNode;
@@ -84,16 +83,19 @@ export function SolutionsSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
-                        className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4"
+                        className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
                     >
-                        What We Do
+                        what we do
                     </motion.p>
-                    <TextReveal
-                        as="h2"
-                        className="text-3xl sm:text-4xl lg:text-5xl text-[var(--color-text-primary)]"
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                        className="text-3xl sm:text-4xl lg:text-5xl text-white font-medium"
                     >
-                        Six disciplines. One engineering studio.
-                    </TextReveal>
+                        six disciplines. one engineering studio.
+                    </motion.h2>
                 </div>
 
                 <div className="space-y-6">
@@ -116,7 +118,7 @@ export function SolutionsSection() {
                                         ? "lg:ml-32 lg:mr-0"
                                         : ""
                             }`}>
-                                <div className="card-glow rounded-xl glass-card p-8 lg:p-10">
+                                <div className="card-glow rounded-xl bg-neutral-900/60 backdrop-blur-sm p-8 lg:p-10">
                                     <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
                                         {/* Icon */}
                                         <div className="flex-shrink-0">
@@ -124,7 +126,7 @@ export function SolutionsSection() {
                                                 whileInView={{ rotate: [0, 360] }}
                                                 viewport={{ once: true }}
                                                 transition={{ duration: 0.6, delay: 0.3 + index * 0.05 }}
-                                                className="w-12 h-12 rounded-xl bg-[var(--color-accent-dim)] flex items-center justify-center text-[var(--color-accent)]"
+                                                className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white"
                                             >
                                                 {solution.icon}
                                             </motion.div>
@@ -132,20 +134,20 @@ export function SolutionsSection() {
 
                                         {/* Content */}
                                         <div className="flex-1 min-w-0">
-                                            <p className="font-[var(--font-mono)] text-[10px] text-[var(--color-danger)] tracking-wider uppercase mb-2">
+                                            <p className="text-[10px] text-white/40 tracking-wider uppercase mb-2">
                                                 ▲ {solution.risk}
                                             </p>
-                                            <h3 className="text-xl lg:text-2xl text-[var(--color-text-primary)] mb-1">
+                                            <h3 className="text-xl lg:text-2xl text-white mb-1">
                                                 {solution.title}
                                             </h3>
-                                            <p className="text-sm text-[var(--color-text-muted)] font-[var(--font-mono)] mb-4">
+                                            <p className="text-sm text-white/40 mb-4">
                                                 {solution.subtitle}
                                             </p>
-                                            <p className="text-[var(--color-text-secondary)] leading-relaxed mb-6 max-w-2xl">
+                                            <p className="text-white/70 leading-relaxed mb-6 max-w-2xl">
                                                 {solution.description}
                                             </p>
                                             <Button variant="ghost" size="sm" href={solution.href}>
-                                                Learn more <ArrowRight size={14} />
+                                                learn more <ArrowRight size={14} />
                                             </Button>
                                         </div>
                                     </div>

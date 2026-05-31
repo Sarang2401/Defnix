@@ -45,7 +45,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
     return (
         <div ref={containerRef}>
-            <span ref={numberRef} className="font-[var(--font-mono)] text-4xl lg:text-5xl font-bold gradient-text">
+            <span ref={numberRef} className="text-4xl lg:text-5xl font-medium text-white tracking-tight">
                 0{suffix}
             </span>
         </div>
@@ -61,7 +61,7 @@ export function MetricsBar() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 0.8 }}
-                    className="glass-card rounded-2xl p-10 lg:p-14"
+                    className="bg-neutral-900/60 backdrop-blur-sm rounded-2xl border border-white/10 p-10 lg:p-14"
                 >
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                         {metrics.map((metric, i) => (
@@ -76,7 +76,7 @@ export function MetricsBar() {
                                 <div className="mb-3">
                                     <AnimatedNumber value={metric.value} suffix={metric.suffix} />
                                 </div>
-                                <p className="text-sm text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider">
+                                <p className="text-sm text-white/40 uppercase tracking-wider">
                                     {metric.label}
                                 </p>
                             </motion.div>

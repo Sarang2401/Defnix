@@ -1,34 +1,13 @@
 import type { Metadata } from "next";
-import { Sora, DM_Sans, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
+import { Readex_Pro } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
-const sora = Sora({
-  variable: "--font-display",
+const readexPro = Readex_Pro({
+  variable: "--font-readex",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "600", "700", "800"],
-});
-
-const dmSans = DM_Sans({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -77,14 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${sora.variable} ${dmSans.variable} ${ibmPlexSans.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className={readexPro.variable}>
       <body className="antialiased">
         <LayoutContent>{children}</LayoutContent>
       </body>
     </html>
   );
 }
-
