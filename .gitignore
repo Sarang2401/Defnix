@@ -1,5 +1,6 @@
 node_modules/
 .env
+.env.*
 dist/
 build/
 .next/
@@ -8,3 +9,17 @@ coverage/
 .expo/
 *.log
 .DS_Store
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*secret*
+*token*
+*credential*
+Defnix_PRD.docx
+Defnix_PRD.txt
+Defnix_Website_PRD_v1.0.docx
+*.docx
+.tmp_prd_extract/

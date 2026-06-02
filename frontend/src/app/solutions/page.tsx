@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight } from "lucide-react";
-import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import * as motion from "framer-motion/client";
 
 export const metadata: Metadata = {
     title: "Solutions",
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 const solutions = [
     {
-        icon: <Shield size={28} />,
+        icon: <Shield size={22} />,
         title: "SOC2 Failure Prevention",
         subtitle: "Compliance Readiness Engineering",
         risk: "73% of companies fail their first SOC2 audit",
@@ -21,7 +21,7 @@ const solutions = [
         capabilities: ["Control gap analysis & remediation roadmap", "Evidence pipeline automation", "Policy documentation suite", "Auditor-ready architecture reviews"],
     },
     {
-        icon: <Cloud size={28} />,
+        icon: <Cloud size={22} />,
         title: "Cloud Insurance",
         subtitle: "Cloud Risk Reduction & Incident Readiness",
         risk: "$4.45M average cost of a cloud data breach",
@@ -30,7 +30,7 @@ const solutions = [
         capabilities: ["Multi-cloud architecture review", "Disaster recovery engineering", "Incident response playbooks", "Blast radius minimization"],
     },
     {
-        icon: <Brain size={28} />,
+        icon: <Brain size={22} />,
         title: "AI Enhanced SOC Analyst",
         subtitle: "AI-Driven Security Automation",
         risk: "SOC teams waste 45% of time on false positives",
@@ -39,7 +39,7 @@ const solutions = [
         capabilities: ["ML-powered alert triage", "Automated investigation runbooks", "Intelligent escalation pipelines", "SOC productivity analytics"],
     },
     {
-        icon: <Globe size={28} />,
+        icon: <Globe size={22} />,
         title: "Website Development",
         subtitle: "Websites for Small Businesses",
         risk: "46% of small businesses still have no website",
@@ -48,7 +48,7 @@ const solutions = [
         capabilities: ["Mobile-first responsive design", "Local SEO & Google Business optimisation", "Online booking & menu integration", "CMS setup for self-management"],
     },
     {
-        icon: <Smartphone size={28} />,
+        icon: <Smartphone size={22} />,
         title: "Mobile App Development",
         subtitle: "iOS & Android Apps",
         risk: "85% of consumers prefer apps for local services",
@@ -57,7 +57,7 @@ const solutions = [
         capabilities: ["Cross-platform iOS & Android (React Native)", "Appointment booking & patient portals", "Push notifications & loyalty features", "App Store & Play Store publishing"],
     },
     {
-        icon: <Workflow size={28} />,
+        icon: <Workflow size={22} />,
         title: "Business Automation",
         subtitle: "Workflow Automation with n8n, Make & Zapier",
         risk: "Teams lose 15+ hours/week to repetitive manual tasks",
@@ -102,27 +102,60 @@ export default function SolutionsPage() {
     return (
         <div className="pt-28 pb-20">
             <section className="max-w-7xl mx-auto px-6 mb-20">
-                <PageTransition><p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">what we do</p></PageTransition>
-                <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6">six disciplines.<br /><span className="text-white/50">one engineering studio.</span></h1>
-                </PageTransition>
-                <PageTransition delay={0.2}>
-                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">from soc2 compliance to mobile apps to business automation — we engineer the systems that help startups and small businesses grow faster.</p>
-                </PageTransition>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
+                >
+                    what we do
+                </motion.p>
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6"
+                >
+                    six disciplines.<br /><span className="text-white/50">one engineering studio.</span>
+                </motion.h1>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="text-lg text-white/60 max-w-2xl leading-relaxed"
+                >
+                    from soc2 compliance to mobile apps to business automation — we engineer the systems that help startups and small businesses grow faster.
+                </motion.p>
             </section>
+
             <section className="max-w-7xl mx-auto px-6">
-                <StaggerContainer className="space-y-8">
-                    {solutions.map((solution, index) => (<SolutionCard key={solution.title} solution={solution} index={index} />))}
-                </StaggerContainer>
+                <div className="space-y-8">
+                    {solutions.map((solution, index) => (
+                        <motion.div
+                            key={solution.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.05 }}
+                        >
+                            <SolutionCard solution={solution} index={index} />
+                        </motion.div>
+                    ))}
+                </div>
             </section>
+
             <section className="max-w-7xl mx-auto px-6 mt-24">
-                <PageTransition>
-                    <div className="text-center">
-                        <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4">not sure which solution fits?</h2>
-                        <p className="text-white/60 max-w-lg mx-auto mb-8">book a 30-minute call. we&apos;ll understand your goals and recommend the right approach.</p>
-                        <Button variant="primary" size="lg" href="/contact">book a free consultation <ArrowRight size={18} /></Button>
-                    </div>
-                </PageTransition>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-center"
+                >
+                    <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4">not sure which solution fits?</h2>
+                    <p className="text-white/60 max-w-lg mx-auto mb-8">book a 30-minute call. we&apos;ll understand your goals and recommend the right approach.</p>
+                    <Button variant="primary" size="lg" href="/contact">book a free consultation <ArrowRight size={18} /></Button>
+                </motion.div>
             </section>
         </div>
     );

@@ -3,6 +3,8 @@ import Link from "next/link";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { Button } from "@/components/ui/Button";
 import { ArrowLeft, Clock, Tag, User, Share2, Twitter, Linkedin } from "lucide-react";
+import { BlogEnhancements } from "@/components/sections/BlogEnhancements";
+import { CopyLinkButton } from "@/components/ui/CopyLinkButton";
 
 /* ---------- Types ---------- */
 interface PostShape {
@@ -231,6 +233,13 @@ interface PageProps {
     params: Promise<{ slug: string }>;
 }
 
+const pillarLinks = [
+    { label: "SOC2 Compliance Pillar", href: "/blog/pillars/soc2-compliance" },
+    { label: "Cloud Security Pillar", href: "/blog/pillars/cloud-security-for-startups" },
+    { label: "Business Automation Pillar", href: "/blog/pillars/business-automation" },
+    { label: "Website Development Pillar", href: "/blog/pillars/website-development-small-business" },
+];
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
     const { slug } = await params;
     const post = await getPost(slug);
@@ -243,6 +252,46 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function BlogDetailPage({ params }: PageProps) {
     const { slug } = await params;
     const post = (await getPost(slug)) || { ...defaultPost, title: slug.replace(/-/g, " ") };
+    const articleSchema = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        headline: post.title,
+        description: post.excerpt,
+        author: {
+            "@type": "Person",
+            name: post.author,
+        },
+        publisher: {
+            "@type": "Organization",
+            name: "Defnix",
+            url: "https://defnix.in",
+        },
+        datePublished: post.date,
+        mainEntityOfPage: `https://defnix.in/blog/${slug}`,
+    };
+
+    const slugify = (value: string) =>
+        value.toLowerCase().replace(/[^a-z0-9\s-]/g, "").trim().replace(/\s+/g, "-");
+    const headings = post.content
+        .split("\n")
+        .filter((line) => line.startsWith("## ") || line.startsWith("### "))
+        .map((line) => ({
+            text: line.replace(/^###?\s/, "").trim(),
+            level: line.startsWith("### ") ? 3 as const : 2 as const,
+            id: slugify(line.replace(/^###?\s/, "").trim()),
+        }));
+    const lowerTags = post.tags.map((tag) => tag.toLowerCase());
+    const serviceLinks = [
+        ...(lowerTags.some((t) => t.includes("soc2") || t.includes("compliance"))
+            ? [{ label: "SOC2 Failure Prevention", href: "/solutions/soc2-failure-prevention" }]
+            : []),
+        ...(lowerTags.some((t) => t.includes("cloud") || t.includes("disaster"))
+            ? [{ label: "Cloud Insurance", href: "/solutions/cloud-insurance" }]
+            : []),
+        ...(lowerTags.some((t) => t.includes("ai") || t.includes("automation") || t.includes("soc"))
+            ? [{ label: "AI Enhanced SOC Analyst", href: "/solutions/ai-soc-analyst" }]
+            : []),
+    ];
 
     // Simple markdown-like rendering for content
     const renderContent = (content: string) => {
@@ -282,21 +331,23 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
             // Headings
             if (line.startsWith("## ")) {
+                const text = line.slice(3);
                 elements.push(
                     <h2
                         key={i}
                         className="text-2xl sm:text-3xl text-white font-medium mt-12 mb-4"
                     >
-                        {line.slice(3)}
+                        {text}
                     </h2>
                 );
             } else if (line.startsWith("### ")) {
+                const text = line.slice(4);
                 elements.push(
                     <h3
                         key={i}
                         className="text-xl text-white font-medium mt-8 mb-3"
                     >
-                        {line.slice(4)}
+                        {text}
                     </h3>
                 );
             }
@@ -347,6 +398,11 @@ export default async function BlogDetailPage({ params }: PageProps) {
     return (
         <div className="pt-28 pb-20">
             <article className="max-w-3xl mx-auto px-6">
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+                />
+                <BlogEnhancements headings={headings} />
                 {/* Back link */}
                 <PageTransition>
                     <Link
@@ -402,6 +458,17 @@ export default async function BlogDetailPage({ params }: PageProps) {
                     <div className="prose-defnix">{renderContent(post.content)}</div>
                 </PageTransition>
 
+                <PageTransition delay={0.25}>
+                    <div className="mt-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-6">
+                        <p className="text-xs uppercase tracking-wider text-[var(--color-text-muted)] mb-2">Author</p>
+                        <h3 className="text-lg text-[var(--color-text-primary)]">{post.author}</h3>
+                        <p className="text-sm text-[var(--color-text-secondary)] mb-3">Engineering Team at Defnix</p>
+                        <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="text-sm text-[var(--color-accent)]">
+                            LinkedIn Profile
+                        </a>
+                    </div>
+                </PageTransition>
+
                 {/* Share + CTA */}
                 <PageTransition delay={0.3}>
                     <div className="mt-16 pt-8 border-t border-white/10">
@@ -427,6 +494,43 @@ export default async function BlogDetailPage({ params }: PageProps) {
                             >
                                 <Linkedin size={14} />
                             </a>
+                            <CopyLinkButton url={`https://defnix.in/blog/${slug}`} />
+                        </div>
+
+                        <div className="mb-10">
+                            <h3 className="text-lg text-[var(--color-text-primary)] mb-3">Related posts</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {Object.keys(staticPosts)
+                                    .filter((key) => key !== slug)
+                                    .slice(0, 3)
+                                    .map((related) => (
+                                        <Link key={related} href={`/blog/${related}`} className="rounded border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                                            {staticPosts[related].title}
+                                        </Link>
+                                    ))}
+                            </div>
+                        </div>
+
+                        <div className="mb-10 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-surface)] p-5">
+                            <h3 className="text-lg text-[var(--color-text-primary)] mb-3">Read next</h3>
+                            <div className="flex flex-wrap gap-2 mb-3">
+                                {serviceLinks.length > 0 ? serviceLinks.map((item) => (
+                                    <Link key={item.href} href={item.href} className="rounded border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                                        {item.label}
+                                    </Link>
+                                )) : (
+                                    <Link href="/solutions" className="rounded border border-[var(--color-border)] bg-[var(--color-bg-primary)] px-3 py-1.5 text-xs text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]">
+                                        Explore Solutions
+                                    </Link>
+                                )}
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                                {pillarLinks.map((item) => (
+                                    <Link key={item.href} href={item.href} className="rounded border border-[var(--color-border)] px-3 py-1.5 text-xs text-[var(--color-text-muted)] hover:text-[var(--color-accent)]">
+                                        {item.label}
+                                    </Link>
+                                ))}
+                            </div>
                         </div>
 
                         {/* CTA */}

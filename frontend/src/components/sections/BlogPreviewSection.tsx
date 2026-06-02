@@ -12,6 +12,7 @@ interface BlogPost {
     category: string;
     readingTime: number;
     date: string;
+    image: string;
 }
 
 // Placeholder posts — will be replaced with API data
@@ -24,6 +25,7 @@ const samplePosts: BlogPost[] = [
         category: "SOC2 Compliance",
         readingTime: 8,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1563206767-5b18f218e8de?auto=format&fit=crop&w=1200&q=80",
     },
     {
         slug: "cloud-insurance-engineering-discipline",
@@ -33,6 +35,7 @@ const samplePosts: BlogPost[] = [
         category: "Cloud Security",
         readingTime: 7,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
     },
     {
         slug: "ai-augmented-soc-analyst",
@@ -42,6 +45,7 @@ const samplePosts: BlogPost[] = [
         category: "AI & Automation",
         readingTime: 9,
         date: "Feb 2026",
+        image: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=800&q=80",
     },
 ];
 
@@ -86,7 +90,7 @@ export function BlogPreviewSection() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="lg:col-span-3"
                     >
-                        <TiltCard tiltAmount={4}>
+                        <TiltCard tiltAmount={4} className="h-full block">
                             <Link
                                 href={`/blog/${featured.slug}`}
                                 className="block rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-white/8 p-8 h-full group relative overflow-hidden"
@@ -114,7 +118,7 @@ export function BlogPreviewSection() {
                     </motion.div>
 
                     {/* Secondary posts */}
-                    <div className="lg:col-span-2 flex flex-col gap-4">
+                    <div className="lg:col-span-2 flex flex-col gap-6">
                         {secondary.map((post, i) => (
                             <motion.div
                                 key={post.slug}
@@ -122,8 +126,9 @@ export function BlogPreviewSection() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+                                className="flex-1"
                             >
-                                <TiltCard tiltAmount={3}>
+                                <TiltCard tiltAmount={3} className="h-full block">
                                     <Link
                                         href={`/blog/${post.slug}`}
                                         className="block rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-white/8 p-6 group"

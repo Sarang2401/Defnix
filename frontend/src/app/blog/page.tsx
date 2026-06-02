@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
+import * as motion from "framer-motion/client";
 import { Clock, Tag, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -19,8 +19,6 @@ interface BlogPost {
     tags: string[];
     featured?: boolean;
 }
-
-/* ---------- Static fallback data (used when API is unreachable) ---------- */
 
 const staticPosts: BlogPost[] = [
     {
@@ -76,8 +74,6 @@ const staticPosts: BlogPost[] = [
     },
 ];
 
-/* ---------- Server-side data fetching ---------- */
-
 async function getPosts(): Promise<BlogPost[]> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
     try {
@@ -86,7 +82,6 @@ async function getPosts(): Promise<BlogPost[]> {
         });
         if (!res.ok) throw new Error("API error");
         const data = await res.json();
-        // Map API response to our BlogPost shape
         return (data.posts || []).map(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (p: any) => ({
@@ -101,16 +96,13 @@ async function getPosts(): Promise<BlogPost[]> {
             }),
         );
     } catch {
-        // API unreachable — use static fallback
         return staticPosts;
     }
 }
 
-/* ---------- Components ---------- */
-
 function FeaturedPost({ post }: { post: BlogPost }) {
     return (
-        <Link href={`/blog/${post.slug}`} className="block group">
+        <Link href={`/blog/${post.slug}`} className="block group mb-6">
             <div className="card-glow rounded-xl bg-neutral-900 p-8 lg:p-10">
                 <div className="flex items-center gap-3 mb-4">
                     <span className="text-[10px] text-white tracking-wider uppercase px-3 py-1 rounded-full bg-white/10">
@@ -195,57 +187,89 @@ function CompactPost({ post }: { post: BlogPost }) {
     );
 }
 
-/* ---------- Page ---------- */
-
 export default async function BlogPage() {
     const posts = await getPosts();
+    const categories = ["All", ...new Set(posts.flatMap((post) => post.tags).slice(0, 6))];
 
-    // First post is featured, rest are secondary
     const featured = posts[0] ? { ...posts[0], featured: true } : null;
     const secondary = posts.slice(1);
 
     return (
-        <div className="pt-28 pb-20">
+        <div className="pt-32 pb-20">
             {/* Header */}
             <section className="max-w-7xl mx-auto px-6 mb-16">
-                <PageTransition>
-                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
-                        technical blog
-                    </p>
-                </PageTransition>
-                <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6">
-                        engineering
-                        <br />
-                        <span className="text-white/50">
-                            insights.
-                        </span>
-                    </h1>
-                </PageTransition>
-                <PageTransition delay={0.2}>
-                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
-                        deep technical articles on soc2 compliance, cloud security
-                        architecture, and ai-driven security operations — written by
-                        engineers, for engineers.
-                    </p>
-                </PageTransition>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
+                >
+                    technical blog
+                </motion.p>
+                <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-4xl sm:text-5xl lg:text-6xl text-white font-medium mb-6"
+                >
+                    engineering
+                    <br />
+                    <span className="text-white/50">insights.</span>
+                </motion.h1>
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="text-lg text-white/60 max-w-2xl leading-relaxed mb-8"
+                >
+                    deep technical articles on soc2 compliance, cloud security
+                    architecture, and ai-driven security operations — written by
+                    engineers, for engineers.
+                </motion.p>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="flex flex-wrap gap-2.5"
+                >
+                    {categories.map((category) => (
+                        <button
+                            key={category}
+                            className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/8 hover:border-white/20 transition-all duration-200"
+                        >
+                            {category}
+                        </button>
+                    ))}
+                </motion.div>
             </section>
 
-            {/* Editorial layout: featured + secondary */}
+            {/* Editorial layout */}
             <section className="max-w-7xl mx-auto px-6">
-                {/* Featured post */}
-                {featured && (
-                    <PageTransition className="mb-8">
-                        <FeaturedPost post={featured} />
-                    </PageTransition>
-                )}
+                {featured && <FeaturedPost post={featured} />}
 
-                {/* Secondary posts — 2-column on desktop */}
-                <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {secondary.map((post) => (
                         <CompactPost key={post.slug} post={post} />
                     ))}
-                </StaggerContainer>
+                </div>
+
+                {/* Newsletter CTA */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                    className="mt-16 rounded-2xl bg-neutral-900/60 backdrop-blur-sm border border-white/10 p-10"
+                >
+                    <h3 className="text-2xl text-white font-medium mb-3">get engineering insights — no spam</h3>
+                    <p className="text-white/60 mb-8">subscribe via the contact page and we&apos;ll share practical security, cloud, and automation playbooks.</p>
+                    <div className="flex flex-wrap gap-3">
+                        <Link href="/blog/pillars/soc2-compliance" className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/60 hover:text-white hover:border-white/20 transition-all duration-200">SOC2 Pillar</Link>
+                        <Link href="/blog/pillars/cloud-security-for-startups" className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/60 hover:text-white hover:border-white/20 transition-all duration-200">Cloud Pillar</Link>
+                        <Link href="/blog/pillars/business-automation" className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/60 hover:text-white hover:border-white/20 transition-all duration-200">Automation Pillar</Link>
+                    </div>
+                </motion.div>
             </section>
         </div>
     );

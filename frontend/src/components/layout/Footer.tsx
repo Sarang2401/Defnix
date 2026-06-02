@@ -58,11 +58,9 @@ export function Footer() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),
             });
-            setSubscribed(true);
-            setEmail("");
-        } catch {
-            // Silently fail — newsletter is non-critical
-        }
+        } catch { }
+        setSubscribed(true);
+        setEmail("");
     };
 
     return (

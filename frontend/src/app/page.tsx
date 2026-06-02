@@ -4,6 +4,7 @@ import { MetricsBar } from "@/components/sections/MetricsBar";
 import { BlogPreviewSection } from "@/components/sections/BlogPreviewSection";
 import { TestimonialSection } from "@/components/sections/TestimonialSection";
 import { CTASection } from "@/components/sections/CTASection";
+import { HowWeWorkSection } from "@/components/sections/HowWeWorkSection";
 
 export default function HomePage() {
   return (
@@ -11,6 +12,7 @@ export default function HomePage() {
       <HeroSection />
       <SolutionsSection />
       <MetricsBar />
+      <HowWeWorkSection />
       <BlogPreviewSection />
       <TestimonialSection />
       <CTASection />

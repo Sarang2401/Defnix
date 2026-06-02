@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "../ui/Button";
-import { PageTransition } from "../ui/PageTransition";
+import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";
@@ -47,7 +47,11 @@ export function ContactForm() {
 
     if (status === "success") {
         return (
-            <PageTransition>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
                 <div className="text-center py-12">
                     <CheckCircle size={48} className="text-white mx-auto mb-4" />
                     <h3 className="text-xl text-white mb-2">
@@ -57,7 +61,7 @@ export function ContactForm() {
                         we&apos;ll respond within 1 business day.
                     </p>
                 </div>
-            </PageTransition>
+            </motion.div>
         );
     }
 

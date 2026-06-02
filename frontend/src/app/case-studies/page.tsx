@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { PageTransition, StaggerContainer } from "@/components/ui/PageTransition";
 import { Button } from "@/components/ui/Button";
+import * as motion from "framer-motion/client";
 import { ArrowRight, Building2, TrendingUp } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -21,7 +21,6 @@ interface CaseStudyShape {
     metricLabel: string;
 }
 
-/* ---------- Static fallback ---------- */
 const staticCaseStudies: CaseStudyShape[] = [
     {
         slug: "saas-soc2-compliance",
@@ -56,7 +55,7 @@ const staticCaseStudies: CaseStudyShape[] = [
             "Implemented automated daily backup verification with alerting",
             "Created incident response playbooks for top 5 failure scenarios",
         ],
-        metric: "<30min",
+        metric: "<30m",
         metricLabel: "Recovery time",
     },
     {
@@ -92,7 +91,7 @@ const staticCaseStudies: CaseStudyShape[] = [
             "Owner reported approximately 40% increase in new customer walk-ins over 3 months",
             "Online contact form generating regular enquiries for event bookings",
         ],
-        metric: "12 days",
+        metric: "12d",
         metricLabel: "To go live",
     },
     {
@@ -116,7 +115,7 @@ const staticCaseStudies: CaseStudyShape[] = [
     {
         slug: "creator-automation-pipeline",
         client: "Content Creator & Coach · London, UK",
-        industry: "Personal Brand & Creator Economy",
+        industry: "Creator Economy",
         title: "Automated Client Pipeline Saved 12+ Hours Per Week",
         challenge:
             "A UK-based content creator with a growing coaching business was manually responding to enquiries, scheduling discovery calls, sending invoices, and managing email follow-ups. Most of the week was spent on admin rather than creating content or coaching.",
@@ -133,7 +132,6 @@ const staticCaseStudies: CaseStudyShape[] = [
     },
 ];
 
-/* ---------- Server-side data fetching ---------- */
 async function getCaseStudies(): Promise<CaseStudyShape[]> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
     try {
@@ -143,7 +141,7 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
         if (!res.ok) throw new Error("API error");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data: any[] = await res.json();
-        return data.map((cs) => ({
+        return data.map((cs, i) => ({
             slug: cs.slug,
             client: cs.client || "Enterprise Client",
             industry: cs.industry || "Technology",
@@ -153,8 +151,8 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
             results: typeof cs.results === "string"
                 ? cs.results.split("\n").filter(Boolean)
                 : Array.isArray(cs.results) ? cs.results : [],
-            metric: "",
-            metricLabel: "",
+            metric: staticCaseStudies[i % staticCaseStudies.length]?.metric || "",
+            metricLabel: staticCaseStudies[i % staticCaseStudies.length]?.metricLabel || "",
         }));
     } catch {
         return staticCaseStudies;
@@ -163,131 +161,151 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
 
 export default async function CaseStudiesPage() {
     const caseStudies = await getCaseStudies();
+
     return (
-        <div className="pt-28 pb-20">
+        <div className="pt-32 pb-20">
             {/* Header */}
-            <section className="max-w-7xl mx-auto px-6 mb-16">
-                <PageTransition>
-                    <p className="font-[var(--font-mono)] text-xs text-[var(--color-accent)] tracking-[0.2em] uppercase mb-4">
-                        Case Studies
+            <section className="max-w-7xl mx-auto px-6 mb-20">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                        case studies
                     </p>
-                </PageTransition>
-                <PageTransition delay={0.1}>
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-6">
-                        Real results.
+                    <h1 className="text-4xl sm:text-5xl lg:text-7xl text-white font-medium mb-7 leading-[1.05] tracking-tight">
+                        proof,
                         <br />
-                        <span className="text-[var(--color-text-secondary)]">
-                            Real engineering.
+                        <span className="text-white/40">
+                            not promises.
                         </span>
                     </h1>
-                </PageTransition>
-                <PageTransition delay={0.2}>
-                    <p className="text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
-                        Detailed breakdowns of how we&apos;ve helped organizations
-                        achieve compliance, build resilience, and automate security
-                        operations.
+                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+                        delivery stories across security, web, mobile, and automation projects.
                     </p>
-                </PageTransition>
+
+                    <div className="mt-8 flex flex-wrap gap-2.5">
+                        {["All", "Security", "Web", "Mobile", "Automation"].map((filter) => (
+                            <button
+                                key={filter}
+                                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/8 hover:border-white/20 transition-all duration-200"
+                            >
+                                {filter}
+                            </button>
+                        ))}
+                    </div>
+                </motion.div>
             </section>
 
-            {/* Case study cards */}
+            {/* Case study list */}
             <section className="max-w-7xl mx-auto px-6">
-                <StaggerContainer className="space-y-8">
-                    {caseStudies.map((study, index) => (
-                        <div
-                            key={study.slug}
-                            className={`card-glow rounded-lg bg-[var(--color-bg-surface)] overflow-hidden ${index === 1 ? "lg:ml-10" : index === 2 ? "lg:ml-20" : ""
-                                }`}
-                        >
-                            <div className="p-8 lg:p-10">
-                                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-                                    {/* Left - content */}
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <span className="flex items-center gap-1.5 text-xs text-[var(--color-text-muted)] font-[var(--font-mono)]">
-                                                <Building2 size={12} />
-                                                {study.industry}
-                                            </span>
-                                            <span className="w-1 h-1 rounded-full bg-[var(--color-border)]" />
-                                            <span className="text-xs text-[var(--color-text-muted)]">
-                                                {study.client}
-                                            </span>
-                                        </div>
-
-                                        <h2 className="text-2xl lg:text-3xl text-[var(--color-text-primary)] mb-4">
-                                            {study.title}
-                                        </h2>
-
-                                        <div className="space-y-4 mb-6">
-                                            <div>
-                                                <p className="text-xs text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider mb-1">
-                                                    Challenge
-                                                </p>
-                                                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                                                    {study.challenge}
-                                                </p>
+                <div className="space-y-6">
+                    {caseStudies.map((study, index) => {
+                        const offset = index % 3;
+                        return (
+                            <motion.div
+                                key={study.slug}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 0.5, delay: index * 0.05 }}
+                                className={`lg:w-[85%] ${offset === 1 ? "lg:ml-[7.5%]" : offset === 2 ? "lg:ml-[15%]" : ""}`}
+                            >
+                                <div className="card-glow rounded-2xl bg-neutral-900/60 backdrop-blur-sm p-8 lg:p-12">
+                                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
+                                        {/* Content */}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <span className="flex items-center gap-2 text-[11px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-white/50">
+                                                    <Building2 size={12} />
+                                                    {study.industry}
+                                                </span>
+                                                <span className="w-1 h-1 rounded-full bg-white/20" />
+                                                <span className="text-[11px] text-white/40 uppercase tracking-widest">
+                                                    {study.client}
+                                                </span>
                                             </div>
+
+                                            <h2 className="text-2xl lg:text-[32px] text-white mb-8 leading-[1.1] tracking-tight font-medium">
+                                                {study.title}
+                                            </h2>
+
+                                            <div className="space-y-6 mb-10">
+                                                <div>
+                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
+                                                        challenge
+                                                    </p>
+                                                    <p className="text-white/60 leading-relaxed">
+                                                        {study.challenge}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
+                                                        solution
+                                                    </p>
+                                                    <p className="text-white/60 leading-relaxed">
+                                                        {study.solution}
+                                                    </p>
+                                                </div>
+                                            </div>
+
                                             <div>
-                                                <p className="text-xs text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider mb-1">
-                                                    Solution
+                                                <p className="text-[10px] uppercase tracking-widest text-white/30 mb-4">
+                                                    results
                                                 </p>
-                                                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                                                    {study.solution}
-                                                </p>
+                                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                    {study.results.map((result) => (
+                                                        <li
+                                                            key={result}
+                                                            className="flex items-start gap-3 text-sm text-white/70"
+                                                        >
+                                                            <TrendingUp size={16} className="mt-0.5 flex-shrink-0 text-white/40" />
+                                                            {result}
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <p className="text-xs text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider mb-2">
-                                                Results
-                                            </p>
-                                            <ul className="space-y-2">
-                                                {study.results.map((result) => (
-                                                    <li
-                                                        key={result}
-                                                        className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]"
-                                                    >
-                                                        <TrendingUp size={14} className="text-[var(--color-success)] mt-0.5 flex-shrink-0" />
-                                                        {result}
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                        {/* Metric Callout */}
+                                        <div className="lg:w-48 flex-shrink-0 flex lg:flex-col items-center lg:items-end justify-center gap-3 pt-6 lg:pt-0 border-t lg:border-t-0 border-white/[0.06]">
+                                            <span className="text-5xl lg:text-7xl font-medium text-white leading-none">
+                                                {study.metric}
+                                            </span>
+                                            <span className="text-xs text-white/40 uppercase tracking-widest lg:text-right">
+                                                {study.metricLabel}
+                                            </span>
                                         </div>
-                                    </div>
-
-                                    {/* Right - metric highlight */}
-                                    <div className="lg:w-48 flex-shrink-0 flex lg:flex-col items-center lg:items-end justify-center gap-2">
-                                        <span className="text-5xl lg:text-6xl font-[var(--font-mono)] font-bold text-[var(--color-accent)]">
-                                            {study.metric}
-                                        </span>
-                                        <span className="text-xs text-[var(--color-text-muted)] font-[var(--font-mono)] uppercase tracking-wider lg:text-right">
-                                            {study.metricLabel}
-                                        </span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    ))}
-                </StaggerContainer>
+                            </motion.div>
+                        );
+                    })}
+                </div>
             </section>
 
             {/* CTA */}
-            <section className="max-w-7xl mx-auto px-6 mt-24">
-                <PageTransition>
-                    <div className="text-center">
-                        <h2 className="text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4">
-                            Want results like these?
-                        </h2>
-                        <p className="text-[var(--color-text-secondary)] max-w-lg mx-auto mb-8">
-                            Every engagement starts with a free assessment call.
-                            Let&apos;s talk about your challenges.
-                        </p>
-                        <Button variant="primary" size="lg" href="/contact">
-                            Book a Consultation
-                            <ArrowRight size={18} />
-                        </Button>
-                    </div>
-                </PageTransition>
+            <section className="max-w-7xl mx-auto px-6 mt-32">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center"
+                >
+                    <h2 className="text-3xl sm:text-4xl text-white font-medium mb-5 tracking-tight">
+                        want results like these?
+                    </h2>
+                    <p className="text-white/60 max-w-lg mx-auto mb-10">
+                        every engagement starts with a free assessment call.
+                        let&apos;s talk about your challenges.
+                    </p>
+                    <Button variant="primary" size="lg" href="/contact">
+                        book a consultation
+                        <ArrowRight size={17} />
+                    </Button>
+                </motion.div>
             </section>
         </div>
     );

@@ -41,23 +41,30 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Defnix — Engineering Studio",
-    description:
-      "Security, cloud, AI, web, mobile, and automation engineering.",
+    description: "Security, cloud, AI, web, mobile, and automation engineering.",
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Defnix",
+    url: "https://defnix.in",
+    sameAs: ["https://www.linkedin.com"],
+    description: "Engineering studio for SOC2 compliance, cloud security, and automation.",
+  };
+
   return (
     <html lang="en" className={readexPro.variable}>
       <body className="antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
         <LayoutContent>{children}</LayoutContent>
       </body>
     </html>

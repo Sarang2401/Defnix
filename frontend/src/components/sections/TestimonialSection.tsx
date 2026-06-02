@@ -68,7 +68,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
 
 export function TestimonialSection() {
     return (
-        <section className="section-gap overflow-hidden">
+        <section className="section-gap" style={{ overflow: "clip" }}>
             <div className="max-w-7xl mx-auto px-6 mb-12">
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
