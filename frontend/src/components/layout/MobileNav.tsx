@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { X } from "lucide-react";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ const navVariants = {
   closed: { x: "100%", opacity: 0 },
 };
 
-const linkVariants = {
+const linkVariants: Variants = {
   open: (i: number) => ({
     opacity: 1,
     y: 0,
