@@ -11,108 +11,106 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
     return (
-        <div className="pt-32 pb-20 relative overflow-hidden">
-            {/* Ambient background glows */}
-            <div className="blob-violet w-[600px] h-[600px] top-20 -left-20 opacity-30 animate-float-slow" />
-            <div className="blob-pink w-[500px] h-[500px] bottom-0 -right-40 opacity-20 animate-float-slow" style={{ animationDelay: "-3s" }} />
-
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="pt-32 pb-20">
+            <div className="max-w-7xl mx-auto px-6">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
                     {/* Left Column: Info */}
                     <div>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                            className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
+                        >
+                            contact us
+                        </motion.p>
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            className="text-4xl sm:text-5xl text-white font-medium mb-6"
+                        >
+                            let&apos;s talk about
+                            <br />
+                            <span className="text-white/50">
+                                your project.
+                            </span>
+                        </motion.h1>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="text-lg text-white/60 leading-relaxed mb-10"
+                        >
+                            whether you need soc2 compliance engineering, cloud
+                            resilience, website development, mobile apps, or
+                            business automation — we start every engagement with a
+                            no-obligation conversation. tell us about your challenges.
+                        </motion.p>
+
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="space-y-6"
                         >
-                            <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
-                                Contact Us
-                            </p>
-                            <h1 className="text-4xl sm:text-5xl lg:text-[56px] text-white mb-6 font-[var(--font-display)] leading-[1.05] tracking-tight">
-                                Book your
-                                <br />
-                                <span className="text-[rgba(245,247,249,0.4)]">
-                                    free engineering consultation.
-                                </span>
-                            </h1>
-                            <p className="text-lg text-[rgba(245,247,249,0.65)] leading-relaxed mb-10 max-w-md">
-                                No spam, no hard sell — just a focused 20-minute call to understand your current setup and next steps.
-                            </p>
-
-                            <div className="flex flex-wrap gap-4 mb-14">
-                                <a
-                                    href="mailto:hello@defnix.com"
-                                    className="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-md px-5 py-2.5 text-sm font-medium text-[rgba(245,247,249,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.15)] transition-all duration-200"
-                                >
-                                    Email us
-                                </a>
-                                <a
-                                    href="https://wa.me/910000000000"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="rounded-xl border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-md px-5 py-2.5 text-sm font-medium text-[rgba(245,247,249,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.15)] transition-all duration-200"
-                                >
-                                    WhatsApp
-                                </a>
+                            <div className="flex items-start gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                    <Mail size={18} />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-white font-medium mb-0.5">
+                                        email
+                                    </p>
+                                    <p className="text-sm text-white/60">
+                                        hello@defnix.com
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="space-y-8">
-                                <div className="flex items-start gap-5">
-                                    <div className="w-12 h-12 rounded-xl bg-[rgba(124,58,237,0.1)] border border-[rgba(124,58,237,0.25)] flex items-center justify-center text-[var(--color-accent-bright)] flex-shrink-0">
-                                        <Mail size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-[15px] text-white font-[var(--font-display)] font-semibold mb-1">Email</p>
-                                        <p className="text-[15px] text-[rgba(245,247,249,0.5)]">hello@defnix.com</p>
-                                    </div>
+                            <div className="flex items-start gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                    <Clock size={18} />
                                 </div>
-                                <div className="flex items-start gap-5">
-                                    <div className="w-12 h-12 rounded-xl bg-[rgba(124,58,237,0.1)] border border-[rgba(124,58,237,0.25)] flex items-center justify-center text-[var(--color-accent-bright)] flex-shrink-0">
-                                        <Clock size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-[15px] text-white font-[var(--font-display)] font-semibold mb-1">Response Time</p>
-                                        <p className="text-[15px] text-[rgba(245,247,249,0.5)]">Within 1 business day</p>
-                                    </div>
+                                <div>
+                                    <p className="text-sm text-white font-medium mb-0.5">
+                                        response time
+                                    </p>
+                                    <p className="text-sm text-white/60">
+                                        within 1 business day
+                                    </p>
                                 </div>
-                                <div className="flex items-start gap-5">
-                                    <div className="w-12 h-12 rounded-xl bg-[rgba(124,58,237,0.1)] border border-[rgba(124,58,237,0.25)] flex items-center justify-center text-[var(--color-accent-bright)] flex-shrink-0">
-                                        <MapPin size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="text-[15px] text-white font-[var(--font-display)] font-semibold mb-1">Location</p>
-                                        <p className="text-[15px] text-[rgba(245,247,249,0.5)]">Remote-first — Serving clients globally</p>
-                                    </div>
+                            </div>
+
+                            <div className="flex items-start gap-4">
+                                <div className="w-10 h-10 rounded-xl bg-neutral-900 border border-white/10 flex items-center justify-center text-white flex-shrink-0">
+                                    <MapPin size={18} />
+                                </div>
+                                <div>
+                                    <p className="text-sm text-white font-medium mb-0.5">
+                                        location
+                                    </p>
+                                    <p className="text-sm text-white/60">
+                                        remote-first · serving clients globally
+                                    </p>
                                 </div>
                             </div>
                         </motion.div>
                     </div>
 
                     {/* Right Column: Form */}
-                    <div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.1 }}
-                            className="rounded-3xl p-8 lg:p-12 relative overflow-hidden"
-                            style={{
-                                background: "rgba(255,255,255,0.03)",
-                                backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-                                border: "1px solid rgba(255,255,255,0.08)",
-                                boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.6)"
-                            }}
-                        >
-                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(124,58,237,0.12),transparent_60%)] pointer-events-none" />
-                            
-                            <div className="relative z-10">
-                                <h2 className="text-2xl text-white mb-3 font-[var(--font-display)] font-bold">Send us a message</h2>
-                                <p className="text-[15px] text-[rgba(245,247,249,0.5)] mb-8">
-                                    Share your use case and we will reply with suggested next steps.
-                                </p>
-                                <ContactForm />
-                            </div>
-                        </motion.div>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.3 }}
+                    >
+                        <div className="rounded-xl bg-neutral-900 border border-white/10 p-8 lg:p-10">
+                            <h2 className="text-xl text-white font-medium mb-6">
+                                send us a message
+                            </h2>
+                            <ContactForm />
+                        </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

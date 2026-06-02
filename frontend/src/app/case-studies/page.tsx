@@ -19,7 +19,6 @@ interface CaseStudyShape {
     results: string[];
     metric: string;
     metricLabel: string;
-    color: string;
 }
 
 const staticCaseStudies: CaseStudyShape[] = [
@@ -40,7 +39,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "10 wk",
         metricLabel: "To SOC2 Type II",
-        color: "#a78bfa"
     },
     {
         slug: "startup-cloud-resilience",
@@ -59,7 +57,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "<30m",
         metricLabel: "Recovery time",
-        color: "#22c55e"
     },
     {
         slug: "security-alert-optimization",
@@ -78,7 +75,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "35%",
         metricLabel: "Alert reduction",
-        color: "#e879f9"
     },
     {
         slug: "cafe-website-melbourne",
@@ -97,7 +93,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "12d",
         metricLabel: "To go live",
-        color: "#f59e0b"
     },
     {
         slug: "dental-clinic-booking-app",
@@ -116,7 +111,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "30%",
         metricLabel: "Fewer no-shows",
-        color: "#06b6d4"
     },
     {
         slug: "creator-automation-pipeline",
@@ -135,7 +129,6 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "12hr",
         metricLabel: "Saved per week",
-        color: "#ec4899"
     },
 ];
 
@@ -158,9 +151,8 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
             results: typeof cs.results === "string"
                 ? cs.results.split("\n").filter(Boolean)
                 : Array.isArray(cs.results) ? cs.results : [],
-            metric: "",
-            metricLabel: "",
-            color: staticCaseStudies[i % staticCaseStudies.length].color,
+            metric: staticCaseStudies[i % staticCaseStudies.length]?.metric || "",
+            metricLabel: staticCaseStudies[i % staticCaseStudies.length]?.metricLabel || "",
         }));
     } catch {
         return staticCaseStudies;
@@ -169,39 +161,35 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
 
 export default async function CaseStudiesPage() {
     const caseStudies = await getCaseStudies();
-    
-    return (
-        <div className="pt-32 pb-20 relative overflow-hidden">
-            {/* Background glow blobs */}
-            <div className="blob-violet w-[800px] h-[800px] -top-60 -right-40 opacity-30 animate-float-slow" />
-            <div className="blob-pink w-[600px] h-[600px] top-[40%] -left-60 opacity-20 animate-float-slow" style={{ animationDelay: "-4s" }} />
 
+    return (
+        <div className="pt-32 pb-20">
             {/* Header */}
-            <section className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
+            <section className="max-w-7xl mx-auto px-6 mb-20">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                 >
-                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
-                        Case Studies
+                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                        case studies
                     </p>
-                    <h1 className="text-4xl sm:text-5xl lg:text-7xl mb-7 font-[var(--font-display)] leading-[1.05] tracking-tight">
-                        Proof,
+                    <h1 className="text-4xl sm:text-5xl lg:text-7xl text-white font-medium mb-7 leading-[1.05] tracking-tight">
+                        proof,
                         <br />
-                        <span className="text-[rgba(245,247,249,0.4)]">
+                        <span className="text-white/40">
                             not promises.
                         </span>
                     </h1>
-                    <p className="text-lg text-[rgba(245,247,249,0.6)] max-w-2xl leading-relaxed">
-                        Delivery stories across security, web, mobile, and automation projects.
+                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+                        delivery stories across security, web, mobile, and automation projects.
                     </p>
 
                     <div className="mt-8 flex flex-wrap gap-2.5">
                         {["All", "Security", "Web", "Mobile", "Automation"].map((filter) => (
                             <button
                                 key={filter}
-                                className="rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] backdrop-blur-md px-4 py-2 text-xs font-mono uppercase tracking-widest text-[rgba(245,247,249,0.5)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] hover:border-[rgba(255,255,255,0.15)] transition-all duration-200"
+                                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/8 hover:border-white/20 transition-all duration-200"
                             >
                                 {filter}
                             </button>
@@ -211,7 +199,7 @@ export default async function CaseStudiesPage() {
             </section>
 
             {/* Case study list */}
-            <section className="max-w-7xl mx-auto px-6 relative z-10">
+            <section className="max-w-7xl mx-auto px-6">
                 <div className="space-y-6">
                     {caseStudies.map((study, index) => {
                         const offset = index % 3;
@@ -221,71 +209,58 @@ export default async function CaseStudiesPage() {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                                transition={{ duration: 0.5, delay: index * 0.05 }}
                                 className={`lg:w-[85%] ${offset === 1 ? "lg:ml-[7.5%]" : offset === 2 ? "lg:ml-[15%]" : ""}`}
                             >
-                                <div
-                                    className="rounded-3xl p-8 lg:p-12 transition-all duration-500 relative overflow-hidden"
-                                    style={{
-                                        background: "rgba(255, 255, 255, 0.03)",
-                                        backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-                                        border: "1px solid rgba(255, 255, 255, 0.08)",
-                                        boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset"
-                                    }}
-                                >
-                                    <div className="absolute top-0 right-0 w-[500px] h-[500px] opacity-[0.03] pointer-events-none" style={{ background: `radial-gradient(circle, ${study.color} 0%, transparent 70%)` }} />
-                                    
-                                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 relative z-10">
+                                <div className="card-glow rounded-2xl bg-neutral-900/60 backdrop-blur-sm p-8 lg:p-12">
+                                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
                                         {/* Content */}
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-3 mb-6">
-                                                <span 
-                                                    className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-full border"
-                                                    style={{ color: study.color, background: `${study.color}10`, borderColor: `${study.color}25` }}
-                                                >
+                                                <span className="flex items-center gap-2 text-[11px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-white/50">
                                                     <Building2 size={12} />
                                                     {study.industry}
                                                 </span>
-                                                <span className="w-1 h-1 rounded-full bg-[rgba(255,255,255,0.2)]" />
-                                                <span className="text-[11px] font-mono text-[rgba(245,247,249,0.4)] uppercase tracking-widest">
+                                                <span className="w-1 h-1 rounded-full bg-white/20" />
+                                                <span className="text-[11px] text-white/40 uppercase tracking-widest">
                                                     {study.client}
                                                 </span>
                                             </div>
 
-                                            <h2 className="text-3xl lg:text-[40px] text-white mb-8 font-[var(--font-display)] leading-[1.1] tracking-tight">
+                                            <h2 className="text-2xl lg:text-[32px] text-white mb-8 leading-[1.1] tracking-tight font-medium">
                                                 {study.title}
                                             </h2>
 
                                             <div className="space-y-6 mb-10">
                                                 <div>
-                                                    <p className="text-[10px] font-mono uppercase tracking-widest text-[rgba(245,247,249,0.3)] mb-2">
-                                                        Challenge
+                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
+                                                        challenge
                                                     </p>
-                                                    <p className="text-[16px] text-[rgba(245,247,249,0.6)] leading-relaxed">
+                                                    <p className="text-white/60 leading-relaxed">
                                                         {study.challenge}
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-[10px] font-mono uppercase tracking-widest text-[rgba(245,247,249,0.3)] mb-2">
-                                                        Solution
+                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
+                                                        solution
                                                     </p>
-                                                    <p className="text-[16px] text-[rgba(245,247,249,0.6)] leading-relaxed">
+                                                    <p className="text-white/60 leading-relaxed">
                                                         {study.solution}
                                                     </p>
                                                 </div>
                                             </div>
 
                                             <div>
-                                                <p className="text-[10px] font-mono uppercase tracking-widest text-[rgba(245,247,249,0.3)] mb-4">
-                                                    Results
+                                                <p className="text-[10px] uppercase tracking-widest text-white/30 mb-4">
+                                                    results
                                                 </p>
                                                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                     {study.results.map((result) => (
                                                         <li
                                                             key={result}
-                                                            className="flex items-start gap-3 text-[15px] text-[rgba(245,247,249,0.7)]"
+                                                            className="flex items-start gap-3 text-sm text-white/70"
                                                         >
-                                                            <TrendingUp size={16} className="mt-0.5 flex-shrink-0" style={{ color: study.color }} />
+                                                            <TrendingUp size={16} className="mt-0.5 flex-shrink-0 text-white/40" />
                                                             {result}
                                                         </li>
                                                     ))}
@@ -294,14 +269,11 @@ export default async function CaseStudiesPage() {
                                         </div>
 
                                         {/* Metric Callout */}
-                                        <div className="lg:w-48 flex-shrink-0 flex lg:flex-col items-center lg:items-end justify-center gap-3 pt-6 lg:pt-0" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderTopWidth: "1px", borderTopColor: "rgba(255,255,255,0.06)" }}>
-                                            <span 
-                                                className="text-6xl lg:text-[80px] font-bold font-[var(--font-display)] leading-none"
-                                                style={{ color: study.color }}
-                                            >
+                                        <div className="lg:w-48 flex-shrink-0 flex lg:flex-col items-center lg:items-end justify-center gap-3 pt-6 lg:pt-0 border-t lg:border-t-0 border-white/[0.06]">
+                                            <span className="text-5xl lg:text-7xl font-medium text-white leading-none">
                                                 {study.metric}
                                             </span>
-                                            <span className="text-xs text-[rgba(245,247,249,0.4)] font-mono uppercase tracking-widest lg:text-right">
+                                            <span className="text-xs text-white/40 uppercase tracking-widest lg:text-right">
                                                 {study.metricLabel}
                                             </span>
                                         </div>
@@ -314,7 +286,7 @@ export default async function CaseStudiesPage() {
             </section>
 
             {/* CTA */}
-            <section className="max-w-7xl mx-auto px-6 mt-32 relative z-10">
+            <section className="max-w-7xl mx-auto px-6 mt-32">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -322,15 +294,15 @@ export default async function CaseStudiesPage() {
                     transition={{ duration: 0.6 }}
                     className="text-center"
                 >
-                    <h2 className="text-3xl sm:text-[40px] text-white mb-5 font-[var(--font-display)] tracking-tight font-bold">
-                        Want results like these?
+                    <h2 className="text-3xl sm:text-4xl text-white font-medium mb-5 tracking-tight">
+                        want results like these?
                     </h2>
-                    <p className="text-[rgba(245,247,249,0.6)] max-w-lg mx-auto mb-10 text-[17px]">
-                        Every engagement starts with a free assessment call.
-                        Let&apos;s talk about your challenges.
+                    <p className="text-white/60 max-w-lg mx-auto mb-10">
+                        every engagement starts with a free assessment call.
+                        let&apos;s talk about your challenges.
                     </p>
                     <Button variant="primary" size="lg" href="/contact">
-                        Book a Consultation
+                        book a consultation
                         <ArrowRight size={17} />
                     </Button>
                 </motion.div>

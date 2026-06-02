@@ -64,18 +64,18 @@ export function BlogPreviewSection() {
                 >
                     <div className="flex items-end justify-between mb-12">
                         <div>
-                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-4">
-                            Technical Blog
-                        </p>
-                        <h2 className="text-3xl sm:text-4xl text-[var(--color-text-primary)] font-[var(--font-display)]">
-                            Engineering insights
-                        </h2>
+                            <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
+                                technical blog
+                            </p>
+                            <h2 className="text-3xl sm:text-4xl text-white font-medium">
+                                engineering insights
+                            </h2>
                         </div>
                         <Link
                             href="/blog"
-                            className="hidden sm:inline-flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors link-hover-slide"
+                            className="hidden sm:inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors link-hover-slide"
                         >
-                            View all posts <ArrowRight size={14} />
+                            view all posts <ArrowRight size={14} />
                         </Link>
                     </div>
                 </motion.div>
@@ -93,27 +93,25 @@ export function BlogPreviewSection() {
                         <TiltCard tiltAmount={4} className="h-full block">
                             <Link
                                 href={`/blog/${featured.slug}`}
-                                className="block rounded-2xl p-14 h-full group relative overflow-hidden min-h-[450px] flex flex-col justify-end shadow-lg"
+                                className="block rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-white/8 p-8 h-full group relative overflow-hidden"
                             >
-                                <img src={featured.image} alt={featured.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.9)] via-[rgba(0,0,0,0.4)] to-transparent" />
+                                {/* Gradient accent bar */}
+                                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-                                <div className="relative z-10">
-                                    <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-widest uppercase mb-5 mt-2">
-                                        {featured.category}
-                                    </p>
-                                    <h3 className="text-3xl lg:text-[44px] font-bold text-white group-hover:text-[var(--color-accent-bright)] transition-colors mb-5 leading-[1.08] font-[var(--font-display)] tracking-tight">
-                                        {featured.title}
-                                    </h3>
-                                    <p className="text-base text-[rgba(245,247,249,0.7)] leading-relaxed mb-8">
-                                        {featured.excerpt}
-                                    </p>
-                                    <div className="flex items-center gap-5 text-sm text-[rgba(245,247,249,0.45)] font-mono">
-                                        <span>{featured.date}</span>
-                                        <span className="flex items-center gap-2">
-                                            <Clock size={14} /> {featured.readingTime} min read
-                                        </span>
-                                    </div>
+                                <p className="text-[10px] text-white/40 tracking-wider uppercase mb-4 mt-2">
+                                    {featured.category}
+                                </p>
+                                <h3 className="text-xl lg:text-2xl text-white group-hover:text-white/80 transition-colors mb-4 leading-tight">
+                                    {featured.title}
+                                </h3>
+                                <p className="text-sm text-white/60 leading-relaxed mb-6">
+                                    {featured.excerpt}
+                                </p>
+                                <div className="flex items-center gap-4 text-xs text-white/40">
+                                    <span>{featured.date}</span>
+                                    <span className="flex items-center gap-1">
+                                        <Clock size={12} /> {featured.readingTime} min read
+                                    </span>
                                 </div>
                             </Link>
                         </TiltCard>
@@ -133,29 +131,19 @@ export function BlogPreviewSection() {
                                 <TiltCard tiltAmount={3} className="h-full block">
                                     <Link
                                         href={`/blog/${post.slug}`}
-                                        className="block rounded-2xl group h-full flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-0.5"
-                                        style={{
-                                          background: "rgba(255,255,255,0.04)",
-                                          backdropFilter: "blur(20px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-                                          border: "1px solid rgba(255,255,255,0.08)",
-                                        }}
+                                        className="block rounded-xl bg-neutral-900/60 backdrop-blur-sm border border-white/8 p-6 group"
                                     >
-                                        <div className="h-44 overflow-hidden relative">
-                                            <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                                        </div>
-                                        <div className="p-8 flex flex-col flex-1">
-                                            <p className="font-mono text-[10px] text-[var(--color-accent-secondary)] tracking-widest uppercase mb-3">
-                                                {post.category}
-                                            </p>
-                                            <h4 className="text-[17px] text-white font-bold group-hover:text-[var(--color-accent-bright)] transition-colors mb-4 leading-snug font-[var(--font-display)] tracking-tight">
-                                                {post.title}
-                                            </h4>
-                                            <div className="flex items-center gap-4 text-xs text-[rgba(245,247,249,0.35)] mt-auto font-mono">
-                                                <span>{post.date}</span>
-                                                <span className="flex items-center gap-1.5">
-                                                    <Clock size={13} /> {post.readingTime} min
-                                                </span>
-                                            </div>
+                                        <p className="text-[10px] text-white/40 tracking-wider uppercase mb-2">
+                                            {post.category}
+                                        </p>
+                                        <h4 className="text-base text-white group-hover:text-white/80 transition-colors mb-2 leading-snug">
+                                            {post.title}
+                                        </h4>
+                                        <div className="flex items-center gap-4 text-xs text-white/40">
+                                            <span>{post.date}</span>
+                                            <span className="flex items-center gap-1">
+                                                <Clock size={12} /> {post.readingTime} min
+                                            </span>
                                         </div>
                                     </Link>
                                 </TiltCard>

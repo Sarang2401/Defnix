@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight } from "lucide-react";
 import { Button } from "../ui/Button";
 import { ReactNode } from "react";
+import { TiltCard } from "../ui/TiltCard";
 
 interface Solution {
   icon: ReactNode;
@@ -74,172 +74,85 @@ const solutions: Solution[] = [
 ];
 
 export function SolutionsSection() {
-  const [active, setActive] = useState(0);
-  const sol = solutions[active];
-
   return (
-    <section className="section-gap relative overflow-hidden" id="solutions">
-      {/* Blob glow */}
-      <div className="blob-violet w-[500px] h-[500px] top-1/2 -right-60 -translate-y-1/2 opacity-40" />
-
-      <div className="mx-auto max-w-7xl px-6 relative z-10">
-        {/* Header */}
+    <section className="section-gap" id="solutions">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="mb-16">
           <motion.p
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[var(--color-accent-secondary)]"
+            className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4"
           >
-            What We Build
+            what we do
           </motion.p>
           <motion.h2
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.08 }}
-            className="text-4xl sm:text-5xl max-w-xl font-[var(--font-display)]"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-3xl sm:text-4xl lg:text-5xl text-white font-medium"
           >
-            Execution-led services for serious growth.
+            six disciplines. one engineering studio.
           </motion.h2>
         </div>
 
-        {/* ── Desktop: Tab panel ─────────────────── */}
-        <div className="hidden lg:grid lg:grid-cols-[360px_1fr] gap-5 min-h-[520px]">
-          {/* List */}
-          <div className="space-y-1.5 self-start">
-            {solutions.map((s, i) => (
-              <button
-                key={s.title}
-                onClick={() => setActive(i)}
-                className={`w-full flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-left transition-all duration-250 group ${
-                  active === i
-                    ? "border"
-                    : "border border-transparent hover:border-[rgba(255,255,255,0.06)]"
-                }`}
-                style={active === i ? {
-                  background: "rgba(255,255,255,0.06)",
-                  backdropFilter: "blur(12px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-                  borderColor: "rgba(255,255,255,0.1)",
-                } : {
-                  background: "transparent",
-                }}
-              >
-                {/* Icon */}
-                <div
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-250"
-                  style={{
-                    background: active === i ? `${s.color}18` : "rgba(255,255,255,0.04)",
-                    color: active === i ? s.color : "rgba(245,247,249,0.35)",
-                    border: `1px solid ${active === i ? `${s.color}35` : "rgba(255,255,255,0.06)"}`,
-                  }}
-                >
-                  {s.icon}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className={`text-sm font-semibold truncate transition-colors duration-200 ${active === i ? "text-white" : "text-[rgba(245,247,249,0.55)] group-hover:text-white"}`}>
-                    {s.title}
-                  </p>
-                  <p className="text-xs text-[rgba(245,247,249,0.3)] truncate mt-0.5">{s.subtitle}</p>
-                </div>
-                <ChevronRight
-                  size={13}
-                  className={`shrink-0 transition-all duration-200 ${active === i ? "translate-x-0.5" : "opacity-0 group-hover:opacity-60"}`}
-                  style={{ color: active === i ? s.color : "inherit" }}
-                />
-              </button>
-            ))}
-          </div>
-
-          {/* Detail panel — Muks-style glassmorphic card */}
-          <div
-            className="relative rounded-2xl overflow-hidden"
-            style={{
-              background: "rgba(255, 255, 255, 0.04)",
-              backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 24px 80px -20px rgba(0,0,0,0.7)",
-            }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] as const }}
-                className="h-full flex flex-col p-10"
-              >
-                {/* Ambient color glow in top-right */}
-                <div
-                  className="absolute -top-20 -right-20 w-64 h-64 rounded-full blur-[80px] pointer-events-none opacity-25 transition-colors duration-500"
-                  style={{ background: sol.color }}
-                />
-
-                <div className="flex items-center gap-3 mb-6 relative z-10">
-                  <div
-                    className="flex h-12 w-12 items-center justify-center rounded-xl"
-                    style={{ background: `${sol.color}15`, color: sol.color, border: `1px solid ${sol.color}30` }}
-                  >
-                    {sol.icon}
-                  </div>
-                  <p className="text-xs font-mono uppercase tracking-widest" style={{ color: sol.color }}>
-                    {sol.subtitle}
-                  </p>
-                </div>
-
-                <h3 className="text-3xl font-bold text-white mb-4 font-[var(--font-display)] relative z-10">{sol.title}</h3>
-
-                <div className="inline-flex items-center gap-2 mb-6 relative z-10">
-                  <span className="h-1.5 w-1.5 rounded-full" style={{ background: sol.color }} />
-                  <span className="text-sm font-medium" style={{ color: sol.color }}>{sol.impact}</span>
-                </div>
-
-                <p className="text-[rgba(245,247,249,0.6)] text-base leading-relaxed flex-1 relative z-10">
-                  {sol.description}
-                </p>
-
-                <div className="mt-8 relative z-10">
-                  <Button variant="primary" size="md" href={sol.href}>
-                    Explore Solution
-                    <ArrowRight size={15} />
-                  </Button>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* ── Mobile: Grid cards ─────────────────── */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:hidden">
-          {solutions.map((s, i) => (
-            <motion.article
-              key={s.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: i * 0.05 }}
-              className="rounded-2xl p-6"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                backdropFilter: "blur(16px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-                border: "1px solid rgba(255,255,255,0.08)",
+        <div className="space-y-6">
+          {solutions.map((solution, index) => (
+            <motion.div
+              key={solution.title}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -60 : 60 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{
+                duration: 0.7,
+                delay: index * 0.05,
+                ease: [0.21, 0.47, 0.32, 0.98],
               }}
             >
-              <div
-                className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl"
-                style={{ background: `${s.color}18`, color: s.color, border: `1px solid ${s.color}30` }}
-              >
-                {s.icon}
-              </div>
-              <h3 className="text-[15px] font-bold text-white mb-1 font-[var(--font-display)]">{s.title}</h3>
-              <p className="text-[10px] text-[rgba(245,247,249,0.35)] mb-3 uppercase tracking-wider font-mono">{s.subtitle}</p>
-              <p className="text-sm text-[rgba(245,247,249,0.55)] mb-5 leading-relaxed">{s.description}</p>
-              <a href={s.href} className="inline-flex items-center gap-1.5 text-xs font-semibold" style={{ color: s.color }}>
-                Learn More <ArrowRight size={11} />
-              </a>
-            </motion.article>
+              <TiltCard tiltAmount={5} className={`${index % 3 === 1
+                  ? "lg:ml-16 lg:mr-0"
+                  : index % 3 === 2
+                    ? "lg:ml-32 lg:mr-0"
+                    : ""
+                }`}>
+                <div className="card-glow rounded-xl bg-neutral-900/60 backdrop-blur-sm p-8 lg:p-10">
+                  <div className="flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
+                    {/* Icon */}
+                    <div className="flex-shrink-0">
+                      <motion.div
+                        whileInView={{ rotate: [0, 360] }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.3 + index * 0.05 }}
+                        className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white"
+                      >
+                        {solution.icon}
+                      </motion.div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[10px] text-white/40 tracking-wider uppercase mb-2">
+                        {solution.impact}
+                      </p>
+                      <h3 className="text-xl lg:text-2xl text-white mb-1">
+                        {solution.title}
+                      </h3>
+                      <p className="text-sm text-white/40 mb-4">
+                        {solution.subtitle}
+                      </p>
+                      <p className="text-white/70 leading-relaxed mb-6 max-w-2xl">
+                        {solution.description}
+                      </p>
+                      <Button variant="ghost" size="sm" href={solution.href}>
+                        learn more <ArrowRight size={14} />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
       </div>

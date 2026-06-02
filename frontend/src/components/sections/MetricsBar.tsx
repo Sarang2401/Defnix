@@ -9,9 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const metrics = [
   { value: 100, suffix: "%", label: "Client Satisfaction", desc: "across all engagements" },
-  { value: 15,  suffix: "+", label: "Projects Shipped",    desc: "on time, in scope" },
-  { value: 2,   suffix: "wk", label: "Avg. Delivery",     desc: "kickoff to live" },
-  { value: 12,  suffix: "+",  label: "Countries Served",   desc: "globally distributed" },
+  { value: 15, suffix: "+", label: "Projects Shipped", desc: "on time, in scope" },
+  { value: 2, suffix: "wk", label: "Avg. Delivery", desc: "kickoff to live" },
+  { value: 12, suffix: "+", label: "Countries Served", desc: "globally distributed" },
 ];
 
 function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
@@ -36,7 +36,7 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
   return (
     <div ref={containerRef}>
-      <span ref={ref} className="font-[var(--font-display)] text-4xl lg:text-5xl font-bold text-white">
+      <span ref={ref} className="text-4xl lg:text-5xl font-medium text-white tracking-tight">
         0{suffix}
       </span>
     </div>
@@ -45,44 +45,36 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
 export function MetricsBar() {
   return (
-    <section className="relative py-28 overflow-hidden">
-      <div className="gradient-divider absolute top-0 left-0 right-0" />
-
+    <section className="section-gap relative">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Glassmorphic metrics card — Muks style */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="rounded-3xl overflow-hidden"
-          style={{
-            background: "rgba(255,255,255,0.04)",
-            backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: "0 1px 0 rgba(255,255,255,0.06) inset, 0 32px 80px -20px rgba(0,0,0,0.7)",
-          }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="bg-neutral-900/60 backdrop-blur-sm rounded-2xl border border-white/10 p-10 lg:p-14"
         >
-          <div className="grid grid-cols-2 lg:grid-cols-4">
-            {metrics.map((m, i) => (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            {metrics.map((metric, i) => (
               <motion.div
-                key={m.label}
-                initial={{ opacity: 0, y: 16 }}
+                key={metric.label}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.09 }}
-                className={`flex flex-col justify-center px-8 py-12 lg:py-16 ${i < metrics.length - 1 ? "border-r border-[rgba(255,255,255,0.06)]" : ""} ${i === 0 || i === 2 ? "border-b border-[rgba(255,255,255,0.06)] lg:border-b-0" : ""}`}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="text-center"
               >
-                <AnimatedNumber value={m.value} suffix={m.suffix} />
-                <p className="text-sm font-semibold text-white mt-3 font-[var(--font-display)]">{m.label}</p>
-                <p className="text-xs text-[rgba(245,247,249,0.35)] mt-1 font-mono">{m.desc}</p>
+                <div className="mb-3">
+                  <AnimatedNumber value={metric.value} suffix={metric.suffix} />
+                </div>
+                <p className="text-sm text-white/40 uppercase tracking-wider">
+                  {metric.label}
+                </p>
               </motion.div>
             ))}
           </div>
         </motion.div>
       </div>
-
-      <div className="gradient-divider absolute bottom-0 left-0 right-0" />
     </section>
   );
 }

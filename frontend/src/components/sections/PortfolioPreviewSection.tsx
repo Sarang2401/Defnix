@@ -34,8 +34,8 @@ const studies = [
 export function PortfolioPreviewSection() {
   return (
     <section
-      className="section-gap relative overflow-hidden"
-      style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
+      className="section-gap relative"
+      style={{ overflow: "clip", borderTop: "1px solid rgba(255,255,255,0.06)" }}
     >
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
@@ -47,16 +47,16 @@ export function PortfolioPreviewSection() {
           className="flex items-end justify-between mb-12"
         >
           <div>
-            <p className="font-mono text-xs text-[var(--color-accent-secondary)] tracking-[0.22em] uppercase mb-3">
-              Portfolio Preview
+            <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-3">
+              portfolio preview
             </p>
-            <h2 className="text-3xl sm:text-4xl font-[var(--font-display)]">
-              Proof, not promises.
+            <h2 className="text-3xl sm:text-4xl text-white font-medium">
+              proof, not promises.
             </h2>
           </div>
           <Link
             href="/case-studies"
-            className="hidden sm:inline-flex items-center gap-2 text-sm text-[rgba(245,247,249,0.45)] hover:text-white transition-colors duration-200"
+            className="hidden sm:inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors duration-200"
           >
             View all <ArrowRight size={14} />
           </Link>
@@ -108,7 +108,7 @@ export function PortfolioPreviewSection() {
                     {study.service}
                   </span>
                   <h3
-                    className="text-sm font-semibold text-white mt-4 mb-4 leading-snug font-[var(--font-display)]"
+                    className="text-sm font-medium text-white mt-4 mb-4 leading-snug"
                     style={{ letterSpacing: "-0.01em" }}
                   >
                     {study.title}

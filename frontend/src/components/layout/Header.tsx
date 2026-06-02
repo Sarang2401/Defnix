@@ -2,22 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
 import { Menu } from "lucide-react";
 import { MobileNav } from "./MobileNav";
 
 const navLinks = [
-  { href: "/solutions", label: "Solutions" },
-  { href: "/case-studies", label: "Work" },
-  { href: "/blog", label: "Insights" },
-  { href: "/about", label: "About" },
+  { href: "/solutions", label: "solutions" },
+  { href: "/blog", label: "blog" },
+  { href: "/case-studies", label: "case studies" },
+  { href: "/about", label: "about" },
+  { href: "/contact", label: "contact" },
 ];
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
@@ -32,74 +30,57 @@ export function Header() {
 
   return (
     <>
-      {/* Scroll progress bar */}
-      <motion.div style={{ scaleX }} className="scroll-progress" />
-
-      {/* ── Floating pill navbar container ─────────── */}
-      <div className="fixed left-0 right-0 top-5 z-50 flex justify-center px-4 pointer-events-none">
-        <motion.header
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as const }}
-          className={`pointer-events-auto w-full max-w-5xl flex items-center justify-between gap-4 px-5 py-3 rounded-2xl transition-all duration-500 ${
-            scrolled
-              ? "navbar-glass shadow-[0_8px_40px_rgba(0,0,0,0.5)]"
-              : "bg-transparent border border-transparent"
-          }`}
-        >
-          {/* Logo */}
-          <Link href="/" className="group flex items-center gap-2.5 shrink-0">
-            <div className="relative flex h-8 w-8 items-center justify-center">
-              <div className="absolute inset-0 rounded-lg bg-[var(--color-accent)] opacity-30 blur-md group-hover:opacity-50 transition-opacity duration-300" />
-              <div className="relative flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-accent)] text-[10px] font-bold text-white tracking-widest shadow-[0_0_12px_rgba(124,58,237,0.5)]">
-                DX
-              </div>
-            </div>
-            <span className="font-[var(--font-display)] font-bold text-[16px] tracking-tight text-white">
-              Defnix
+      <nav className="fixed top-0 left-0 right-0 z-50 px-6 md:px-10 pt-6">
+        <div className={`flex items-center justify-between gap-4 transition-all duration-300 ${scrolled ? "opacity-95" : "opacity-100"}`}>
+          {/* Left pill — Logo */}
+          <Link
+            href="/"
+            className="flex items-center gap-2 bg-neutral-900/90 backdrop-blur rounded-full pl-4 pr-6 py-3"
+          >
+            <svg
+              viewBox="0 0 256 256"
+              className="h-5 w-5"
+              fill="#ffffff"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" />
+            </svg>
+            <span className="text-white text-sm font-normal tracking-tight">
+              defnix
             </span>
           </Link>
 
-          {/* Desktop nav links — centered */}
-          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+          {/* Center pill — Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-1 bg-neutral-900/90 backdrop-blur rounded-full px-3 py-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-link px-4 py-2 rounded-xl hover:bg-[rgba(255,255,255,0.06)] transition-all duration-200"
+                className="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full"
               >
                 {link.label}
               </Link>
             ))}
-          </nav>
-
-          {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center gap-3 shrink-0">
-            <Link
-              href="/contact"
-              className="text-sm text-[rgba(245,247,249,0.5)] hover:text-white transition-colors duration-200"
-            >
-              Contact
-            </Link>
-            <Link
-              href="/contact"
-              className="group relative inline-flex items-center gap-2 overflow-hidden rounded-xl bg-[var(--color-accent)] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_0_20px_rgba(124,58,237,0.4)] transition-all duration-300 hover:shadow-[0_0_32px_rgba(124,58,237,0.65)] hover:-translate-y-px"
-            >
-              <span className="relative z-10">Book a Call</span>
-              <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-[#7c3aed] to-[#e879f9]" />
-            </Link>
           </div>
 
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setMobileOpen(true)}
-            className="p-2 text-[rgba(245,247,249,0.6)] hover:text-white lg:hidden rounded-lg hover:bg-[rgba(255,255,255,0.08)] transition-all"
-            aria-label="Open menu"
-          >
-            <Menu size={20} />
-          </button>
-        </motion.header>
-      </div>
+          {/* Right — CTA + Mobile toggle */}
+          <div className="flex items-center gap-3">
+            <Link
+              href="/contact"
+              className="bg-white text-black text-sm font-normal rounded-full px-6 py-3 hover:bg-neutral-200 transition-colors"
+            >
+              get started
+            </Link>
+            <button
+              onClick={() => setMobileOpen(true)}
+              className="md:hidden p-2 text-white/60 hover:text-white transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu size={24} />
+            </button>
+          </div>
+        </div>
+      </nav>
 
       <MobileNav
         isOpen={mobileOpen}

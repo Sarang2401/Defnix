@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ReactNode, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
+
 type ButtonVariant = "primary" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
 
@@ -20,18 +21,18 @@ interface ButtonProps {
 }
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-xs",
-  md: "px-5 py-2.5 text-sm",
-  lg: "px-7 py-3.5 text-[15px]",
+  sm: "px-4 py-1.5 text-xs",
+  md: "px-6 py-3 text-sm",
+  lg: "px-8 py-4 text-base",
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--color-accent)] text-white font-semibold rounded-xl shadow-[0_0_20px_rgba(124,58,237,0.4)] hover:shadow-[0_0_35px_rgba(124,58,237,0.65)] hover:-translate-y-0.5 transition-all duration-300",
+    "bg-white text-black font-medium hover:bg-neutral-200",
   outline:
-    "btn-trace rounded-xl text-[var(--color-text-primary)] font-medium",
+    "border border-white/20 text-white hover:bg-white/10",
   ghost:
-    "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[rgba(255,255,255,0.06)] rounded-xl transition-all duration-200",
+    "text-white/60 hover:text-white hover:bg-white/5",
 };
 
 function MagneticWrapper({ children, disabled }: { children: ReactNode; disabled?: boolean }) {
@@ -73,7 +74,7 @@ export function Button({
   disabled = false,
   magnetic = true,
 }: ButtonProps) {
-  const classes = `relative inline-flex items-center justify-center gap-2 overflow-hidden font-[var(--font-heading)] ${sizeClasses[size]} ${variantClasses[variant]} ${disabled ? "opacity-40 cursor-not-allowed" : "cursor-pointer"} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full transition-all duration-200 ${sizeClasses[size]} ${variantClasses[variant]} ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"} ${className}`;
 
   const isMagnetic = magnetic && !disabled && variant === "primary";
 

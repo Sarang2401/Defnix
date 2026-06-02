@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { X } from "lucide-react";
 
 interface MobileNavProps {
   isOpen: boolean;
@@ -10,56 +10,88 @@ interface MobileNavProps {
   links: { href: string; label: string }[];
 }
 
+const overlayVariants = {
+  open: { opacity: 1 },
+  closed: { opacity: 0 },
+};
+
+const navVariants = {
+  open: { x: 0, opacity: 1 },
+  closed: { x: "100%", opacity: 0 },
+};
+
+const linkVariants: Variants = {
+  open: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: 0.1 + i * 0.06, duration: 0.35, ease: [0.21, 0.47, 0.32, 0.98] },
+  }),
+  closed: { opacity: 0, y: 20 },
+};
+
 export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
   return (
     <AnimatePresence>
       {isOpen && (
         <>
+          {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+            variants={overlayVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
             onClick={onClose}
           />
 
+          {/* Full-screen nav panel */}
           <motion.nav
-            initial={{ opacity: 0, scale: 0.96, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: -8 }}
-            transition={{ type: "spring", damping: 26, stiffness: 280 }}
-            className="fixed inset-x-4 top-4 z-[70] rounded-2xl overflow-hidden"
-            style={{
-              background: "rgba(8, 8, 16, 0.95)",
-              backdropFilter: "blur(24px)", willChange: "transform, backdrop-filter", transform: "translateZ(0)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(124,58,237,0.2)",
-            }}
+            variants={navVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
+            transition={{ type: "spring", damping: 30, stiffness: 300 }}
+            className="fixed inset-0 z-[70] bg-black flex flex-col"
           >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[rgba(255,255,255,0.07)]">
-              <span className="font-[var(--font-display)] font-bold text-[16px] text-white tracking-tight">Defnix</span>
+            {/* Header area */}
+            <div className="flex items-center justify-between px-6 h-20 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <svg
+                  viewBox="0 0 256 256"
+                  className="h-5 w-5"
+                  fill="#ffffff"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" />
+                </svg>
+                <span className="text-white text-sm font-normal tracking-tight">
+                  defnix
+                </span>
+              </div>
               <button
                 onClick={onClose}
-                className="p-2 rounded-lg text-[rgba(245,247,249,0.5)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] transition-all"
-                aria-label="Close"
+                className="p-2 text-white/60 hover:text-white transition-colors"
+                aria-label="Close menu"
               >
-                <X size={18} />
+                <X size={24} />
               </button>
             </div>
 
-            <div className="p-3 space-y-1">
+            {/* Links */}
+            <div className="flex-1 flex flex-col justify-center px-8 gap-6">
               {links.map((link, i) => (
                 <motion.div
                   key={link.href}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.06 + i * 0.04, duration: 0.22 }}
+                  variants={linkVariants}
+                  initial="closed"
+                  animate="open"
+                  custom={i}
                 >
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="flex items-center px-4 py-3 rounded-xl text-[rgba(245,247,249,0.7)] hover:text-white hover:bg-[rgba(255,255,255,0.06)] text-[15px] font-medium transition-all duration-150"
+                    className="text-3xl text-white hover:text-white/70 transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -67,21 +99,23 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.25 }}
-              className="p-4 border-t border-[rgba(255,255,255,0.07)]"
-            >
-              <Link
-                href="/contact"
-                onClick={onClose}
-                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-semibold text-[15px] text-white bg-[var(--color-accent)] shadow-[0_0_24px_rgba(124,58,237,0.5)] hover:shadow-[0_0_32px_rgba(124,58,237,0.7)] transition-shadow duration-300"
+            {/* CTA at bottom */}
+            <div className="px-8 pb-12">
+              <motion.div
+                variants={linkVariants}
+                initial="closed"
+                animate="open"
+                custom={links.length}
               >
-                Book Free Consultation
-                <ArrowRight size={15} />
-              </Link>
-            </motion.div>
+                <Link
+                  href="/contact"
+                  onClick={onClose}
+                  className="block w-full text-center py-4 rounded-full bg-white text-black font-medium text-lg hover:bg-neutral-200 transition-colors"
+                >
+                  get started
+                </Link>
+              </motion.div>
+            </div>
           </motion.nav>
         </>
       )}

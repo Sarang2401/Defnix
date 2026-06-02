@@ -43,142 +43,123 @@ export function ContactForm() {
     };
 
     const inputClasses =
-        "w-full px-5 py-3.5 bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.08)] rounded-xl text-[15px] text-white placeholder:text-[rgba(245,247,249,0.3)] focus:outline-none focus:border-[var(--color-accent)] focus:bg-[rgba(255,255,255,0.05)] transition-all duration-300 font-[var(--font-body)]";
+        "w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-white/30 transition-colors";
+
+    if (status === "success") {
+        return (
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                <div className="text-center py-12">
+                    <CheckCircle size={48} className="text-white mx-auto mb-4" />
+                    <h3 className="text-xl text-white mb-2">
+                        message sent
+                    </h3>
+                    <p className="text-sm text-white/60">
+                        we&apos;ll respond within 1 business day.
+                    </p>
+                </div>
+            </motion.div>
+        );
+    }
 
     return (
-        <div className="relative min-h-[300px]">
-            <AnimatePresence mode="wait">
-                {status === "success" ? (
-                    <motion.div
-                        key="success"
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        transition={{ duration: 0.4 }}
-                        className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.06)] rounded-2xl"
+        <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div>
+                    <label
+                        htmlFor="name"
+                        className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                     >
-                        <CheckCircle size={56} className="text-[var(--color-success)] mb-5 drop-shadow-[0_0_12px_rgba(40,200,64,0.4)]" />
-                        <h3 className="text-2xl text-white mb-2 font-[var(--font-display)] font-semibold">
-                            Message sent
-                        </h3>
-                        <p className="text-[15px] text-[rgba(245,247,249,0.6)]">
-                            We&apos;ll respond within 1 business day.
-                        </p>
-                        <button
-                            onClick={() => setStatus("idle")}
-                            className="mt-8 text-sm font-semibold text-[var(--color-accent-bright)] hover:text-white transition-colors"
-                        >
-                            Send another message
-                        </button>
-                    </motion.div>
-                ) : (
-                    <motion.form
-                        key="form"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        onSubmit={handleSubmit}
-                        className="space-y-5"
+                        name *
+                    </label>
+                    <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        required
+                        value={form.name}
+                        onChange={handleChange}
+                        placeholder="jane doe"
+                        className={inputClasses}
+                    />
+                </div>
+                <div>
+                    <label
+                        htmlFor="email"
+                        className="block text-xs text-white/40 uppercase tracking-wider mb-2"
                     >
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div>
-                                <label
-                                    htmlFor="name"
-                                    className="block text-[11px] font-mono text-[rgba(245,247,249,0.5)] uppercase tracking-widest mb-2.5 pl-1"
-                                >
-                                    Name *
-                                </label>
-                                <input
-                                    id="name"
-                                    name="name"
-                                    type="text"
-                                    required
-                                    value={form.name}
-                                    onChange={handleChange}
-                                    placeholder="Jane Doe"
-                                    className={inputClasses}
-                                />
-                            </div>
-                            <div>
-                                <label
-                                    htmlFor="email"
-                                    className="block text-[11px] font-mono text-[rgba(245,247,249,0.5)] uppercase tracking-widest mb-2.5 pl-1"
-                                >
-                                    Email *
-                                </label>
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    required
-                                    value={form.email}
-                                    onChange={handleChange}
-                                    placeholder="jane@company.com"
-                                    className={inputClasses}
-                                />
-                            </div>
-                        </div>
+                        email *
+                    </label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        value={form.email}
+                        onChange={handleChange}
+                        placeholder="jane@company.com"
+                        className={inputClasses}
+                    />
+                </div>
+            </div>
 
-                        <div>
-                            <label
-                                htmlFor="company"
-                                className="block text-[11px] font-mono text-[rgba(245,247,249,0.5)] uppercase tracking-widest mb-2.5 pl-1"
-                            >
-                                Company
-                            </label>
-                            <input
-                                id="company"
-                                name="company"
-                                type="text"
-                                value={form.company}
-                                onChange={handleChange}
-                                placeholder="Acme Inc."
-                                className={inputClasses}
-                            />
-                        </div>
+            <div>
+                <label
+                    htmlFor="company"
+                    className="block text-xs text-white/40 uppercase tracking-wider mb-2"
+                >
+                    company
+                </label>
+                <input
+                    id="company"
+                    name="company"
+                    type="text"
+                    value={form.company}
+                    onChange={handleChange}
+                    placeholder="acme inc."
+                    className={inputClasses}
+                />
+            </div>
 
-                        <div>
-                            <label
-                                htmlFor="message"
-                                className="block text-[11px] font-mono text-[rgba(245,247,249,0.5)] uppercase tracking-widest mb-2.5 pl-1"
-                            >
-                                Message *
-                            </label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                required
-                                rows={5}
-                                value={form.message}
-                                onChange={handleChange}
-                                placeholder="Tell us about your project..."
-                                className={`${inputClasses} resize-none`}
-                            />
-                        </div>
+            <div>
+                <label
+                    htmlFor="message"
+                    className="block text-xs text-white/40 uppercase tracking-wider mb-2"
+                >
+                    message *
+                </label>
+                <textarea
+                    id="message"
+                    name="message"
+                    required
+                    rows={5}
+                    value={form.message}
+                    onChange={handleChange}
+                    placeholder="tell us about your project..."
+                    className={`${inputClasses} resize-none`}
+                />
+            </div>
 
-                        {status === "error" && (
-                            <div className="flex items-center gap-2.5 text-[13px] text-[#ff5f57] bg-[rgba(255,95,87,0.1)] border border-[rgba(255,95,87,0.2)] p-3 rounded-xl">
-                                <AlertCircle size={16} />
-                                Something went wrong. Please try again or email us directly.
-                            </div>
-                        )}
+            {status === "error" && (
+                <div className="flex items-center gap-2 text-sm text-white/60">
+                    <AlertCircle size={16} />
+                    something went wrong. please try again or email us directly.
+                </div>
+            )}
 
-                        <div className="pt-2">
-                            <Button
-                                type="submit"
-                                variant="primary"
-                                size="lg"
-                                disabled={status === "submitting"}
-                                className="w-full"
-                            >
-                                {status === "submitting" ? "Sending..." : "Send Message"}
-                                <Send size={16} />
-                            </Button>
-                        </div>
-                    </motion.form>
-                )}
-            </AnimatePresence>
-        </div>
+            <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                disabled={status === "submitting"}
+                className="w-full sm:w-auto"
+            >
+                {status === "submitting" ? "sending..." : "send message"}
+                <Send size={16} />
+            </Button>
+        </form>
     );
 }

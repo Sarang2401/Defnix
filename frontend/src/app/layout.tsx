@@ -1,37 +1,13 @@
 import type { Metadata } from "next";
-import { Syne, Inter, JetBrains_Mono } from "next/font/google";
+import { Readex_Pro } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
-// Syne — for bold display headings (same as Muks Robotics)
-const syne = Syne({
-  variable: "--font-display",
+const readexPro = Readex_Pro({
+  variable: "--font-readex",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-// Inter — for body, UI, labels
-const inter = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["300", "400", "500", "600"],
-});
-
-const interHeading = Inter({
-  variable: "--font-heading",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-// JetBrains Mono — for code/mono text
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -83,10 +59,7 @@ export default function RootLayout({
   };
 
   return (
-    <html
-      lang="en"
-      className={`${syne.variable} ${inter.variable} ${interHeading.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className={readexPro.variable}>
       <body className="antialiased">
         <script
           type="application/ld+json"

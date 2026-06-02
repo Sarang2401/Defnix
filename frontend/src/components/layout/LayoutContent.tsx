@@ -8,6 +8,7 @@ import { SmoothScroll } from "../ui/SmoothScroll";
 export function LayoutContent({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const isAdmin = pathname.startsWith("/admin");
+    const isHome = pathname === "/";
 
     if (isAdmin) {
         return <>{children}</>;
@@ -15,7 +16,8 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
 
     return (
         <SmoothScroll>
-            <Header />
+            {/* Hide global header on homepage — hero has its own navbar */}
+            {!isHome && <Header />}
             <main className="min-h-screen">{children}</main>
             <Footer />
         </SmoothScroll>
