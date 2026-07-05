@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Readex_Pro } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
-const readexPro = Readex_Pro({
-  variable: "--font-readex",
+/*
+  Typography — loaded via next/font for performance.
+  General Sans is not in Google Fonts, so it is imported
+  via the @import in globals.css (googleapis CDN).
+  Inter covers body + label roles.
+*/
+const inter = Inter({
+  variable: "--font-inter-loaded",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -59,7 +65,14 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={readexPro.variable}>
+    <html lang="en" className={inter.variable}>
+      <head>
+        {/* General Sans — not available on Google Fonts, loaded from Fontshare */}
+        <link
+          rel="stylesheet"
+          href="https://api.fontshare.com/v2/css?f[]=general-sans@600&display=swap"
+        />
+      </head>
       <body className="antialiased">
         <script
           type="application/ld+json"
