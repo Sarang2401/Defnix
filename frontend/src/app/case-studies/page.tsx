@@ -1,36 +1,20 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/Button";
 import * as motion from "framer-motion/client";
-import { ArrowRight, Building2, TrendingUp } from "lucide-react";
+import { CaseStudiesList, FilterPills, CaseStudiesCtaButton, type CaseStudy } from "./CaseStudiesClient";
 
 export const metadata: Metadata = {
-    title: "Case Studies",
-    description:
-        "Real-world results from our engineering engagements in SOC2 compliance, cloud security, and AI-driven security operations.",
+    title: "Case Studies — Defnix",
+    description: "Real-world results from our engineering engagements in SOC2 compliance, cloud security, and AI-driven security operations.",
 };
 
-interface CaseStudyShape {
-    slug: string;
-    client: string;
-    industry: string;
-    title: string;
-    challenge: string;
-    solution: string;
-    results: string[];
-    metric: string;
-    metricLabel: string;
-}
-
-const staticCaseStudies: CaseStudyShape[] = [
+const staticCaseStudies: CaseStudy[] = [
     {
         slug: "saas-soc2-compliance",
         client: "Seed-Stage SaaS Startup",
         industry: "B2B SaaS",
         title: "SOC2 Type II Readiness in 10 Weeks — First-Time Pass",
-        challenge:
-            "A seed-stage SaaS company needed SOC2 Type II certification to move forward with their first enterprise prospect. They had no formal compliance processes, minimal documentation, and a small engineering team already stretched thin with product work.",
-        solution:
-            "We conducted a control gap assessment across their AWS environment, built a set of tailored security policies, and implemented automated evidence collection for their core infrastructure. The team was guided through the entire audit preparation process.",
+        challenge: "A seed-stage SaaS company needed SOC2 Type II certification to move forward with their first enterprise prospect. They had no formal compliance processes, minimal documentation, and a small engineering team already stretched thin with product work.",
+        solution: "We conducted a control gap assessment across their AWS environment, built a set of tailored security policies, and implemented automated evidence collection for their core infrastructure. The team was guided through the entire audit preparation process.",
         results: [
             "Passed SOC2 Type II audit on the first attempt in 10 weeks",
             "Created and documented 12 security policies from scratch",
@@ -39,16 +23,16 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "10 wk",
         metricLabel: "To SOC2 Type II",
+        accentColor: "#84A98C",
+        iconName: "ShieldCheck",
     },
     {
         slug: "startup-cloud-resilience",
         client: "Growing SaaS Platform",
         industry: "Cloud SaaS",
         title: "Disaster Recovery Setup for a Growing Platform",
-        challenge:
-            "A SaaS platform serving around 30 clients had no formal disaster recovery plan. Their infrastructure ran in a single availability zone with manual backup processes and no documented recovery procedures.",
-        solution:
-            "We designed and implemented a basic multi-AZ failover setup, created automated backup verification, and wrote incident response playbooks covering their most critical failure scenarios. Recovery procedures were documented and tested.",
+        challenge: "A SaaS platform serving around 30 clients had no formal disaster recovery plan. Their infrastructure ran in a single availability zone with manual backup processes and no documented recovery procedures.",
+        solution: "We designed and implemented a basic multi-AZ failover setup, created automated backup verification, and wrote incident response playbooks covering their most critical failure scenarios. Recovery procedures were documented and tested.",
         results: [
             "Established documented disaster recovery procedures for the first time",
             "Reduced estimated recovery time from unknown hours to under 30 minutes",
@@ -57,16 +41,16 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "<30m",
         metricLabel: "Recovery time",
+        accentColor: "#52796F",
+        iconName: "Cloud",
     },
     {
         slug: "security-alert-optimization",
         client: "Early-Stage Tech Company",
         industry: "Technology",
         title: "35% Reduction in Security Alert Noise via Automated Triage",
-        challenge:
-            "A small engineering team was managing security alerts manually, spending significant time each week investigating false positives from their monitoring tools. There was no structured process for triaging or escalating alerts.",
-        solution:
-            "We analyzed their existing alert patterns, configured automated filtering rules based on historical data, and built a structured triage workflow that categorized alerts by severity and relevance before they reached the team.",
+        challenge: "A small engineering team was managing security alerts manually, spending significant time each week investigating false positives from their monitoring tools. There was no structured process for triaging or escalating alerts.",
+        solution: "We analyzed their existing alert patterns, configured automated filtering rules based on historical data, and built a structured triage workflow that categorized alerts by severity and relevance before they reached the team.",
         results: [
             "35% reduction in alerts requiring manual investigation",
             "Structured triage workflow reduced average response time significantly",
@@ -75,16 +59,16 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "35%",
         metricLabel: "Alert reduction",
+        accentColor: "#CAD2C5",
+        iconName: "Activity",
     },
     {
         slug: "cafe-website-melbourne",
         client: "Independent Cafe · Melbourne, AU",
         industry: "Food & Beverage",
         title: "From No Online Presence to Google Local Pack in 6 Weeks",
-        challenge:
-            "A cafe with two locations in Melbourne had no website and relied entirely on foot traffic and Instagram. Competitors with basic websites were appearing in local search results while this cafe was invisible online.",
-        solution:
-            "We built a mobile-first website with an online menu, Google Maps integration, click-to-call, and local SEO configured for 'best coffee near me' style searches. Google Business Profile was set up and optimised alongside the site.",
+        challenge: "A cafe with two locations in Melbourne had no website and relied entirely on foot traffic and Instagram. Competitors with basic websites were appearing in local search results while this cafe was invisible online.",
+        solution: "We built a mobile-first website with an online menu, Google Maps integration, click-to-call, and local SEO configured for 'best coffee near me' style searches. Google Business Profile was set up and optimised alongside the site.",
         results: [
             "Website live within 12 days of kickoff",
             "Appeared in Google local search results within 6 weeks",
@@ -93,16 +77,16 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "12d",
         metricLabel: "To go live",
+        accentColor: "#84A98C",
+        iconName: "Globe",
     },
     {
         slug: "dental-clinic-booking-app",
         client: "Family Dental Practice · Austin, TX",
         industry: "Healthcare",
         title: "Booking App Reduced No-Shows by 30% for a Dental Practice",
-        challenge:
-            "A family dental practice was managing all appointments by phone, experiencing frequent no-shows and missed calls outside of business hours. Front desk staff were spending hours per week on scheduling and manual reminders.",
-        solution:
-            "We built a cross-platform iOS and Android booking app with automated SMS and email appointment reminders, online rescheduling, and a simple patient portal. Staff could manage the schedule through a companion admin dashboard.",
+        challenge: "A family dental practice was managing all appointments by phone, experiencing frequent no-shows and missed calls outside of business hours. Front desk staff were spending hours per week on scheduling and manual reminders.",
+        solution: "We built a cross-platform iOS and Android booking app with automated SMS and email appointment reminders, online rescheduling, and a simple patient portal. Staff could manage the schedule through a companion admin dashboard.",
         results: [
             "No-show rate dropped from approximately 18% to around 12% within 2 months",
             "Over 60% of appointments now booked through the app without phone calls",
@@ -111,16 +95,16 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "30%",
         metricLabel: "Fewer no-shows",
+        accentColor: "#52796F",
+        iconName: "Smartphone",
     },
     {
         slug: "creator-automation-pipeline",
         client: "Content Creator & Coach · London, UK",
         industry: "Creator Economy",
         title: "Automated Client Pipeline Saved 12+ Hours Per Week",
-        challenge:
-            "A UK-based content creator with a growing coaching business was manually responding to enquiries, scheduling discovery calls, sending invoices, and managing email follow-ups. Most of the week was spent on admin rather than creating content or coaching.",
-        solution:
-            "We built an end-to-end automation workflow using n8n: enquiry form submission triggered CRM entry, personalised email sequence, calendar booking link, and automatic invoice generation on payment. Social media content was queued via a scheduling pipeline.",
+        challenge: "A UK-based content creator with a growing coaching business was manually responding to enquiries, scheduling discovery calls, sending invoices, and managing email follow-ups. Most of the week was spent on admin rather than creating content or coaching.",
+        solution: "We built an end-to-end automation workflow using n8n: enquiry form submission triggered CRM entry, personalised email sequence, calendar booking link, and automatic invoice generation on payment.",
         results: [
             "Reclaimed 12+ hours per week previously spent on manual admin tasks",
             "Lead response time dropped from 24 hours to under 5 minutes via automated replies",
@@ -129,15 +113,15 @@ const staticCaseStudies: CaseStudyShape[] = [
         ],
         metric: "12hr",
         metricLabel: "Saved per week",
+        accentColor: "#84A98C",
+        iconName: "Zap",
     },
 ];
 
-async function getCaseStudies(): Promise<CaseStudyShape[]> {
+async function getCaseStudies(): Promise<CaseStudy[]> {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
     try {
-        const res = await fetch(`${apiUrl}/case-studies`, {
-            next: { revalidate: 60 },
-        });
+        const res = await fetch(`${apiUrl}/case-studies`, { next: { revalidate: 60 } });
         if (!res.ok) throw new Error("API error");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const data: any[] = await res.json();
@@ -148,11 +132,11 @@ async function getCaseStudies(): Promise<CaseStudyShape[]> {
             title: cs.title,
             challenge: cs.challenge || "",
             solution: cs.solution || "",
-            results: typeof cs.results === "string"
-                ? cs.results.split("\n").filter(Boolean)
-                : Array.isArray(cs.results) ? cs.results : [],
+            results: typeof cs.results === "string" ? cs.results.split("\n").filter(Boolean) : Array.isArray(cs.results) ? cs.results : [],
             metric: staticCaseStudies[i % staticCaseStudies.length]?.metric || "",
             metricLabel: staticCaseStudies[i % staticCaseStudies.length]?.metricLabel || "",
+            accentColor: staticCaseStudies[i % staticCaseStudies.length]?.accentColor || "#84A98C",
+            iconName: staticCaseStudies[i % staticCaseStudies.length]?.iconName || "Zap",
         }));
     } catch {
         return staticCaseStudies;
@@ -163,151 +147,89 @@ export default async function CaseStudiesPage() {
     const caseStudies = await getCaseStudies();
 
     return (
-        <div className="pt-32 pb-20">
-            {/* Header */}
-            <section className="max-w-7xl mx-auto px-6 mb-20">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                >
-                    <p className="text-xs text-white/40 tracking-[0.2em] uppercase mb-4">
-                        case studies
-                    </p>
-                    <h1 className="text-4xl sm:text-5xl lg:text-7xl text-white font-medium mb-7 leading-[1.05] tracking-tight">
-                        proof,
-                        <br />
-                        <span className="text-white/40">
-                            not promises.
-                        </span>
+        <div className="pt-32 pb-20" style={{ backgroundColor: "var(--color-surface)", position: "relative", overflow: "hidden" }}>
+            {/* Angular stepped background */}
+            <div style={{ position: "absolute", top: 0, right: 0, width: "60%", height: "100%", zIndex: 0, opacity: 0.8, pointerEvents: "none" }}>
+                <svg viewBox="0 0 800 1000" preserveAspectRatio="none" width="100%" height="100%">
+                    <path d="M 800 0 L 800 1000 L 400 1000 L 400 800 L 200 800 L 200 500 L 0 500 L 0 200 L 800 0" fill="url(#angularGrad1)" />
+                    <path d="M 800 200 L 800 1000 L 600 1000 L 600 700 L 400 700 L 400 300 L 800 200" fill="url(#angularGrad2)" />
+                    <defs>
+                        <linearGradient id="angularGrad1" x1="100%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(82,121,111,0.06)" />
+                            <stop offset="100%" stopColor="transparent" />
+                        </linearGradient>
+                        <linearGradient id="angularGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="rgba(132,169,140,0.04)" />
+                            <stop offset="100%" stopColor="transparent" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+
+            {/* ── Header ─────────────────────────────── */}
+            <section className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
+                        <div className="animate-pulse-dot" style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F", boxShadow: "0 0 8px rgba(82,121,111,0.8)" }} />
+                        <p style={{ fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#52796F", fontWeight: 500 }}>case studies</p>
+                    </div>
+
+                    <h1 style={{
+                        fontFamily: "var(--font-headline)",
+                        fontSize: "clamp(3rem, 8vw, 6rem)",
+                        fontWeight: 700, lineHeight: 1.05,
+                        letterSpacing: "-0.04em", color: "#CAD2C5", marginBottom: 20,
+                    }}>
+                        proof,{" "}
+                        <span style={{ color: "rgba(202,210,197,0.3)" }}>not promises.</span>
                     </h1>
-                    <p className="text-lg text-white/60 max-w-2xl leading-relaxed">
+
+                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "52ch", marginBottom: 32 }}>
                         delivery stories across security, web, mobile, and automation projects.
                     </p>
 
-                    <div className="mt-8 flex flex-wrap gap-2.5">
-                        {["All", "Security", "Web", "Mobile", "Automation"].map((filter) => (
-                            <button
-                                key={filter}
-                                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/8 hover:border-white/20 transition-all duration-200"
-                            >
-                                {filter}
-                            </button>
-                        ))}
-                    </div>
+                    {/* Filter pills */}
+                    <FilterPills />
                 </motion.div>
             </section>
 
-            {/* Case study list */}
-            <section className="max-w-7xl mx-auto px-6">
-                <div className="space-y-6">
-                    {caseStudies.map((study, index) => {
-                        const offset = index % 3;
-                        return (
-                            <motion.div
-                                key={study.slug}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.5, delay: index * 0.05 }}
-                                className={`lg:w-[85%] ${offset === 1 ? "lg:ml-[7.5%]" : offset === 2 ? "lg:ml-[15%]" : ""}`}
-                            >
-                                <div className="card-glow rounded-2xl bg-neutral-900/60 backdrop-blur-sm p-8 lg:p-12">
-                                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
-                                        {/* Content */}
-                                        <div className="flex-1 min-w-0">
-                                            <div className="flex items-center gap-3 mb-6">
-                                                <span className="flex items-center gap-2 text-[11px] uppercase tracking-widest px-2.5 py-1 rounded-full border border-white/10 bg-white/5 text-white/50">
-                                                    <Building2 size={12} />
-                                                    {study.industry}
-                                                </span>
-                                                <span className="w-1 h-1 rounded-full bg-white/20" />
-                                                <span className="text-[11px] text-white/40 uppercase tracking-widest">
-                                                    {study.client}
-                                                </span>
-                                            </div>
-
-                                            <h2 className="text-2xl lg:text-[32px] text-white mb-8 leading-[1.1] tracking-tight font-medium">
-                                                {study.title}
-                                            </h2>
-
-                                            <div className="space-y-6 mb-10">
-                                                <div>
-                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
-                                                        challenge
-                                                    </p>
-                                                    <p className="text-white/60 leading-relaxed">
-                                                        {study.challenge}
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <p className="text-[10px] uppercase tracking-widest text-white/30 mb-2">
-                                                        solution
-                                                    </p>
-                                                    <p className="text-white/60 leading-relaxed">
-                                                        {study.solution}
-                                                    </p>
-                                                </div>
-                                            </div>
-
-                                            <div>
-                                                <p className="text-[10px] uppercase tracking-widest text-white/30 mb-4">
-                                                    results
-                                                </p>
-                                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                    {study.results.map((result) => (
-                                                        <li
-                                                            key={result}
-                                                            className="flex items-start gap-3 text-sm text-white/70"
-                                                        >
-                                                            <TrendingUp size={16} className="mt-0.5 flex-shrink-0 text-white/40" />
-                                                            {result}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-
-                                        {/* Metric Callout */}
-                                        <div className="lg:w-48 flex-shrink-0 flex lg:flex-col items-center lg:items-end justify-center gap-3 pt-6 lg:pt-0 border-t lg:border-t-0 border-white/[0.06]">
-                                            <span className="text-5xl lg:text-7xl font-medium text-white leading-none">
-                                                {study.metric}
-                                            </span>
-                                            <span className="text-xs text-white/40 uppercase tracking-widest lg:text-right">
-                                                {study.metricLabel}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </div>
+            {/* ── Case study list ─────────────────────── */}
+            <section className="max-w-7xl mx-auto px-6 relative z-10">
+                <CaseStudiesList studies={caseStudies} />
             </section>
 
-            {/* CTA */}
-            <section className="max-w-7xl mx-auto px-6 mt-32">
+            {/* ── CTA ──────────────────────────────────── */}
+            <section className="max-w-7xl mx-auto px-6 mt-28 relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
-                    className="text-center"
+                    style={{
+                        borderRadius: "24px", textAlign: "center",
+                        padding: "clamp(40px, 6vw, 64px)",
+                        position: "relative", overflow: "hidden",
+                        background: "linear-gradient(145deg, #354F52, #2F3E46, #354F52)",
+                        border: "1px solid rgba(82,121,111,0.22)",
+                        boxShadow: "8px 8px 22px #1e2b31, -4px -4px 14px #3f5461",
+                    }}
                 >
-                    <h2 className="text-3xl sm:text-4xl text-white font-medium mb-5 tracking-tight">
-                        want results like these?
-                    </h2>
-                    <p
-                        className="text-white/60 mx-auto mb-10"
-                        style={{ maxWidth: "48ch", lineHeight: "1.6", display: "block" }}
-                    >
-                        every engagement starts with a free assessment call.
-                        let&apos;s talk about your challenges.
-                    </p>
-                    <Button variant="primary" size="lg" href="/contact">
-                        book a consultation
-                        <ArrowRight size={17} />
-                    </Button>
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, rgba(132,169,140,0.5), transparent)" }} />
+                    <div style={{ position: "absolute", top: "-40px", left: "-40px", width: 200, height: 200, background: "radial-gradient(circle, rgba(82,121,111,0.12), transparent 70%)", filter: "blur(30px)", animation: "float-orb-a 12s ease-in-out infinite" }} />
+
+                    <div style={{ position: "relative", zIndex: 10 }}>
+                        <h2 style={{
+                            fontFamily: "var(--font-headline)",
+                            fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.03em",
+                            background: "linear-gradient(135deg, #CAD2C5, #84A98C)",
+                            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
+                            marginBottom: 16,
+                        }}>want results like these?</h2>
+                        <p style={{ fontSize: "15px", color: "rgba(202,210,197,0.55)", lineHeight: 1.7, maxWidth: "48ch", margin: "0 auto 32px" }}>
+                            every engagement starts with a free assessment call. let&apos;s talk about your challenges.
+                        </p>
+                        <CaseStudiesCtaButton />
+                    </div>
                 </motion.div>
             </section>
         </div>

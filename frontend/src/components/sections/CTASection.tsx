@@ -1,65 +1,226 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "../ui/Button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 export function CTASection() {
+    const [btnHovered, setBtnHovered] = useState(false);
+
     return (
-        <section className="section-gap relative">
-            <div className="max-w-7xl mx-auto px-6">
+        <section className="section-gap relative overflow-hidden" style={{ background: "var(--color-surface)", paddingBottom: "180px" }}>
+            {/* Massive bottom wave transitioning into footer */}
+            <div style={{ position: "absolute", bottom: -1, left: 0, right: 0, zIndex: 0, overflow: "hidden", lineHeight: 0 }}>
+                <svg viewBox="0 0 1440 200" preserveAspectRatio="none" style={{ display: "block", width: "calc(100% + 1.3px)", height: "200px" }}>
+                    <path fill="rgba(45,68,73,1)" d="M0,64L80,69.3C160,75,320,85,480,85.3C640,85,800,75,960,69.3C1120,64,1280,64,1360,64L1440,64L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
+                    <path fill="#18262E" d="M0,128L80,122.7C160,117,320,107,480,117.3C640,128,800,160,960,160C1120,160,1280,128,1360,112L1440,96L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
+                </svg>
+            </div>
+            
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-60px" }}
                     transition={{ duration: 0.8 }}
-                    className="relative rounded-2xl overflow-hidden"
+                    style={{ position: "relative", borderRadius: "28px", overflow: "hidden" }}
                 >
-                    {/* Content */}
-                    <div
-                        className="relative z-10 rounded-2xl border p-12 lg:p-20 text-center"
-                        style={{
-                            backgroundColor: "var(--color-secondary)",
-                            borderColor: "var(--color-border)",
-                        }}
-                    >
-                        <motion.h2
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.1 }}
-                            className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6"
-                            style={{ color: "var(--color-mist)", fontFamily: "var(--font-headline)" }}
-                        >
-                            ready to build something great?
-                        </motion.h2>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.3 }}
-                            className="text-lg mx-auto mb-10"
-                            style={{
-                                color: "var(--color-text-secondary)",
-                                fontFamily: "var(--font-body)",
-                                maxWidth: "52ch",
-                                lineHeight: "1.6",
-                            }}
-                        >
-                            whether it&apos;s soc2 compliance, a website for your cafe, a booking app,
-                            or automating your workflows — book a free consultation and let&apos;s talk.
-                        </motion.p>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.5, delay: 0.4 }}
-                        >
-                            <Button variant="primary" size="lg" href="/contact">
-                                book a consultation
-                                <ArrowRight size={18} />
-                            </Button>
-                        </motion.div>
+                    {/* Neumorphic outer container */}
+                    <div style={{
+                        position: "relative",
+                        borderRadius: "28px",
+                        overflow: "hidden",
+                        background: "linear-gradient(145deg, #354F52 0%, #2F3E46 50%, #354F52 100%)",
+                        border: "1px solid rgba(82,121,111,0.25)",
+                        boxShadow: "10px 10px 28px #1e2b31, -5px -5px 18px #3f5461",
+                        padding: "clamp(48px, 8vw, 80px) clamp(32px, 6vw, 80px)",
+                        textAlign: "center",
+                    }}>
+                        {/* Animated floating orbs */}
+                        <div className="animate-orb-a" style={{
+                            position: "absolute",
+                            top: "-60px", left: "-40px",
+                            width: "280px", height: "280px",
+                            borderRadius: "50%",
+                            background: "radial-gradient(circle, rgba(82,121,111,0.18) 0%, transparent 70%)",
+                            pointerEvents: "none",
+                            filter: "blur(40px)",
+                        }} />
+                        <div className="animate-orb-b" style={{
+                            position: "absolute",
+                            bottom: "-80px", right: "-60px",
+                            width: "320px", height: "320px",
+                            borderRadius: "50%",
+                            background: "radial-gradient(circle, rgba(132,169,140,0.12) 0%, transparent 70%)",
+                            pointerEvents: "none",
+                            filter: "blur(50px)",
+                        }} />
+
+                        {/* Top decorative gradient border */}
+                        <div style={{
+                            position: "absolute", top: 0, left: 0, right: 0, height: "2px",
+                            background: "linear-gradient(90deg, transparent, rgba(82,121,111,0.6), rgba(132,169,140,0.6), rgba(82,121,111,0.6), transparent)",
+                        }} />
+
+                        {/* Dot grid overlay */}
+                        <div className="bg-dot-grid absolute inset-0 opacity-20 pointer-events-none" />
+
+                        {/* Corner shimmer accents */}
+                        <div style={{
+                            position: "absolute", top: 0, left: 0,
+                            width: "200px", height: "200px",
+                            background: "radial-gradient(circle at top left, rgba(82,121,111,0.1), transparent 60%)",
+                            pointerEvents: "none",
+                        }} />
+                        <div style={{
+                            position: "absolute", bottom: 0, right: 0,
+                            width: "200px", height: "200px",
+                            background: "radial-gradient(circle at bottom right, rgba(132,169,140,0.08), transparent 60%)",
+                            pointerEvents: "none",
+                        }} />
+
+                        {/* Content */}
+                        <div style={{ position: "relative", zIndex: 10 }}>
+                            {/* Eyebrow pill */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 12 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 28 }}
+                            >
+                                <div style={{
+                                    display: "inline-flex", alignItems: "center", gap: 7,
+                                    background: "rgba(30,43,49,0.6)",
+                                    border: "1px solid rgba(82,121,111,0.25)",
+                                    borderRadius: "999px",
+                                    padding: "6px 16px",
+                                    boxShadow: "inset 2px 2px 6px rgba(30,43,49,0.8), inset -1px -1px 4px rgba(63,84,97,0.2)",
+                                }}>
+                                    <Sparkles size={12} color="#84A98C" />
+                                    <span style={{
+                                        fontSize: "11px", color: "#84A98C",
+                                        fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase",
+                                    }}>
+                                        free consultation
+                                    </span>
+                                </div>
+                            </motion.div>
+
+                            {/* Headline */}
+                            <motion.h2
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                                style={{
+                                    fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                                    fontWeight: 700,
+                                    fontFamily: "var(--font-headline)",
+                                    letterSpacing: "-0.03em",
+                                    lineHeight: 1.1,
+                                    marginBottom: 20,
+                                    background: "linear-gradient(135deg, #CAD2C5 0%, #84A98C 100%)",
+                                    WebkitBackgroundClip: "text",
+                                    WebkitTextFillColor: "transparent",
+                                    backgroundClip: "text",
+                                }}
+                            >
+                                ready to build something great?
+                            </motion.h2>
+
+                            {/* Sub-copy */}
+                            <motion.p
+                                initial={{ opacity: 0, y: 16 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.22 }}
+                                style={{
+                                    fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)",
+                                    color: "rgba(202,210,197,0.55)",
+                                    fontFamily: "var(--font-body)",
+                                    lineHeight: 1.7,
+                                    maxWidth: "52ch",
+                                    margin: "0 auto 40px",
+                                }}
+                            >
+                                whether it&apos;s soc2 compliance, a website for your cafe, a booking app,
+                                or automating your workflows — book a free consultation and let&apos;s talk.
+                            </motion.p>
+
+                            {/* CTA buttons */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 14 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.35 }}
+                                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap" }}
+                            >
+                                {/* Primary CTA */}
+                                <Link
+                                    href="/contact"
+                                    onMouseEnter={() => setBtnHovered(true)}
+                                    onMouseLeave={() => setBtnHovered(false)}
+                                    style={{
+                                        display: "inline-flex", alignItems: "center", gap: 8,
+                                        backgroundColor: btnHovered ? "#84A98C" : "#CAD2C5",
+                                        color: "#2F3E46",
+                                        borderRadius: "999px",
+                                        padding: "14px 32px",
+                                        fontFamily: "var(--font-label)",
+                                        fontSize: "0.75rem",
+                                        fontWeight: 600,
+                                        letterSpacing: "0.1em",
+                                        textTransform: "uppercase",
+                                        textDecoration: "none",
+                                        boxShadow: btnHovered
+                                            ? "inset 2px 2px 6px rgba(30,43,49,0.2), 0 0 20px rgba(132,169,140,0.3)"
+                                            : "5px 5px 14px #1e2b31, -2px -2px 8px #3f5461",
+                                        transform: btnHovered ? "scale(0.98)" : "scale(1)",
+                                        transition: "all 0.25s ease",
+                                    }}
+                                >
+                                    book a consultation
+                                    <motion.span animate={{ x: btnHovered ? 3 : 0 }} transition={{ duration: 0.2 }}>
+                                        <ArrowRight size={14} />
+                                    </motion.span>
+                                </Link>
+
+                                {/* Secondary CTA */}
+                                <Link
+                                    href="/solutions"
+                                    style={{
+                                        display: "inline-flex", alignItems: "center", gap: 8,
+                                        background: "transparent",
+                                        color: "rgba(202,210,197,0.65)",
+                                        borderRadius: "999px",
+                                        padding: "13px 28px",
+                                        border: "1px solid rgba(202,210,197,0.2)",
+                                        fontFamily: "var(--font-label)",
+                                        fontSize: "0.75rem",
+                                        fontWeight: 500,
+                                        letterSpacing: "0.1em",
+                                        textTransform: "uppercase",
+                                        textDecoration: "none",
+                                        boxShadow: "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461",
+                                        transition: "all 0.25s ease",
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.color = "#CAD2C5";
+                                        e.currentTarget.style.borderColor = "rgba(202,210,197,0.4)";
+                                        e.currentTarget.style.boxShadow = "inset 2px 2px 5px #1e2b31, inset -1px -1px 3px #3f5461";
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.color = "rgba(202,210,197,0.65)";
+                                        e.currentTarget.style.borderColor = "rgba(202,210,197,0.2)";
+                                        e.currentTarget.style.boxShadow = "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461";
+                                    }}
+                                >
+                                    see solutions
+                                </Link>
+                            </motion.div>
+                        </div>
                     </div>
                 </motion.div>
             </div>
