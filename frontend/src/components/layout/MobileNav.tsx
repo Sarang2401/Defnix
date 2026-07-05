@@ -11,12 +11,12 @@ interface MobileNavProps {
 }
 
 const overlayVariants = {
-  open: { opacity: 1 },
+  open:   { opacity: 1 },
   closed: { opacity: 0 },
 };
 
 const navVariants = {
-  open: { x: 0, opacity: 1 },
+  open:   { x: 0, opacity: 1 },
   closed: { x: "100%", opacity: 0 },
 };
 
@@ -41,7 +41,8 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
             animate="open"
             exit="closed"
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[60] backdrop-blur-sm"
+            style={{ backgroundColor: "rgba(47, 62, 70, 0.85)" }}
             onClick={onClose}
           />
 
@@ -52,26 +53,34 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
             animate="open"
             exit="closed"
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-0 z-[70] bg-black flex flex-col"
+            className="fixed inset-0 z-[70] flex flex-col"
+            style={{ backgroundColor: "var(--color-surface)" }}
           >
             {/* Header area */}
-            <div className="flex items-center justify-between px-6 h-20 border-b border-white/10">
+            <div
+              className="flex items-center justify-between px-6 h-20"
+              style={{ borderBottom: "1px solid var(--color-border)" }}
+            >
               <div className="flex items-center gap-2">
                 <svg
                   viewBox="0 0 256 256"
                   className="h-5 w-5"
-                  fill="#ffffff"
+                  fill="var(--color-mist)"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" />
                 </svg>
-                <span className="text-white text-sm font-normal tracking-tight">
+                <span
+                  className="type-label"
+                  style={{ color: "var(--color-mist)" }}
+                >
                   defnix
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="p-2 text-white/60 hover:text-white transition-colors"
+                className="p-2 transition-colors"
+                style={{ color: "var(--color-text-secondary)" }}
                 aria-label="Close menu"
               >
                 <X size={24} />
@@ -91,7 +100,10 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                   <Link
                     href={link.href}
                     onClick={onClose}
-                    className="text-3xl text-white hover:text-white/70 transition-colors duration-200"
+                    className="type-headline block transition-colors duration-200"
+                    style={{ color: "var(--color-mist)" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sage)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-mist)")}
                   >
                     {link.label}
                   </Link>
@@ -110,7 +122,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <Link
                   href="/contact"
                   onClick={onClose}
-                  className="block w-full text-center py-4 rounded-full bg-white text-black font-medium text-lg hover:bg-neutral-200 transition-colors"
+                  className="btn-primary block w-full text-center py-4"
                 >
                   get started
                 </Link>
