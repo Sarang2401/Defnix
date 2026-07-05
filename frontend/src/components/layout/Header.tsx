@@ -79,10 +79,10 @@ export function Header() {
         pointerEvents:"none",
       }}>
         {/*
-          Wrapper: relative so MENU tab can be absolutely positioned
-          below the left edge of the pill
+          position:relative on wrapper so the MENU tongue can be
+          absolutely positioned flush against the pill's bottom edge.
         */}
-        <div style={{ position:"relative", display:"inline-flex", flexDirection:"column", alignItems:"flex-start", pointerEvents:"all" }}>
+        <div style={{ position:"relative", display:"inline-block", pointerEvents:"all" }}>
 
           {/* ── Main pill ───────────────────────────────── */}
           <nav style={{
@@ -105,27 +105,22 @@ export function Header() {
               borderRight:"1px solid rgba(82,121,111,0.22)",
               textDecoration:"none", flexShrink:0,
             }}>
-              <div style={{ position:"relative", width:120, height:40, flexShrink:0 }}>
+              <div style={{ position:"relative", width:160, height:54, flexShrink:0 }}>
                 <Image
                   src="/logo-defnix.png"
                   alt="Defnix"
                   fill
-                  sizes="120px"
+                  sizes="160px"
                   style={{
                     objectFit:"contain",
                     objectPosition:"left center",
                     /*
-                      mix-blend-mode:lighten: on a DARK bg, white pixels
-                      from the logo become the lighter of (white, dark-bg) = white.
-                      mix-blend-mode:screen: white stays white (bad).
-                      mix-blend-mode:multiply: white×dark = dark (white disappears ✓).
-                      BUT multiply darkens color pixels too.
-                      
-                      Best for white-bg logo on dark surface:
-                      Invert the whole image, then screen blend.
-                      filter: invert(1) makes black bg, colors invert → then screen on dark = visible
+                      invert(1) → white bg becomes black (invisible on dark pill)
+                      The logo's dark-teal D and text become light/mist-toned.
+                      hue-rotate(180deg) nudges inverted green-ish tones back
+                      toward the original sage/mist palette.
                     */
-                    filter:"invert(1) hue-rotate(180deg) saturate(0.8) brightness(1.1)",
+                    filter:"invert(1) hue-rotate(180deg) saturate(0.75) brightness(1.05)",
                   }}
                   priority
                 />
@@ -195,38 +190,46 @@ export function Header() {
           </nav>
 
           {/*
-            ── MENU drop-tab — sits BELOW the pill, attached under
-               the logo+clock section. Matches the reference exactly.
-          ──────────────────────────────────────────────────────── */}
+            ── MENU tongue — absolutely positioned flush against the
+               pill's bottom-left, creating a seamless "tongue" effect.
+               borderTop colour matches the pill bg → seam is invisible.
+          */}
           <button
             onClick={() => setNavOpen(true)}
             aria-label="Open navigation menu"
             style={{
+              position:"absolute",
+              top:"calc(100% - 1px)",   /* overlap pill bottom border by 1px */
+              left:10,                   /* sits under the logo section */
               display:"inline-flex", alignItems:"center", gap:8,
-              /* Position: below the pill's left section */
-              marginTop:2,
               backgroundColor: pillBg,
               border:"1px solid rgba(82,121,111,0.32)",
-              /* Flat top so it looks connected to pill above */
-              borderRadius:"0 0 10px 10px",
-              borderTop:"none",
-              padding:"6px 20px 7px",
+              /* borderTop same colour as pill bg → looks like a seamless extension */
+              borderTop:`1px solid ${scrolled ? "rgba(24,38,46,0.98)" : "rgba(24,38,46,0.92)"}`,
+              borderRadius:"0 0 11px 11px",
+              padding:"6px 22px 8px",
               cursor:"pointer",
-              transition:"background-color 0.18s",
               backdropFilter:"blur(20px)",
+              transition:"background-color 0.18s",
+              zIndex:1,
             }}
-            onMouseEnter={e=>(e.currentTarget.style.backgroundColor="rgba(82,121,111,0.18)")}
-            onMouseLeave={e=>(e.currentTarget.style.backgroundColor=pillBg)}
+            onMouseEnter={e=>{
+              e.currentTarget.style.backgroundColor="rgba(82,121,111,0.18)";
+              e.currentTarget.style.borderTopColor=scrolled?"rgba(82,121,111,0.05)":"rgba(82,121,111,0.05)";
+            }}
+            onMouseLeave={e=>{
+              e.currentTarget.style.backgroundColor=pillBg;
+              e.currentTarget.style.borderTopColor=scrolled?"rgba(24,38,46,0.98)":"rgba(24,38,46,0.92)";
+            }}
           >
             <span style={{
-              fontFamily:"'Inter',sans-serif", fontSize:"0.62rem", fontWeight:700,
-              letterSpacing:"0.15em", textTransform:"uppercase",
-              color:"rgba(202,210,197,0.6)",
+              fontFamily:"'Inter',sans-serif", fontSize:"0.6rem", fontWeight:700,
+              letterSpacing:"0.16em", textTransform:"uppercase",
+              color:"rgba(202,210,197,0.55)",
             }}>Menu</span>
-            {/* + icon */}
-            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
-              <rect x="4" y="0" width="2" height="10" rx="1" fill="rgba(202,210,197,0.45)"/>
-              <rect x="0" y="4" width="10" height="2" rx="1" fill="rgba(202,210,197,0.45)"/>
+            <svg width="9" height="9" viewBox="0 0 9 9" fill="none" aria-hidden="true">
+              <rect x="3.5" y="0" width="2" height="9" rx="1" fill="rgba(202,210,197,0.4)"/>
+              <rect x="0" y="3.5" width="9" height="2" rx="1" fill="rgba(202,210,197,0.4)"/>
             </svg>
           </button>
         </div>
