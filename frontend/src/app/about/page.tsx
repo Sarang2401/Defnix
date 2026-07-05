@@ -180,7 +180,10 @@ export default function AboutPage() {
                     <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4">
                         let&apos;s build something secure.
                     </h2>
-                    <p className="text-white/60 max-w-lg mx-auto mb-8">
+                    <p
+                        className="text-white/60 mx-auto mb-8"
+                        style={{ maxWidth: "48ch", lineHeight: "1.6", display: "block" }}
+                    >
                         whether you need soc2 certification, cloud resilience
                         engineering, or ai-driven security automation — we&apos;re
                         here to help.

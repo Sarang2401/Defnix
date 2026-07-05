@@ -85,7 +85,12 @@ export function SolutionPageLayout({ iconName, label, title, subtitle, sections 
                 <PageTransition>
                     <div className="rounded-xl bg-neutral-900 border border-white/10 p-10 lg:p-14 text-center">
                         <h2 className="text-2xl sm:text-3xl text-white font-medium mb-4">ready to get started?</h2>
-                        <p className="text-white/60 max-w-lg mx-auto mb-8">book a no-obligation consultation call. we&apos;ll assess your current posture and outline a clear path forward.</p>
+                        <p
+                            className="text-white/60 mx-auto mb-8"
+                            style={{ maxWidth: "48ch", lineHeight: "1.6", display: "block" }}
+                        >
+                            book a no-obligation consultation call. we&apos;ll assess your current posture and outline a clear path forward.
+                        </p>
                         <Button variant="primary" size="lg" href="/contact">book a consultation <ArrowRight size={18} /></Button>
                     </div>
                 </PageTransition>

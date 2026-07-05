@@ -297,7 +297,10 @@ export default async function CaseStudiesPage() {
                     <h2 className="text-3xl sm:text-4xl text-white font-medium mb-5 tracking-tight">
                         want results like these?
                     </h2>
-                    <p className="text-white/60 max-w-lg mx-auto mb-10">
+                    <p
+                        className="text-white/60 mx-auto mb-10"
+                        style={{ maxWidth: "48ch", lineHeight: "1.6", display: "block" }}
+                    >
                         every engagement starts with a free assessment call.
                         let&apos;s talk about your challenges.
                     </p>

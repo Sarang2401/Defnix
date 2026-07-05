@@ -263,7 +263,12 @@ export default async function BlogPage() {
                     className="mt-16 rounded-2xl bg-neutral-900/60 backdrop-blur-sm border border-white/10 p-10"
                 >
                     <h3 className="text-2xl text-white font-medium mb-3">get engineering insights — no spam</h3>
-                    <p className="text-white/60 mb-8">subscribe via the contact page and we&apos;ll share practical security, cloud, and automation playbooks.</p>
+                    <p
+                        className="text-white/60 mb-8"
+                        style={{ maxWidth: "56ch", lineHeight: "1.6", display: "block" }}
+                    >
+                        subscribe via the contact page and we&apos;ll share practical security, cloud, and automation playbooks.
+                    </p>
                     <div className="flex flex-wrap gap-3">
                         <Link href="/blog/pillars/soc2-compliance" className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/60 hover:text-white hover:border-white/20 transition-all duration-200">SOC2 Pillar</Link>
                         <Link href="/blog/pillars/cloud-security-for-startups" className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-widest text-white/60 hover:text-white hover:border-white/20 transition-all duration-200">Cloud Pillar</Link>
