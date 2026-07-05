@@ -16,13 +16,20 @@ export function CTASection() {
                     className="relative rounded-2xl overflow-hidden"
                 >
                     {/* Content */}
-                    <div className="relative z-10 bg-neutral-900/60 backdrop-blur-sm rounded-2xl border border-white/10 p-12 lg:p-20 text-center">
+                    <div
+                        className="relative z-10 rounded-2xl border p-12 lg:p-20 text-center"
+                        style={{
+                            backgroundColor: "var(--color-secondary)",
+                            borderColor: "var(--color-border)",
+                        }}
+                    >
                         <motion.h2
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.1 }}
-                            className="text-3xl sm:text-4xl lg:text-5xl text-white font-medium mb-6"
+                            className="text-3xl sm:text-4xl lg:text-5xl font-semibold mb-6"
+                            style={{ color: "var(--color-mist)", fontFamily: "var(--font-headline)" }}
                         >
                             ready to build something great?
                         </motion.h2>
@@ -31,7 +38,13 @@ export function CTASection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5, delay: 0.3 }}
-                            className="text-lg text-white/60 max-w-xl mx-auto mb-10"
+                            className="text-lg mx-auto mb-10"
+                            style={{
+                                color: "var(--color-text-secondary)",
+                                fontFamily: "var(--font-body)",
+                                maxWidth: "52ch",
+                                lineHeight: "1.6",
+                            }}
                         >
                             whether it&apos;s soc2 compliance, a website for your cafe, a booking app,
                             or automating your workflows — book a free consultation and let&apos;s talk.
