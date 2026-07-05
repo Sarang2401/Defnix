@@ -1,160 +1,436 @@
 "use client";
 
 import Link from "next/link";
-import { Menu } from "lucide-react";
-import { useState, useEffect } from "react";
-import { MobileNav } from "../layout/MobileNav";
+import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck, Cloud, Bot, Globe } from "lucide-react";
 
-const navLinks = [
-  { href: "/solutions", label: "solutions" },
-  { href: "/blog", label: "blog" },
-  { href: "/case-studies", label: "case studies" },
-  { href: "/about", label: "about" },
-  { href: "/contact", label: "contact" },
+/* ─── Compliance dashboard mockup ──────────────────────────────
+   Visible below the fold, partially clipped — like Craft's app
+   preview that entices you to scroll.
+   All colors strictly from DESIGN.md tokens.
+   ─────────────────────────────────────────────────────────────── */
+
+const statusItems = [
+  { icon: ShieldCheck, label: "SOC2 Type II",     status: "COMPLIANT",  dot: "#84A98C" },
+  { icon: Cloud,       label: "Cloud Resilience", status: "MONITORED",  dot: "#84A98C" },
+  { icon: Bot,         label: "AI SOC Analyst",   status: "ACTIVE",     dot: "#84A98C" },
+  { icon: Globe,       label: "Web Delivery",     status: "LIVE",       dot: "#CAD2C5" },
 ];
 
-export function HeroSection() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+const metrics = [
+  { value: "100%", label: "Client satisfaction" },
+  { value: "15+",  label: "Projects delivered"  },
+  { value: "<1 hr",label: "Avg response time"   },
+  { value: "6",    label: "Solutions"            },
+];
 
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [mobileOpen]);
-
+function DashboardMockup() {
   return (
-    <section className="relative h-screen w-full bg-black" style={{ overflow: "clip" }}>
-      {/* Background Video */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260418_063509_7d167302-4fd4-480b-8260-18ab572333d4.mp4"
-      />
-
-      {/* Navbar — absolute on top of video */}
-      <nav className="absolute z-20 px-6 md:px-10 pt-6 top-0 left-0 right-0">
-        <div className="flex items-center justify-between gap-4">
-          {/* Left pill — Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-2 bg-neutral-900/90 backdrop-blur rounded-full pl-4 pr-6 py-3"
-          >
-            <svg
-              viewBox="0 0 256 256"
-              className="h-5 w-5"
-              fill="#ffffff"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 128 L 64 128 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z M 128 64 L 128 128 L 64.5 128 L 32 95 L 0 64 L 0 0 L 64 0 Z M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 128 0 L 192 0 Z" />
-            </svg>
-            <span className="text-white text-sm font-normal tracking-tight">
-              defnix
-            </span>
-          </Link>
-
-          {/* Center pill — Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-1 bg-neutral-900/90 backdrop-blur rounded-full px-3 py-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-neutral-300 hover:text-white transition-colors text-sm px-5 py-2 rounded-full"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Right — CTA + Mobile toggle */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/contact"
-              className="bg-white text-black text-sm font-normal rounded-full px-6 py-3 hover:bg-neutral-200 transition-colors"
-            >
-              get started
-            </Link>
-            <button
-              onClick={() => setMobileOpen(true)}
-              className="md:hidden p-2 text-white/60 hover:text-white transition-colors"
-              aria-label="Open menu"
-            >
-              <Menu size={24} />
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Navigation Overlay */}
-      <MobileNav
-        isOpen={mobileOpen}
-        onClose={() => setMobileOpen(false)}
-        links={navLinks}
-      />
-
-      {/* Foreground content wrapper */}
-      <div className="relative h-full w-full z-10">
-        {/* Three staggered headline words */}
-        <h1 className="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] left-4 md:left-10 top-[18%]">
-          engineer
-        </h1>
-        <h1 className="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] right-4 md:right-10 top-[38%] text-right">
-          your
-        </h1>
-        <h1 className="hero-title absolute text-white font-medium text-[14vw] md:text-[13vw] left-[18%] md:left-[28%] top-[58%]">
-          future
-        </h1>
-
-        {/* Description paragraph */}
-        <p className="absolute left-6 md:left-10 top-[46%] max-w-[240px] text-[15px] leading-snug text-white/90">
-          we build security systems, websites, mobile apps, and automation — for startups that move fast
-        </p>
-
-        {/* Stat block — top-right */}
-        <div className="absolute right-6 md:right-24 top-[14%]">
-          <div className="flex items-center gap-3 justify-end">
-            <div className="hidden md:block h-px w-24 bg-white/40 rotate-[20deg]" />
-            <span className="text-4xl md:text-5xl font-medium tracking-tight text-white">
-              +100%
-            </span>
-          </div>
-          <p className="text-xs md:text-sm text-white/70 mt-1 text-right">
-            client satisfaction
-          </p>
-        </div>
-
-        {/* Stat block — bottom-left */}
-        <div className="absolute left-6 md:left-20 bottom-20 md:bottom-24">
-          <div className="flex items-center gap-3">
-            <span className="text-4xl md:text-5xl font-medium tracking-tight text-white">
-              +15
-            </span>
-            <div className="hidden md:block h-px w-24 bg-white/40 rotate-[-20deg]" />
-          </div>
-          <p className="text-xs md:text-sm text-white/70 mt-1">
-            projects delivered
-          </p>
-        </div>
-
-        {/* Stat block — bottom-right */}
-        <div className="absolute right-6 md:right-20 bottom-16 md:bottom-20">
-          <div className="flex items-center gap-3 justify-end">
-            <div className="hidden md:block h-px w-24 bg-white/40 rotate-[-20deg]" />
-            <span className="text-4xl md:text-5xl font-medium tracking-tight text-white">
-              +6
-            </span>
-          </div>
-          <p className="text-xs md:text-sm text-white/70 mt-1 text-right">
-            solutions offered
-          </p>
-        </div>
+    <div
+      style={{
+        width: "100%",
+        maxWidth: "860px",
+        margin: "0 auto",
+        backgroundColor: "#354F52",           /* secondary */
+        border: "1px solid rgba(82,121,111,0.35)", /* pine 35% */
+        borderRadius: "16px 16px 0 0",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      {/* Window chrome */}
+      <div
+        style={{
+          backgroundColor: "#2F3E46",         /* surface */
+          borderBottom: "1px solid rgba(82,121,111,0.25)",
+          padding: "12px 20px",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+        }}
+      >
+        {/* Traffic lights */}
+        {["#52796F","#84A98C","#CAD2C5"].map((c) => (
+          <span
+            key={c}
+            style={{
+              width: 10, height: 10,
+              borderRadius: "50%",
+              backgroundColor: c,
+              opacity: 0.6,
+              display: "inline-block",
+            }}
+          />
+        ))}
+        <span
+          style={{
+            marginLeft: "auto",
+            fontFamily: "var(--font-label)",
+            fontSize: "0.65rem",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "rgba(202,210,197,0.4)",
+          }}
+        >
+          defnix · security dashboard
+        </span>
       </div>
 
-      {/* Bottom gradient overlay */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-b from-transparent to-black z-10" />
+      {/* Dashboard body */}
+      <div style={{ padding: "24px", display: "flex", flexDirection: "column", gap: "16px" }}>
+
+        {/* Metrics row */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "12px" }}>
+          {metrics.map((m) => (
+            <div
+              key={m.label}
+              style={{
+                backgroundColor: "#2F3E46",
+                border: "1px solid rgba(82,121,111,0.25)",
+                borderRadius: "10px",
+                padding: "14px 16px",
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: "var(--font-headline)",
+                  fontSize: "1.5rem",
+                  fontWeight: 600,
+                  color: "#CAD2C5",
+                  lineHeight: 1,
+                  marginBottom: 4,
+                }}
+              >
+                {m.value}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--font-label)",
+                  fontSize: "0.6rem",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "rgba(202,210,197,0.45)",
+                }}
+              >
+                {m.label}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Status list */}
+        <div
+          style={{
+            backgroundColor: "#2F3E46",
+            border: "1px solid rgba(82,121,111,0.25)",
+            borderRadius: "10px",
+            overflow: "hidden",
+          }}
+        >
+          {statusItems.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={item.label}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "14px",
+                  padding: "14px 18px",
+                  borderBottom: i < statusItems.length - 1
+                    ? "1px solid rgba(82,121,111,0.18)"
+                    : "none",
+                }}
+              >
+                {/* Icon tile */}
+                <div
+                  style={{
+                    width: 32, height: 32,
+                    borderRadius: 8,
+                    backgroundColor: "#354F52",
+                    border: "1px solid rgba(82,121,111,0.3)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon size={14} color="#84A98C" />
+                </div>
+
+                {/* Label */}
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.875rem",
+                    color: "#CAD2C5",
+                    flex: 1,
+                  }}
+                >
+                  {item.label}
+                </span>
+
+                {/* Status badge */}
+                <span
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    fontFamily: "var(--font-label)",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: item.dot,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 6, height: 6,
+                      borderRadius: "50%",
+                      backgroundColor: item.dot,
+                      display: "inline-block",
+                    }}
+                  />
+                  {item.status}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Activity bar chart (decorative) */}
+        <div
+          style={{
+            backgroundColor: "#2F3E46",
+            border: "1px solid rgba(82,121,111,0.25)",
+            borderRadius: "10px",
+            padding: "16px 18px",
+          }}
+        >
+          <div
+            style={{
+              fontFamily: "var(--font-label)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "rgba(202,210,197,0.4)",
+              marginBottom: 12,
+            }}
+          >
+            Threat activity — last 7 days
+          </div>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: "6px", height: "40px" }}>
+            {[30, 55, 40, 70, 45, 85, 60].map((h, i) => (
+              <div
+                key={i}
+                style={{
+                  flex: 1,
+                  height: `${h}%`,
+                  borderRadius: "3px 3px 0 0",
+                  backgroundColor: i === 5 ? "#84A98C" : "#52796F",
+                  opacity: i === 5 ? 1 : 0.5,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Main Hero ─────────────────────────────────────────────── */
+export function HeroSection() {
+  return (
+    <section
+      style={{
+        backgroundColor: "var(--color-surface)",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        paddingTop: "140px",
+        paddingBottom: 0,
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      {/* ── Headline block ──────────────────────────────────── */}
+      <div style={{ textAlign: "center", padding: "0 24px", zIndex: 10 }}>
+
+        {/* Eyebrow label */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 28,
+          }}
+        >
+          <span
+            style={{
+              width: 6, height: 6,
+              borderRadius: "50%",
+              backgroundColor: "#84A98C",
+              display: "inline-block",
+            }}
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-label)",
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "rgba(202,210,197,0.6)",
+            }}
+          >
+            Engineering studio · Bengaluru, India
+          </span>
+        </motion.div>
+
+        {/* Main headline — inspired by Craft's massive centered type */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          style={{
+            fontFamily: "var(--font-headline)",
+            fontWeight: 600,
+            fontSize: "clamp(2.8rem, 7vw, 5.5rem)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.03em",
+            color: "#CAD2C5",
+            maxWidth: "16ch",
+            margin: "0 auto 20px",
+          }}
+        >
+          Security built{" "}
+          <span style={{ color: "#84A98C" }}>
+            for&nbsp;what&apos;s&nbsp;next.
+          </span>
+        </motion.h1>
+
+        {/* Sub-headline */}
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "1.0625rem",
+            lineHeight: 1.65,
+            color: "rgba(202,210,197,0.65)",
+            maxWidth: "46ch",
+            margin: "0 auto 40px",
+            display: "block",
+          }}
+        >
+          SOC2 compliance, cloud resilience, AI automation, web &amp; mobile —
+          every engagement starts with a free assessment call.
+        </motion.p>
+
+        {/* CTA — single pill like Craft */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.32, ease: "easeOut" }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 12,
+            marginBottom: 72,
+          }}
+        >
+          <Link
+            href="/contact"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              backgroundColor: "#CAD2C5",
+              color: "#2F3E46",
+              borderRadius: "999px",
+              padding: "14px 32px",
+              fontFamily: "var(--font-label)",
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              transition: "background-color 0.2s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#84A98C")}
+            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#CAD2C5")}
+          >
+            Book a free consultation
+            <ArrowRight size={14} />
+          </Link>
+
+          <Link
+            href="/solutions"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              backgroundColor: "transparent",
+              color: "#CAD2C5",
+              borderRadius: "999px",
+              padding: "13px 28px",
+              border: "1px solid rgba(202,210,197,0.25)",
+              fontFamily: "var(--font-label)",
+              fontSize: "0.75rem",
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+              transition: "border-color 0.2s ease, color 0.2s ease",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "rgba(202,210,197,0.6)";
+              e.currentTarget.style.color = "#CAD2C5";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(202,210,197,0.25)";
+            }}
+          >
+            See solutions
+          </Link>
+        </motion.div>
+      </div>
+
+      {/* ── Floating dashboard mockup — inspired by Craft's app preview ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 48 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.75, delay: 0.45, ease: "easeOut" }}
+        style={{
+          width: "100%",
+          paddingLeft: "clamp(16px, 4vw, 80px)",
+          paddingRight: "clamp(16px, 4vw, 80px)",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
+        {/* Subtle top fade to blend hero into mockup */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            height: "40px",
+            background: `linear-gradient(to bottom, #2F3E46, transparent)`,
+            zIndex: 20,
+            pointerEvents: "none",
+          }}
+        />
+        <DashboardMockup />
+      </motion.div>
     </section>
   );
 }
