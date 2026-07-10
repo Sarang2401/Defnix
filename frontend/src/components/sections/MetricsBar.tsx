@@ -1,10 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useEffect, useRef, useState, memo } from "react";
+import { motion, useInView, animate } from "framer-motion";
+import { getStat } from "@/lib/stats-data";
 
-/* ── Animated Number ─────────────────────────────── */
-function AnimatedNumber({
+const satisfactionStat = getStat("satisfaction");
+const projectsStat = getStat("projects");
+const deliveryStat = getStat("delivery-time");
+const countriesStat = getStat("countries");
+
+/* ── Animated Number — driven by framer-motion's animate(),
+   a single shared timeline engine instead of one hand-rolled
+   requestAnimationFrame loop per instance ───────────────── */
+const AnimatedNumber = memo(function AnimatedNumber({
     value,
     suffix,
     prefix = "",
@@ -21,18 +29,12 @@ function AnimatedNumber({
 
     useEffect(() => {
         if (!shouldAnimate) return;
-        let start: number | null = null;
-        const duration = 1600;
-        const ease = (t: number) => 1 - Math.pow(1 - t, 3);
-        const step = (timestamp: number) => {
-            if (!start) start = timestamp;
-            const elapsed = timestamp - start;
-            const t = Math.min(elapsed / duration, 1);
-            setDisplayed(Math.round(ease(t) * value));
-            if (t < 1) requestAnimationFrame(step);
-        };
-        const frame = requestAnimationFrame(step);
-        return () => cancelAnimationFrame(frame);
+        const controls = animate(0, value, {
+            duration: 1.6,
+            ease: [0.33, 1, 0.68, 1],
+            onUpdate: (latest) => setDisplayed(Math.round(latest)),
+        });
+        return () => controls.stop();
     }, [shouldAnimate, value]);
 
     return (
@@ -44,13 +46,13 @@ function AnimatedNumber({
             {prefix}{displayed}{suffix}
         </span>
     );
-}
+});
 
-function Pill({ text, color = "#84A98C" }: { text: string; color?: string }) {
+const Pill = memo(function Pill({ text, color = "var(--color-sage)" }: { text: string; color?: string }) {
     return (
         <div style={{
-            background: "rgba(132,169,140, 0.15)",
-            border: "1px solid rgba(132,169,140, 0.3)",
+            background: "color-mix(in srgb, var(--color-sage) 15%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)",
             borderRadius: "999px",
             padding: "4px 10px",
             display: "inline-flex",
@@ -62,13 +64,13 @@ function Pill({ text, color = "#84A98C" }: { text: string; color?: string }) {
             </span>
         </div>
     );
-}
+});
 
 function AbstractAvatars() {
     const colors = [
-        "linear-gradient(135deg, #84A98C, #52796F)",
-        "linear-gradient(135deg, #52796F, #2F3E46)",
-        "linear-gradient(135deg, #CAD2C5, #84A98C)",
+        "linear-gradient(135deg, var(--color-sage), var(--color-pine))",
+        "linear-gradient(135deg, var(--color-pine), var(--color-surface))",
+        "linear-gradient(135deg, var(--color-mist), var(--color-sage))",
     ];
     return (
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -76,7 +78,7 @@ function AbstractAvatars() {
                 <div key={i} style={{
                     width: 42, height: 42, borderRadius: "50%",
                     background: bg,
-                    border: "3px solid #18262E",
+                    border: "3px solid var(--color-glass-deep)",
                     marginLeft: i > 0 ? -14 : 0,
                     boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                     position: "relative",
@@ -87,7 +89,7 @@ function AbstractAvatars() {
     );
 }
 
-function AnimatedBarChart({ animate }: { animate: boolean }) {
+const AnimatedBarChart = memo(function AnimatedBarChart({ animate: shouldAnimate }: { animate: boolean }) {
     const bars = [0.4, 0.6, 0.5, 0.8, 0.7, 1.0];
     return (
         <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 48 }}>
@@ -95,19 +97,19 @@ function AnimatedBarChart({ animate }: { animate: boolean }) {
                 <motion.div
                     key={i}
                     initial={{ height: 0 }}
-                    animate={{ height: animate ? h * 48 : 0 }}
+                    animate={{ height: shouldAnimate ? h * 48 : 0 }}
                     transition={{ duration: 0.6, delay: 0.2 + i * 0.1, ease: "easeOut" }}
                     style={{
                         width: 14,
                         borderRadius: "6px 6px 0 0",
-                        background: "linear-gradient(to top, #52796F, #84A98C)",
-                        boxShadow: "0 0 8px rgba(132,169,140,0.3)",
+                        background: "linear-gradient(to top, var(--color-pine), var(--color-sage))",
+                        boxShadow: "0 0 8px color-mix(in srgb, var(--color-sage) 30%, transparent)",
                     }}
                 />
             ))}
         </div>
     );
-}
+});
 
 export function MetricsBar() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -128,9 +130,9 @@ export function MetricsBar() {
                             className="flex-1 flex flex-col justify-between"
                             style={{
                                 borderRadius: "24px",
-                                background: "linear-gradient(145deg, #2d4449, #18262E)",
-                                border: "1px solid rgba(82,121,111,0.2)",
-                                boxShadow: "inset 2px 2px 8px #3f5461, 8px 8px 20px #111a20",
+                                background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-glass-deep))",
+                                border: "1px solid var(--color-border)",
+                                boxShadow: "inset 2px 2px 8px var(--color-neu-light), 8px 8px 20px #111a20",
                                 padding: "32px",
                                 position: "relative",
                                 overflow: "hidden",
@@ -139,10 +141,10 @@ export function MetricsBar() {
                         >
                             <AbstractAvatars />
                             <div className="mt-8">
-                                <div style={{ fontSize: "2.8rem", fontWeight: 700, lineHeight: 1.1, textShadow: "0 2px 10px rgba(202,210,197,0.2)" }}>
-                                    <AnimatedNumber value={100} suffix="%" color="#CAD2C5" animate={isInView} />
+                                <div style={{ fontSize: "2.8rem", fontWeight: 700, lineHeight: 1.1, textShadow: "0 2px 10px color-mix(in srgb, var(--color-mist) 20%, transparent)" }}>
+                                    <AnimatedNumber value={satisfactionStat.value} suffix={satisfactionStat.suffix} color="var(--color-mist)" animate={isInView} />
                                 </div>
-                                <p style={{ fontSize: "13.5px", color: "rgba(202,210,197,0.5)", marginTop: 6, fontWeight: 500 }}>
+                                <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", marginTop: 6, fontWeight: 500 }}>
                                     across all engagements
                                 </p>
                             </div>
@@ -157,23 +159,23 @@ export function MetricsBar() {
                             className="flex-1 flex flex-col justify-between"
                             style={{
                                 borderRadius: "24px",
-                                background: "linear-gradient(145deg, #2d4449, #18262E)",
-                                border: "1px solid rgba(82,121,111,0.2)",
-                                boxShadow: "inset 2px 2px 8px #3f5461, 8px 8px 20px #111a20",
+                                background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-glass-deep))",
+                                border: "1px solid var(--color-border)",
+                                boxShadow: "inset 2px 2px 8px var(--color-neu-light), 8px 8px 20px #111a20",
                                 padding: "32px",
                                 position: "relative",
                                 overflow: "hidden",
                                 minHeight: "220px",
                             }}
                         >
-                            <p style={{ fontSize: "13.5px", color: "rgba(202,210,197,0.5)", fontWeight: 500, marginBottom: 8 }}>
+                            <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", fontWeight: 500, marginBottom: 8 }}>
                                 Projects Shipped
                             </p>
                             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
-                                <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, textShadow: "0 2px 10px rgba(132,169,140,0.2)" }}>
-                                    <AnimatedNumber value={15} suffix="+" color="#84A98C" animate={isInView} />
+                                <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, textShadow: "0 2px 10px color-mix(in srgb, var(--color-sage) 20%, transparent)" }}>
+                                    <AnimatedNumber value={projectsStat.value} suffix={projectsStat.suffix} color="var(--color-sage)" animate={isInView} />
                                 </div>
-                                <Pill text="on time" color="#84A98C" />
+                                <Pill text="on time" color="var(--color-sage)" />
                             </div>
                             <AnimatedBarChart animate={isInView} />
                         </motion.div>
@@ -188,9 +190,9 @@ export function MetricsBar() {
                         className="lg:col-span-2 relative"
                         style={{
                             borderRadius: "24px",
-                            background: "linear-gradient(145deg, #18262E, #2d4449)",
-                            border: "1px solid rgba(82,121,111,0.2)",
-                            boxShadow: "inset 2px 2px 8px #3f5461, 8px 8px 24px #111a20",
+                            background: "linear-gradient(145deg, var(--color-glass-deep), var(--color-glass-mid))",
+                            border: "1px solid var(--color-border)",
+                            boxShadow: "inset 2px 2px 8px var(--color-neu-light), 8px 8px 24px #111a20",
                             padding: "32px",
                             overflow: "hidden",
                             minHeight: "460px",
@@ -211,18 +213,18 @@ export function MetricsBar() {
                                     </filter>
                                     
                                     <linearGradient id="grad-bottom" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#2F3E46" />
-                                        <stop offset="100%" stopColor="#18262E" />
+                                        <stop offset="0%" stopColor="var(--color-surface)" />
+                                        <stop offset="100%" stopColor="var(--color-glass-deep)" />
                                     </linearGradient>
                                     
                                     <linearGradient id="grad-mid" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#52796F" />
-                                        <stop offset="100%" stopColor="#354F52" />
+                                        <stop offset="0%" stopColor="var(--color-pine)" />
+                                        <stop offset="100%" stopColor="var(--color-secondary)" />
                                     </linearGradient>
 
                                     <linearGradient id="grad-top" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#CAD2C5" />
-                                        <stop offset="100%" stopColor="#84A98C" />
+                                        <stop offset="0%" stopColor="var(--color-mist)" />
+                                        <stop offset="100%" stopColor="var(--color-sage)" />
                                     </linearGradient>
                                 </defs>
 
@@ -233,7 +235,7 @@ export function MetricsBar() {
                                 >
                                     <ellipse cx="400" cy="450" rx="320" ry="130" fill="url(#grad-bottom)" filter="url(#shadow-2)" transform="rotate(-10 400 450)" />
                                     {/* Disc edge highlight */}
-                                    <ellipse cx="400" cy="448" rx="320" ry="130" fill="none" stroke="rgba(202,210,197,0.1)" strokeWidth="3" transform="rotate(-10 400 450)" />
+                                    <ellipse cx="400" cy="448" rx="320" ry="130" fill="none" stroke="color-mix(in srgb, var(--color-mist) 10%, transparent)" strokeWidth="3" transform="rotate(-10 400 450)" />
                                 </motion.g>
 
                                 {/* Middle Disc */}
@@ -242,7 +244,7 @@ export function MetricsBar() {
                                     transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                                 >
                                     <ellipse cx="380" cy="320" rx="280" ry="110" fill="url(#grad-mid)" filter="url(#shadow-1)" transform="rotate(-5 380 320)" />
-                                    <ellipse cx="380" cy="318" rx="280" ry="110" fill="none" stroke="rgba(202,210,197,0.2)" strokeWidth="3" transform="rotate(-5 380 320)" />
+                                    <ellipse cx="380" cy="318" rx="280" ry="110" fill="none" stroke="color-mix(in srgb, var(--color-mist) 20%, transparent)" strokeWidth="3" transform="rotate(-5 380 320)" />
                                 </motion.g>
 
                                 {/* Top Disc */}
@@ -266,24 +268,24 @@ export function MetricsBar() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.4 }}
                                 style={{
-                                    background: "rgba(24, 38, 46, 0.65)",
+                                    background: "color-mix(in srgb, var(--color-glass-deep) 65%, transparent)",
                                     backdropFilter: "blur(12px)",
                                     WebkitBackdropFilter: "blur(12px)",
-                                    border: "1px solid rgba(202,210,197,0.15)",
+                                    border: "1px solid color-mix(in srgb, var(--color-mist) 15%, transparent)",
                                     borderRadius: "20px",
                                     padding: "24px 32px",
                                     boxShadow: "0 12px 32px rgba(0,0,0,0.3)",
                                     pointerEvents: "auto",
                                 }}
                             >
-                                <p style={{ fontSize: "13.5px", color: "rgba(202,210,197,0.7)", fontWeight: 500, marginBottom: 8 }}>
+                                <p style={{ fontSize: "13.5px", color: "var(--color-text-secondary)", fontWeight: 500, marginBottom: 8 }}>
                                     Avg. Delivery
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                                    <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, color: "#CAD2C5" }}>
-                                        <AnimatedNumber value={2} suffix=" wk" color="#CAD2C5" animate={isInView} />
+                                    <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, color: "var(--color-mist)" }}>
+                                        <AnimatedNumber value={deliveryStat.value} suffix={deliveryStat.suffix} color="var(--color-mist)" animate={isInView} />
                                     </div>
-                                    <Pill text="30% faster" color="#CAD2C5" />
+                                    <Pill text="30% faster" color="var(--color-mist)" />
                                 </div>
                             </motion.div>
 
@@ -294,10 +296,10 @@ export function MetricsBar() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.6 }}
                                 style={{
-                                    background: "rgba(24, 38, 46, 0.75)",
+                                    background: "color-mix(in srgb, var(--color-glass-deep) 75%, transparent)",
                                     backdropFilter: "blur(16px)",
                                     WebkitBackdropFilter: "blur(16px)",
-                                    border: "1px solid rgba(202,210,197,0.15)",
+                                    border: "1px solid color-mix(in srgb, var(--color-mist) 15%, transparent)",
                                     borderRadius: "20px",
                                     padding: "24px 32px",
                                     boxShadow: "0 12px 32px rgba(0,0,0,0.4)",
@@ -306,25 +308,25 @@ export function MetricsBar() {
                                     maxWidth: "340px",
                                 }}
                             >
-                                <p style={{ fontSize: "13.5px", color: "rgba(202,210,197,0.7)", fontWeight: 500, marginBottom: 8 }}>
+                                <p style={{ fontSize: "13.5px", color: "var(--color-text-secondary)", fontWeight: 500, marginBottom: 8 }}>
                                     Countries Served
                                 </p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                                    <div style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1, color: "#84A98C" }}>
-                                        <AnimatedNumber value={12} suffix="+" color="#84A98C" animate={isInView} />
+                                    <div style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1, color: "var(--color-sage)" }}>
+                                        <AnimatedNumber value={countriesStat.value} suffix={countriesStat.suffix} color="var(--color-sage)" animate={isInView} />
                                     </div>
-                                    <Pill text="Global" color="#84A98C" />
+                                    <Pill text="Global" color="var(--color-sage)" />
                                 </div>
                                 
                                 {/* Horizontal Progress Bar */}
-                                <div style={{ height: 6, background: "rgba(82,121,111,0.2)", borderRadius: 3, overflow: "hidden" }}>
+                                <div style={{ height: 6, background: "var(--color-border)", borderRadius: 3, overflow: "hidden" }}>
                                     <motion.div
                                         initial={{ width: 0 }}
                                         animate={{ width: isInView ? "85%" : 0 }}
                                         transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
                                         style={{
                                             height: "100%",
-                                            background: "linear-gradient(90deg, #52796F, #84A98C)",
+                                            background: "linear-gradient(90deg, var(--color-pine), var(--color-sage))",
                                             borderRadius: 3,
                                         }}
                                     />
