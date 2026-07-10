@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import * as motion from "framer-motion/client";
 import {
     type BlogPost,
-    BlogCategories,
-    FeaturedPost,
-    BlogPostsList,
+    BlogExplorer,
     NewsletterPillar
 } from "./BlogClient";
 
@@ -84,10 +82,6 @@ async function getPosts(): Promise<BlogPost[]> {
 
 export default async function BlogPage() {
     const posts = await getPosts();
-    const allTags = Array.from(new Set(posts.flatMap((p) => p.tags)));
-    const categories = ["All", ...allTags.slice(0, 6)];
-    const featured = posts[0] ? { ...posts[0], featured: true } : null;
-    const secondary = posts.slice(1);
 
     return (
         <div className="pt-32 pb-20" style={{ backgroundColor: "var(--color-surface)", position: "relative", overflow: "hidden" }}>
@@ -126,23 +120,16 @@ export default async function BlogPage() {
                         </span>
                     </h1>
 
-                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "55ch", marginBottom: 28 }}>
+                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "55ch" }}>
                         deep technical articles on soc2 compliance, cloud security architecture,
                         and ai-driven security operations — written by engineers, for engineers.
                     </p>
-
-                    {/* Category filter pills */}
-                    <BlogCategories categories={categories} />
                 </motion.div>
             </section>
 
-            {/* ── Posts ──────────────────────────────── */}
+            {/* ── Posts (with interactive category filter) ──── */}
             <section className="max-w-7xl mx-auto px-6 relative z-10">
-                {/* Featured post */}
-                {featured && <FeaturedPost post={featured} />}
-
-                {/* Secondary posts grid */}
-                <BlogPostsList posts={secondary} />
+                <BlogExplorer posts={posts} />
 
                 {/* Newsletter / pillar CTA */}
                 <NewsletterPillar />

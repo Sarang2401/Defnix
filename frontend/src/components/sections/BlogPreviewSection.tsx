@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Clock, BookOpen, TrendingUp } from "lucide-react";
+import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 interface BlogPost {
     slug: string;
@@ -17,9 +17,9 @@ interface BlogPost {
 }
 
 const categoryColors: Record<string, { accent: string; bg: string }> = {
-    "SOC2 Compliance": { accent: "#84A98C", bg: "rgba(132,169,140,0.08)" },
-    "Cloud Security": { accent: "#52796F", bg: "rgba(82,121,111,0.08)" },
-    "AI & Automation": { accent: "#CAD2C5", bg: "rgba(202,210,197,0.06)" },
+    "SOC2 Compliance": { accent: "var(--color-sage)", bg: "color-mix(in srgb, var(--color-sage) 8%, transparent)" },
+    "Cloud Security": { accent: "var(--color-pine)", bg: "color-mix(in srgb, var(--color-pine) 8%, transparent)" },
+    "AI & Automation": { accent: "var(--color-mist)", bg: "color-mix(in srgb, var(--color-mist) 6%, transparent)" },
 };
 
 const samplePosts: BlogPost[] = [
@@ -57,15 +57,15 @@ const samplePosts: BlogPost[] = [
 function ReadingArc({ minutes }: { minutes: number }) {
     return (
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-            <Clock size={13} color="#84A98C" />
-            <span style={{ fontSize: "12px", color: "rgba(202,210,197,0.6)", fontWeight: 500 }}>{minutes} min read</span>
+            <Clock size={13} color="var(--color-sage)" />
+            <span style={{ fontSize: "12px", color: "color-mix(in srgb, var(--color-mist) 60%, transparent)", fontWeight: 500 }}>{minutes} min read</span>
         </div>
     );
 }
 
 /* ── Category badge ────────────────────────────── */
-function CategoryBadge({ category }: { category: string }) {
-    const colors = categoryColors[category] || { accent: "#84A98C", bg: "rgba(132,169,140,0.08)" };
+const CategoryBadge = memo(function CategoryBadge({ category }: { category: string }) {
+    const colors = categoryColors[category] || { accent: "var(--color-sage)", bg: "color-mix(in srgb, var(--color-sage) 8%, transparent)" };
     return (
         <div style={{
             display: "inline-flex", alignItems: "center", gap: 6,
@@ -73,7 +73,7 @@ function CategoryBadge({ category }: { category: string }) {
             border: `1px solid ${colors.accent}30`,
             borderRadius: "999px",
             padding: "3px 10px",
-            boxShadow: `inset 2px 2px 5px rgba(30,43,49,0.6), inset -1px -1px 3px rgba(63,84,97,0.2)`,
+            boxShadow: `inset 2px 2px 5px color-mix(in srgb, var(--color-neu-dark) 60%, transparent), inset -1px -1px 3px color-mix(in srgb, var(--color-neu-light) 20%, transparent)`,
         }}>
             <div style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: colors.accent, boxShadow: `0 0 4px ${colors.accent}` }} />
             <span style={{ fontSize: "10px", color: colors.accent, fontWeight: 500, letterSpacing: "0.08em", textTransform: "uppercase" }}>
@@ -81,12 +81,12 @@ function CategoryBadge({ category }: { category: string }) {
             </span>
         </div>
     );
-}
+});
 
 /* ── Featured post card ───────────────────────── */
 function FeaturedCard({ post }: { post: BlogPost }) {
     const [hovered, setHovered] = useState(false);
-    const colors = categoryColors[post.category] || { accent: "#84A98C", bg: "rgba(132,169,140,0.08)" };
+    const colors = categoryColors[post.category] || { accent: "var(--color-sage)", bg: "color-mix(in srgb, var(--color-sage) 8%, transparent)" };
 
     return (
         <Link
@@ -100,10 +100,10 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                 borderRadius: "20px",
                 overflow: "hidden",
                 position: "relative",
-                border: `1px solid ${hovered ? "rgba(132,169,140,0.35)" : "rgba(82,121,111,0.2)"}`,
+                border: `1px solid ${hovered ? "color-mix(in srgb, var(--color-sage) 35%, transparent)" : "var(--color-border)"}`,
                 boxShadow: hovered
-                    ? `8px 8px 24px #1e2b31, -4px -4px 14px #3f5461, 0 0 30px rgba(132,169,140,0.08)`
-                    : `6px 6px 18px #1e2b31, -3px -3px 12px #3f5461`,
+                    ? `8px 8px 24px var(--color-neu-dark), -4px -4px 14px var(--color-neu-light), 0 0 30px color-mix(in srgb, var(--color-sage) 8%, transparent)`
+                    : `6px 6px 18px var(--color-neu-dark), -3px -3px 12px var(--color-neu-light)`,
                 transition: "all 0.4s ease",
                 minHeight: "420px",
             }}>
@@ -120,11 +120,11 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                 {/* Gradient overlays */}
                 <div style={{
                     position: "absolute", inset: 0,
-                    background: "linear-gradient(to top, #2F3E46 40%, rgba(47,62,70,0.4) 70%, transparent 100%)",
+                    background: "linear-gradient(to top, var(--color-surface) 40%, color-mix(in srgb, var(--color-surface) 40%, transparent) 70%, transparent 100%)",
                 }} />
                 <div style={{
                     position: "absolute", inset: 0,
-                    background: `linear-gradient(135deg, rgba(47,62,70,0.6), transparent 60%)`,
+                    background: `linear-gradient(135deg, color-mix(in srgb, var(--color-surface) 60%, transparent), transparent 60%)`,
                 }} />
 
                 {/* Animated top accent line */}
@@ -147,11 +147,11 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                         {post.isNew && (
                             <div style={{
                                 display: "flex", alignItems: "center", gap: 5,
-                                background: "rgba(132,169,140,0.15)", border: "1px solid rgba(132,169,140,0.3)",
+                                background: "color-mix(in srgb, var(--color-sage) 15%, transparent)", border: "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)",
                                 borderRadius: "999px", padding: "3px 10px",
                             }}>
-                                <div style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "#84A98C" }} className="animate-pulse-dot" />
-                                <span style={{ fontSize: "10px", color: "#84A98C", fontWeight: 600, letterSpacing: "0.1em" }}>NEW</span>
+                                <div style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "var(--color-sage)" }} className="animate-pulse-dot" />
+                                <span style={{ fontSize: "10px", color: "var(--color-sage)", fontWeight: 600, letterSpacing: "0.1em" }}>NEW</span>
                             </div>
                         )}
                     </div>
@@ -161,7 +161,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                         <h3 style={{
                             fontSize: "clamp(1.1rem, 2vw, 1.45rem)",
                             fontWeight: 600,
-                            color: hovered ? "#CAD2C5" : "rgba(202,210,197,0.9)",
+                            color: hovered ? "var(--color-mist)" : "color-mix(in srgb, var(--color-mist) 90%, transparent)",
                             fontFamily: "var(--font-headline)",
                             lineHeight: 1.3,
                             marginBottom: 12,
@@ -172,7 +172,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                         </h3>
                         <p style={{
                             fontSize: "13px",
-                            color: hovered ? "rgba(202,210,197,0.65)" : "rgba(202,210,197,0.45)",
+                            color: hovered ? "color-mix(in srgb, var(--color-mist) 65%, transparent)" : "var(--color-text-muted)",
                             lineHeight: 1.65,
                             marginBottom: 20,
                             transition: "color 0.3s ease",
@@ -183,10 +183,10 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                         <div style={{
                             display: "flex", alignItems: "center", justifyContent: "space-between",
                             paddingTop: 16,
-                            borderTop: "1px solid rgba(82,121,111,0.2)",
+                            borderTop: "1px solid var(--color-border)",
                         }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                                <span style={{ fontSize: "11px", color: "rgba(202,210,197,0.4)" }}>{post.date}</span>
+                                <span style={{ fontSize: "11px", color: "color-mix(in srgb, var(--color-mist) 40%, transparent)" }}>{post.date}</span>
                                 <ReadingArc minutes={post.readingTime} />
                             </div>
                             <motion.div
@@ -194,7 +194,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
                                 transition={{ duration: 0.2 }}
                                 style={{
                                     display: "flex", alignItems: "center", gap: 6,
-                                    color: "#84A98C", fontSize: "12px", fontWeight: 500,
+                                    color: "var(--color-sage)", fontSize: "12px", fontWeight: 500,
                                 }}
                             >
                                 Read article <ArrowRight size={13} />
@@ -210,7 +210,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
 /* ── Secondary post card ──────────────────────── */
 function SecondaryCard({ post, index }: { post: BlogPost; index: number }) {
     const [hovered, setHovered] = useState(false);
-    const colors = categoryColors[post.category] || { accent: "#84A98C", bg: "rgba(132,169,140,0.08)" };
+    const colors = categoryColors[post.category] || { accent: "var(--color-sage)", bg: "color-mix(in srgb, var(--color-sage) 8%, transparent)" };
 
     return (
         <motion.div
@@ -230,11 +230,11 @@ function SecondaryCard({ post, index }: { post: BlogPost; index: number }) {
                     borderRadius: "18px",
                     position: "relative",
                     overflow: "hidden",
-                    background: "linear-gradient(145deg, #354F52, #2d4449)",
-                    border: `1px solid ${hovered ? "rgba(82,121,111,0.4)" : "rgba(82,121,111,0.15)"}`,
+                    background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                    border: `1px solid ${hovered ? "color-mix(in srgb, var(--color-pine) 40%, transparent)" : "color-mix(in srgb, var(--color-pine) 15%, transparent)"}`,
                     boxShadow: hovered
-                        ? `inset 3px 3px 8px #1e2b31, inset -2px -2px 6px #3f5461, 0 0 20px rgba(82,121,111,0.08)`
-                        : `5px 5px 14px #1e2b31, -2px -2px 8px #3f5461`,
+                        ? `inset 3px 3px 8px var(--color-neu-dark), inset -2px -2px 6px var(--color-neu-light), 0 0 20px color-mix(in srgb, var(--color-pine) 8%, transparent)`
+                        : `5px 5px 14px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light)`,
                     padding: "22px",
                     transition: "all 0.35s ease",
                     display: "flex", flexDirection: "column", gap: 14,
@@ -254,28 +254,28 @@ function SecondaryCard({ post, index }: { post: BlogPost; index: number }) {
                         position: "absolute", top: 0, left: 0, right: 0, height: "1px",
                         background: hovered
                             ? `linear-gradient(90deg, transparent, ${colors.accent}40, transparent)`
-                            : "linear-gradient(90deg, transparent, rgba(82,121,111,0.15), transparent)",
+                            : "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-pine) 15%, transparent), transparent)",
                         transition: "all 0.35s ease",
                     }} />
 
                     <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 12 }}>
                         <CategoryBadge category={post.category} />
                         <div style={{
-                            background: "rgba(30,43,49,0.7)",
-                            border: "1px solid rgba(82,121,111,0.15)",
+                            background: "color-mix(in srgb, var(--color-neu-dark) 70%, transparent)",
+                            border: "1px solid color-mix(in srgb, var(--color-pine) 15%, transparent)",
                             borderRadius: "8px",
                             padding: "4px 8px",
-                            boxShadow: "inset 2px 2px 4px rgba(30,43,49,0.8)",
+                            boxShadow: "inset 2px 2px 4px color-mix(in srgb, var(--color-neu-dark) 80%, transparent)",
                             flexShrink: 0,
                         }}>
-                            <span style={{ fontSize: "10px", color: "rgba(202,210,197,0.35)" }}>{post.date}</span>
+                            <span style={{ fontSize: "10px", color: "color-mix(in srgb, var(--color-mist) 35%, transparent)" }}>{post.date}</span>
                         </div>
                     </div>
 
                     <h4 style={{
                         fontSize: "0.95rem",
                         fontWeight: 600,
-                        color: hovered ? "#CAD2C5" : "rgba(202,210,197,0.8)",
+                        color: hovered ? "var(--color-mist)" : "color-mix(in srgb, var(--color-mist) 80%, transparent)",
                         fontFamily: "var(--font-headline)",
                         lineHeight: 1.4,
                         letterSpacing: "-0.01em",
@@ -287,7 +287,7 @@ function SecondaryCard({ post, index }: { post: BlogPost; index: number }) {
 
                     <div style={{
                         display: "flex", alignItems: "center", justifyContent: "space-between",
-                        paddingTop: 12, borderTop: "1px solid rgba(82,121,111,0.12)",
+                        paddingTop: 12, borderTop: "1px solid color-mix(in srgb, var(--color-pine) 12%, transparent)",
                         marginTop: "auto",
                     }}>
                         <ReadingArc minutes={post.readingTime} />
@@ -313,7 +313,7 @@ export function BlogPreviewSection() {
             {/* Torn Paper Edge (Top) */}
             <div style={{ position: "absolute", top: -1, left: 0, right: 0, zIndex: 5, overflow: "hidden", lineHeight: 0, transform: "rotate(180deg)" }}>
                 <svg viewBox="0 0 1200 120" preserveAspectRatio="none" style={{ display: "block", width: "calc(100% + 1.3px)", height: "40px" }}>
-                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(30,43,49,1)" style={{ fill: "var(--color-surface)" }}></path>
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="var(--color-neu-dark)" style={{ fill: "var(--color-surface)" }}></path>
                 </svg>
             </div>
 
@@ -332,12 +332,12 @@ export function BlogPreviewSection() {
                         <div>
                             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                                 <div style={{
-                                    width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F",
-                                    boxShadow: "0 0 8px rgba(82,121,111,0.8)",
+                                    width: 6, height: 6, borderRadius: "50%", backgroundColor: "var(--color-pine)",
+                                    boxShadow: "0 0 8px color-mix(in srgb, var(--color-pine) 80%, transparent)",
                                 }} className="animate-pulse-dot" />
                                 <p style={{
                                     fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
-                                    color: "#52796F", fontWeight: 500,
+                                    color: "var(--color-pine)", fontWeight: 500,
                                 }}>
                                     technical blog
                                 </p>
@@ -345,11 +345,11 @@ export function BlogPreviewSection() {
                             <h2 style={{
                                 fontSize: "clamp(2rem, 4vw, 3rem)",
                                 fontWeight: 600,
-                                color: "#CAD2C5",
+                                color: "var(--color-mist)",
                                 fontFamily: "var(--font-headline)",
                                 letterSpacing: "-0.02em",
                             }}>
-                                engineering <span style={{ color: "#84A98C" }}>insights</span>
+                                engineering <span style={{ color: "var(--color-sage)" }}>insights</span>
                             </h2>
                         </div>
 
@@ -359,24 +359,24 @@ export function BlogPreviewSection() {
                             style={{
                                 padding: "8px 18px",
                                 borderRadius: "999px",
-                                border: "1px solid rgba(82,121,111,0.25)",
-                                color: "rgba(202,210,197,0.55)",
+                                border: "1px solid color-mix(in srgb, var(--color-pine) 25%, transparent)",
+                                color: "color-mix(in srgb, var(--color-mist) 55%, transparent)",
                                 fontSize: "12px",
                                 fontWeight: 500,
                                 letterSpacing: "0.05em",
-                                boxShadow: "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461",
+                                boxShadow: "3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light)",
                                 transition: "all 0.25s ease",
                                 textDecoration: "none",
                             }}
                             onMouseEnter={(e) => {
-                                e.currentTarget.style.color = "#84A98C";
-                                e.currentTarget.style.borderColor = "rgba(132,169,140,0.35)";
-                                e.currentTarget.style.boxShadow = "inset 2px 2px 5px #1e2b31, inset -1px -1px 3px #3f5461";
+                                e.currentTarget.style.color = "var(--color-sage)";
+                                e.currentTarget.style.borderColor = "color-mix(in srgb, var(--color-sage) 35%, transparent)";
+                                e.currentTarget.style.boxShadow = "inset 2px 2px 5px var(--color-neu-dark), inset -1px -1px 3px var(--color-neu-light)";
                             }}
                             onMouseLeave={(e) => {
-                                e.currentTarget.style.color = "rgba(202,210,197,0.55)";
-                                e.currentTarget.style.borderColor = "rgba(82,121,111,0.25)";
-                                e.currentTarget.style.boxShadow = "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461";
+                                e.currentTarget.style.color = "color-mix(in srgb, var(--color-mist) 55%, transparent)";
+                                e.currentTarget.style.borderColor = "color-mix(in srgb, var(--color-pine) 25%, transparent)";
+                                e.currentTarget.style.boxShadow = "3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light)";
                             }}
                         >
                             <BookOpen size={13} />
@@ -418,7 +418,7 @@ export function BlogPreviewSection() {
                         href="/blog"
                         style={{
                             display: "inline-flex", alignItems: "center", gap: 8,
-                            color: "#84A98C", fontSize: "13px", fontWeight: 500,
+                            color: "var(--color-sage)", fontSize: "13px", fontWeight: 500,
                         }}
                     >
                         View all posts <ArrowRight size={13} />

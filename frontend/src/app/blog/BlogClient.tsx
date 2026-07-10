@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Rss, Clock } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export type BlogPost = {
     slug: string;
@@ -55,32 +56,82 @@ export function ReadingTimeArc({ minutes }: { minutes: string }) {
     );
 }
 
-export function BlogCategories({ categories }: { categories: string[] }) {
+export function BlogCategories({
+    categories,
+    active,
+    onSelect,
+}: {
+    categories: string[];
+    active: string;
+    onSelect: (category: string) => void;
+}) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
             style={{ display: "flex", flexWrap: "wrap", gap: 10 }}
+            role="group"
+            aria-label="Filter articles by category"
         >
             {categories.map((cat) => (
-                <div key={cat} style={{
-                    borderRadius: "999px",
-                    border: "1px solid rgba(82,121,111,0.2)",
-                    background: "rgba(53,79,82,0.25)",
-                    padding: "6px 16px", fontSize: "11px",
-                    textTransform: "uppercase", letterSpacing: "0.12em",
-                    color: "rgba(202,210,197,0.5)",
-                    boxShadow: "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461",
-                    cursor: "pointer", transition: "all 0.2s ease", fontWeight: 500,
-                }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = "#84A98C"; e.currentTarget.style.borderColor = "rgba(132,169,140,0.35)"; e.currentTarget.style.boxShadow = "inset 2px 2px 5px #1e2b31, inset -1px -1px 3px #3f5461"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(202,210,197,0.5)"; e.currentTarget.style.borderColor = "rgba(82,121,111,0.2)"; e.currentTarget.style.boxShadow = "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461"; }}
+                <button
+                    key={cat}
+                    type="button"
+                    onClick={() => onSelect(cat)}
+                    aria-pressed={active === cat}
+                    className="blog-category-pill"
+                    data-active={active === cat || undefined}
+                    style={{
+                        borderRadius: "999px",
+                        border: "1px solid rgba(82,121,111,0.2)",
+                        padding: "6px 16px", fontSize: "11px",
+                        textTransform: "uppercase", letterSpacing: "0.12em",
+                        fontWeight: 500,
+                        cursor: "pointer",
+                    }}
                 >
                     {cat}
-                </div>
+                </button>
             ))}
         </motion.div>
+    );
+}
+
+/* ── Interactive category filter + results, shared client state ── */
+export function BlogExplorer({ posts }: { posts: BlogPost[] }) {
+    const [active, setActive] = useState("All");
+
+    const categories = useMemo(() => {
+        const allTags = Array.from(new Set(posts.flatMap((p) => p.tags)));
+        return ["All", ...allTags.slice(0, 6)];
+    }, [posts]);
+
+    const filtered = useMemo(
+        () => (active === "All" ? posts : posts.filter((p) => p.tags.includes(active))),
+        [posts, active]
+    );
+
+    const featured = filtered[0] ? { ...filtered[0], featured: true } : null;
+    const secondary = filtered.slice(1);
+
+    return (
+        <>
+            <div style={{ marginBottom: 40 }}>
+                <BlogCategories categories={categories} active={active} onSelect={setActive} />
+            </div>
+
+            {filtered.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "60px 20px", color: "rgba(202,210,197,0.5)" }}>
+                    No articles in <strong style={{ color: "#84A98C" }}>{active}</strong> yet — check back soon.
+                </div>
+            ) : (
+                <>
+                    {featured && <FeaturedPost post={featured} />}
+                    <BlogPostsList posts={secondary} />
+                </>
+            )}
+        </>
     );
 }
 
