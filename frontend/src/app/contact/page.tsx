@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, MapPin, Mail, Sparkles, CheckCircle, AlertCircle, Send } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { MapPin, Mail, Sparkles, CheckCircle, AlertCircle, Send } from "lucide-react";
 
 /* ── Neumorphic input field ──────────────────────────── */
 function NeuField({
@@ -363,7 +363,7 @@ export default function ContactPage() {
                             <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(202,210,197,0.3)", marginBottom: 14, fontWeight: 600 }}>what to expect</p>
                             {[
                                 "Response within 1 business day",
-                                "30-min discovery call — no pressure",
+                                "Free 30-minute discovery call",
                                 "Tailored recommendation for your goals",
                             ].map((item) => (
                                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
