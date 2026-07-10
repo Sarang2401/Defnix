@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { LayoutContent } from "@/components/layout/LayoutContent";
 
 /*
-  Typography — loaded via next/font for performance.
-  General Sans is not in Google Fonts, so it is imported
-  via the @import in globals.css (googleapis CDN).
-  Inter covers body + label roles.
+  Typography — both loaded via next/font/google (self-hosted,
+  no render-blocking external <link>, no duplicate requests).
+  Space Grotesk covers headlines, Inter covers body + label roles.
 */
-const inter = Inter({
-  variable: "--font-inter-loaded",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500"],
+  weight: ["500", "600", "700"],
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -65,14 +71,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" className={inter.variable}>
-      <head>
-        {/* General Sans — not available on Google Fonts, loaded from Fontshare */}
-        <link
-          rel="stylesheet"
-          href="https://api.fontshare.com/v2/css?f[]=general-sans@600&display=swap"
-        />
-      </head>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body className="antialiased">
         <script
           type="application/ld+json"
