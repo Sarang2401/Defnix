@@ -109,7 +109,10 @@
    BASE
    ──────────────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
+  /* Lenis (SmoothScroll.tsx) owns scroll easing — native CSS smooth-scroll
+     would fight it, re-easing toward every incremental scrollTop update
+     Lenis makes and compounding into multi-second lag. */
+  scroll-behavior: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100dvh;
