@@ -30,7 +30,7 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
             onClick={onClose}
             style={{
               position:"fixed", inset:0, zIndex:60,
-              backgroundColor:"rgba(18,28,34,0.78)",
+              backgroundColor:"color-mix(in srgb, var(--color-glass-deep) 78%, transparent)",
               backdropFilter:"blur(6px)",
             }}
           />
@@ -44,8 +44,8 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
             style={{
               position:"fixed", top:0, left:0, bottom:0, zIndex:70,
               width:"min(360px,90vw)",
-              backgroundColor:"#19272f",
-              borderRight:"1px solid rgba(82,121,111,0.2)",
+              backgroundColor:"var(--color-glass-deep)",
+              borderRight:"1px solid var(--color-border)",
               display:"flex", flexDirection:"column",
             }}
           >
@@ -53,8 +53,8 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
             <div style={{
               display:"flex", alignItems:"center", justifyContent:"space-between",
               padding:"14px 20px",
-              borderBottom:"1px solid rgba(82,121,111,0.15)",
-              backgroundColor:"#1e2c32",
+              borderBottom:"1px solid color-mix(in srgb, var(--color-pine) 15%, transparent)",
+              backgroundColor:"var(--color-glass-deep)",
             }}>
               <div style={{ position:"relative", width:110, height:36 }}>
                 <Image
@@ -69,17 +69,14 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
                 />
               </div>
 
-              <Link href="/contact" onClick={onClose} style={{
+              <Link href="/contact" onClick={onClose} className="header-cta-link" style={{
                 display:"inline-flex", alignItems:"center",
-                backgroundColor:"#CAD2C5", color:"#19272f",
+                color:"var(--color-glass-deep)",
                 borderRadius:8, padding:"7px 16px",
                 fontFamily:"'Inter',sans-serif", fontSize:"0.62rem",
                 fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase",
                 textDecoration:"none", whiteSpace:"nowrap",
-                transition:"background-color 0.18s ease",
               }}
-              onMouseEnter={(e)=>(e.currentTarget.style.backgroundColor="#84A98C")}
-              onMouseLeave={(e)=>(e.currentTarget.style.backgroundColor="#CAD2C5")}
               >
                 Let&apos;s Talk
               </Link>
@@ -93,29 +90,17 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
                   animate={{ opacity:1, x:0 }}
                   transition={{ delay:0.06+i*0.05, duration:0.26, ease:"easeOut" }}
                 >
-                  <Link href={item.href} onClick={onClose} style={{
+                  <Link href={item.href} onClick={onClose} className="nav-overlay-link" style={{
                     display:"flex", alignItems:"center", gap:16,
                     padding:"18px 24px",
-                    borderBottom:"1px solid rgba(82,121,111,0.1)",
+                    borderBottom:"1px solid color-mix(in srgb, var(--color-pine) 10%, transparent)",
                     textDecoration:"none",
-                    transition:"background-color 0.15s ease",
-                  }}
-                  onMouseEnter={(e)=>{
-                    e.currentTarget.style.backgroundColor="rgba(82,121,111,0.1)";
-                    (e.currentTarget.querySelector(".a") as HTMLElement).style.color="#84A98C";
-                    (e.currentTarget.querySelector(".l") as HTMLElement).style.color="#84A98C";
-                  }}
-                  onMouseLeave={(e)=>{
-                    e.currentTarget.style.backgroundColor="transparent";
-                    (e.currentTarget.querySelector(".a") as HTMLElement).style.color="rgba(202,210,197,0.22)";
-                    (e.currentTarget.querySelector(".l") as HTMLElement).style.color="#CAD2C5";
                   }}
                   >
-                    <span className="a" style={{ fontSize:"1.05rem", color:"rgba(202,210,197,0.22)", transition:"color 0.15s ease", lineHeight:1 }}>→</span>
-                    <span className="l" style={{
+                    <span className="nav-overlay-arrow" style={{ fontSize:"1.05rem", lineHeight:1 }}>→</span>
+                    <span className="nav-overlay-label" style={{
                       fontFamily:"'Inter',sans-serif", fontSize:"0.7rem", fontWeight:700,
                       letterSpacing:"0.16em", textTransform:"uppercase",
-                      color:"#CAD2C5", transition:"color 0.15s ease",
                     }}>{item.label}</span>
                   </Link>
                 </motion.div>
@@ -124,29 +109,25 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
 
             {/* Bottom bar */}
             <div style={{
-              borderTop:"1px solid rgba(82,121,111,0.15)",
+              borderTop:"1px solid color-mix(in srgb, var(--color-pine) 15%, transparent)",
               padding:"14px 20px",
               display:"flex", alignItems:"center", justifyContent:"space-between",
-              backgroundColor:"#1e2c32",
+              backgroundColor:"var(--color-glass-deep)",
             }}>
               <span style={{
                 fontFamily:"'Inter',sans-serif", fontSize:"0.56rem", fontWeight:500,
                 letterSpacing:"0.14em", textTransform:"uppercase",
-                color:"rgba(202,210,197,0.26)",
+                color:"color-mix(in srgb, var(--color-mist) 26%, transparent)",
               }}>Bengaluru · India</span>
 
-              <button onClick={onClose} style={{
+              <button onClick={onClose} className="nav-overlay-close" style={{
                 display:"inline-flex", alignItems:"center", gap:7,
-                backgroundColor:"rgba(82,121,111,0.1)",
-                border:"1px solid rgba(82,121,111,0.24)",
+                border:"1px solid color-mix(in srgb, var(--color-pine) 24%, transparent)",
                 borderRadius:999, padding:"6px 16px",
                 fontFamily:"'Inter',sans-serif", fontSize:"0.6rem", fontWeight:700,
                 letterSpacing:"0.14em", textTransform:"uppercase",
-                color:"#CAD2C5", cursor:"pointer",
-                transition:"background-color 0.18s ease",
+                color:"var(--color-mist)", cursor:"pointer",
               }}
-              onMouseEnter={(e)=>(e.currentTarget.style.backgroundColor="rgba(82,121,111,0.22)")}
-              onMouseLeave={(e)=>(e.currentTarget.style.backgroundColor="rgba(82,121,111,0.1)")}
               >
                 Close ×
               </button>
