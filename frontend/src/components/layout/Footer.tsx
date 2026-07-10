@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
+import { solutionGroups, getSolutionsByGroup } from "@/lib/solutions-data";
+import { getStat } from "@/lib/stats-data";
 
 /* ─── Social icons (inline SVGs matching the reference HTML) ─── */
 const LinkedInIcon = () => (
@@ -40,14 +43,6 @@ const InstagramIcon = () => (
   </svg>
 );
 
-/* ─── Service tiles for the 2×2 grid ─────────────── */
-const serviceTiles = [
-  { label: "SOC2",     inverted: false },
-  { label: "Cloud",    inverted: true  },
-  { label: "AI",       inverted: false },
-  { label: "Web/\nMobile", inverted: false },
-];
-
 export function Footer() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
@@ -79,8 +74,8 @@ export function Footer() {
         style={{ padding: "var(--spacing-xl)", borderColor: "var(--color-border)" }}
       >
 
-        {/* ── Col 1-5: Newsletter ─────────────────── */}
-        <div className="col-span-12 md:col-span-5 flex flex-col justify-start">
+        {/* ── Col 1-4: Newsletter ─────────────────── */}
+        <div className="col-span-12 md:col-span-4 flex flex-col justify-start">
           <h2
             className="type-headline mb-4"
             style={{ color: "var(--color-mist)" }}
@@ -107,6 +102,7 @@ export function Footer() {
           ) : (
             <form
               onSubmit={handleSubscribe}
+              className="footer-newsletter-form"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -118,10 +114,7 @@ export function Footer() {
                 padding: "6px 6px 6px 20px",
                 gap: "8px",
                 boxSizing: "border-box",
-                transition: "border-color 0.2s ease",
               }}
-              onFocusCapture={(e) => (e.currentTarget.style.borderColor = "var(--color-sage)")}
-              onBlurCapture={(e) => (e.currentTarget.style.borderColor = "var(--color-pine)")}
             >
               <input
                 id="footer-email"
@@ -144,6 +137,7 @@ export function Footer() {
               />
               <button
                 type="submit"
+                className="footer-submit-btn"
                 style={{
                   flexShrink: 0,
                   backgroundColor: "var(--color-mist)",
@@ -158,10 +152,7 @@ export function Footer() {
                   border: "none",
                   cursor: "pointer",
                   whiteSpace: "nowrap",
-                  transition: "background-color 0.2s ease",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--color-sage)")}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--color-mist)")}
               >
                 Submit
               </button>
@@ -169,41 +160,36 @@ export function Footer() {
           )}
         </div>
 
-        {/* ── Col 6-8: Link columns ───────────────── */}
+        {/* ── Col 5-8: Link columns ───────────────── */}
         <div
-          className="col-span-12 md:col-span-3 grid grid-cols-2 gap-6 pl-8"
-          style={{ borderLeft: "1px solid var(--color-border)" }}
+          className="col-span-12 md:col-span-4 grid gap-6 pl-8"
+          style={{ borderLeft: "1px solid var(--color-border)", gridTemplateColumns: "3fr 2fr" }}
         >
-          {/* Solutions */}
-          <div className="flex flex-col gap-4">
-            <h3
-              className="type-label mb-2"
-              style={{ color: "var(--color-pine)" }}
-            >
-              Solutions
-            </h3>
-            <ul className="flex flex-col gap-3">
-              {[
-                { href: "/solutions/soc2-failure-prevention", label: "SOC2 Failure Prevention" },
-                { href: "/solutions/cloud-insurance",         label: "Cloud Insurance" },
-                { href: "/solutions/ai-soc-analyst",         label: "AI SOC Analyst" },
-                { href: "/solutions/website-development",    label: "Website Development" },
-                { href: "/solutions/mobile-development",     label: "Mobile App Development" },
-                { href: "/solutions/business-automation",    label: "Business Automation" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="type-label"
-                    style={{ color: "var(--color-text-secondary)", transition: "color 0.2s ease" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sage)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-secondary)")}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Solutions — grouped by discipline */}
+          <div className="flex flex-col gap-5">
+            {solutionGroups.map((group) => (
+              <div key={group.id} className="flex flex-col gap-2.5">
+                <h3
+                  className="type-label"
+                  style={{ color: "var(--color-pine)" }}
+                >
+                  {group.label}
+                </h3>
+                <ul className="flex flex-col gap-4">
+                  {getSolutionsByGroup(group.id).map((solution) => (
+                    <li key={solution.href}>
+                      <Link
+                        href={solution.href}
+                        className="footer-nav-link"
+                        style={{ color: "var(--color-text-secondary)" }}
+                      >
+                        {solution.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
 
           {/* Resources */}
@@ -214,7 +200,7 @@ export function Footer() {
             >
               Resources
             </h3>
-            <ul className="flex flex-col gap-3">
+            <ul className="flex flex-col gap-4">
               {[
                 { href: "/blog",          label: "Blog" },
                 { href: "/case-studies",  label: "Case Studies" },
@@ -224,10 +210,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="type-label"
-                    style={{ color: "var(--color-text-secondary)", transition: "color 0.2s ease" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sage)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-secondary)")}
+                    className="footer-nav-link"
+                    style={{ color: "var(--color-text-secondary)" }}
                   >
                     {link.label}
                   </Link>
@@ -237,64 +221,62 @@ export function Footer() {
           </div>
         </div>
 
-        {/* ── Col 9-12: 2×2 Service tile grid ────── */}
+        {/* ── Col 9-12: Get in touch + trust block ── */}
         <div
-          className="col-span-12 md:col-span-4 pl-8"
+          className="col-span-12 md:col-span-4 pl-8 flex flex-col gap-4"
           style={{ borderLeft: "1px solid var(--color-border)" }}
         >
-          <div className="grid grid-cols-2 gap-2" style={{ aspectRatio: "1 / 1" }}>
-            {serviceTiles.map((tile) =>
-              tile.inverted ? (
-                /* Inverted tile — mist bg, surface text */
+          {/* Get in touch card */}
+          <div
+            className="bg-gradient-surface-secondary flex flex-col gap-3"
+            style={{
+              borderRadius: "var(--radius-md)",
+              border: "1px solid var(--color-border)",
+              padding: "20px",
+            }}
+          >
+            <h3 className="type-label" style={{ color: "var(--color-pine)" }}>
+              Get in touch
+            </h3>
+            <p className="type-body" style={{ color: "var(--color-text-secondary)", fontSize: "0.85rem" }}>
+              Have a project in mind? We typically respond within {getStat("response-time").display}.
+            </p>
+            <Link
+              href="/contact"
+              className="footer-cta-link type-label"
+              style={{ color: "var(--color-mist)" }}
+            >
+              Start a conversation <ArrowRight size={13} />
+            </Link>
+          </div>
+
+          {/* Trust / credibility stats — pulled from stats-data so they can't drift */}
+          <div className="grid grid-cols-2 gap-2">
+            {["satisfaction", "countries"].map((id) => {
+              const stat = getStat(id);
+              return (
                 <div
-                  key={tile.label}
-                  className="flex items-center justify-center text-center transition-colors duration-200"
-                  style={{
-                    backgroundColor: "var(--color-mist)",
-                    borderRadius: "var(--radius-md)",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--color-sage)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--color-mist)")}
-                >
-                  <span
-                    className="type-label"
-                    style={{ color: "var(--color-surface)" }}
-                  >
-                    {tile.label}
-                  </span>
-                </div>
-              ) : (
-                /* Default tile — secondary bg */
-                <div
-                  key={tile.label}
-                  className="flex items-center justify-center text-center transition-colors duration-200"
+                  key={id}
+                  className="tint-sage-hover"
                   style={{
                     backgroundColor: "var(--color-secondary)",
                     borderRadius: "var(--radius-md)",
                     border: "1px solid var(--color-border)",
-                    cursor: "default",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "var(--color-pine)";
-                    const span = e.currentTarget.querySelector("span");
-                    if (span) span.style.color = "var(--color-sage)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "var(--color-border)";
-                    const span = e.currentTarget.querySelector("span");
-                    if (span) span.style.color = "var(--color-mist)";
+                    padding: "14px",
                   }}
                 >
-                  <span
-                    className="type-label whitespace-pre-line leading-tight"
-                    style={{ color: "var(--color-mist)", transition: "color 0.2s ease" }}
+                  <div
+                    className="type-headline"
+                    style={{ color: "var(--color-sage)", fontSize: "1.4rem", marginBottom: 2 }}
                   >
-                    {tile.label}
-                  </span>
+                    {stat.display}
+                  </div>
+                  <div className="type-label" style={{ color: "var(--color-text-muted)", fontSize: "0.65rem" }}>
+                    {stat.label}
+                  </div>
                 </div>
-              )
-            )}
+              );
+            })}
           </div>
         </div>
 
@@ -323,9 +305,8 @@ export function Footer() {
                 key={label}
                 href={href}
                 aria-label={label}
-                style={{ color: "var(--color-text-muted)", transition: "color 0.2s ease" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sage)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
+                className="footer-link"
+                style={{ color: "var(--color-text-muted)" }}
               >
                 <Icon />
               </a>
@@ -341,12 +322,7 @@ export function Footer() {
                 { href: "/disclaimer",       label: "Disclaimer" },
               ].map((link, i, arr) => (
                 <span key={link.href} className="flex items-center gap-2">
-                  <Link
-                    href={link.href}
-                    style={{ transition: "color 0.2s ease" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-sage)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-text-muted)")}
-                  >
+                  <Link href={link.href} className="footer-link">
                     {link.label}
                   </Link>
                   {i < arr.length - 1 && <span>·</span>}

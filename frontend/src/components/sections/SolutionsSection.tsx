@@ -1,135 +1,57 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from "framer-motion";
-import { Shield, Cloud, Brain, Globe, Smartphone, Workflow, ArrowRight, Terminal, Zap, Lock } from "lucide-react";
+import { ArrowRight, Zap, type LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, memo } from "react";
+import { solutionGroups, getSolutionsByGroup, type Solution } from "@/lib/solutions-data";
 
-interface Solution {
-    icon: typeof Shield;
-    title: string;
-    subtitle: string;
-    impact: string;
-    impactValue: string;
-    description: string;
-    href: string;
-    colSpan?: number;
-    rowSpan?: number;
-    featured?: boolean;
-    accentColor?: string;
-}
-
-const solutions: Solution[] = [
-    {
-        icon: Shield,
-        title: "SOC2 Failure Prevention",
-        subtitle: "Compliance Readiness Engineering",
-        impact: "Faster audit readiness",
-        impactValue: "3×",
-        description: "Control framework design, evidence automation, and audit workflows built into operations.",
-        href: "/solutions/soc2-failure-prevention",
-        colSpan: 2,
-        rowSpan: 1,
-        accentColor: "#84A98C",
-    },
-    {
-        icon: Cloud,
-        title: "Cloud Insurance",
-        subtitle: "Risk Reduction & Incident Readiness",
-        impact: "Reduced blast radius",
-        impactValue: "90%",
-        description: "Architecture hardening, disaster recovery, and monitoring for real resilience.",
-        href: "/solutions/cloud-insurance",
-        colSpan: 2,
-        rowSpan: 1,
-        accentColor: "#52796F",
-    },
-    {
-        icon: Brain,
-        title: "AI SOC Analyst",
-        subtitle: "Security Automation",
-        impact: "Faster threat triage",
-        impactValue: "10×",
-        description: "ML-powered alert triage and automated investigation pipelines.",
-        href: "/solutions/ai-soc-analyst",
-        colSpan: 2,
-        rowSpan: 2,
-        featured: true,
-        accentColor: "#84A98C",
-    },
-    {
-        icon: Globe,
-        title: "Website Development",
-        subtitle: "Conversion-First Websites",
-        impact: "Better lead flow",
-        impactValue: "+40%",
-        description: "Performance-first sites built for search ranking and client conversion.",
-        href: "/solutions/website-development",
-        colSpan: 1,
-        rowSpan: 1,
-        accentColor: "#CAD2C5",
-    },
-    {
-        icon: Smartphone,
-        title: "Mobile Apps",
-        subtitle: "Cross-Platform Builds",
-        impact: "Faster MVP delivery",
-        impactValue: "2wk",
-        description: "iOS and Android apps with booking, notifications, and payments.",
-        href: "/solutions/mobile-development",
-        colSpan: 1,
-        rowSpan: 1,
-        accentColor: "#84A98C",
-    },
-    {
-        icon: Workflow,
-        title: "Business Automation",
-        subtitle: "Workflow Engineering",
-        impact: "Hours saved weekly",
-        impactValue: "20h+",
-        description: "Automation for onboarding, operations, and customer lifecycle.",
-        href: "/solutions/business-automation",
-        colSpan: 2,
-        rowSpan: 1,
-        accentColor: "#52796F",
-    },
-];
-
-/* ── Animated terminal for featured AI card ───── */
+/* ── Animated terminal for the featured AI card ───── */
 const terminalLines = [
-    { text: "$ alert-triage --input=siem-stream", color: "#84A98C", delay: 0 },
-    { text: "> Analyzing 847 events...", color: "#CAD2C5", delay: 0.6 },
-    { text: "> [HIGH] Lateral movement detected · Host: ws-14", color: "#84A98C", delay: 1.2 },
-    { text: "> [LOW]  Port scan noise · Auto-suppressed", color: "#52796F", delay: 1.8 },
-    { text: "> Enriching IOCs via threat intel feeds...", color: "#CAD2C5", delay: 2.4 },
-    { text: "> 1 actionable alert / 847 events. 99.9% filtered.", color: "#84A98C", delay: 3.0 },
+    { text: "$ alert-triage --input=siem-stream", color: "var(--color-sage)", delay: 0 },
+    { text: "> Analyzing 847 events...", color: "var(--color-mist)", delay: 0.6 },
+    { text: "> [HIGH] Lateral movement detected · Host: ws-14", color: "var(--color-sage)", delay: 1.2 },
+    { text: "> [LOW]  Port scan noise · Auto-suppressed", color: "var(--color-pine)", delay: 1.8 },
+    { text: "> Enriching IOCs via threat intel feeds...", color: "var(--color-mist)", delay: 2.4 },
+    { text: "> 1 actionable alert / 847 events. 99.9% filtered.", color: "var(--color-sage)", delay: 3.0 },
 ];
 
 function FeaturedTerminal() {
     const [visibleLines, setVisibleLines] = useState(0);
 
     useEffect(() => {
-        terminalLines.forEach((line, i) => {
-            setTimeout(() => {
-                setVisibleLines((prev) => Math.max(prev, i + 1));
-            }, line.delay * 1000 + 600);
-        });
+        const timeoutIds: ReturnType<typeof setTimeout>[] = [];
+        const scheduleCycle = () => {
+            terminalLines.forEach((line, i) => {
+                timeoutIds.push(
+                    setTimeout(() => {
+                        setVisibleLines((prev) => Math.max(prev, i + 1));
+                    }, line.delay * 1000 + 600)
+                );
+            });
+        };
+        scheduleCycle();
         const interval = setInterval(() => {
             setVisibleLines(0);
             terminalLines.forEach((line, i) => {
-                setTimeout(() => {
-                    setVisibleLines((prev) => Math.max(prev, i + 1));
-                }, line.delay * 1000);
+                timeoutIds.push(
+                    setTimeout(() => {
+                        setVisibleLines((prev) => Math.max(prev, i + 1));
+                    }, line.delay * 1000)
+                );
             });
         }, 8000);
-        return () => clearInterval(interval);
+        return () => {
+            clearInterval(interval);
+            timeoutIds.forEach((id) => clearTimeout(id));
+        };
     }, []);
 
     return (
         <div
             style={{
-                background: "rgba(30,43,49,0.8)",
-                border: "1px solid rgba(82,121,111,0.25)",
+                background: "color-mix(in srgb, var(--color-neu-dark) 80%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--color-pine) 25%, transparent)",
                 borderRadius: "10px",
                 padding: "14px 16px",
                 fontFamily: "'Courier New', monospace",
@@ -137,14 +59,14 @@ function FeaturedTerminal() {
                 lineHeight: "1.7",
                 flex: 1,
                 overflow: "hidden",
-                boxShadow: "inset 3px 3px 8px rgba(30,43,49,0.8), inset -1px -1px 4px rgba(63,84,97,0.2)",
+                boxShadow: "inset 3px 3px 8px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), inset -1px -1px 4px color-mix(in srgb, var(--color-neu-light) 20%, transparent)",
             }}
         >
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-                {["#52796F", "#84A98C", "#CAD2C5"].map((c) => (
+                {["var(--color-pine)", "var(--color-sage)", "var(--color-mist)"].map((c) => (
                     <span key={c} style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: c, opacity: 0.7, display: "inline-block" }} />
                 ))}
-                <span style={{ color: "rgba(202,210,197,0.3)", fontSize: "9px", letterSpacing: "0.1em", marginLeft: 4 }}>ai-triage.sh</span>
+                <span style={{ color: "color-mix(in srgb, var(--color-mist) 30%, transparent)", fontSize: "9px", letterSpacing: "0.1em", marginLeft: 4 }}>ai-triage.sh</span>
             </div>
             {terminalLines.slice(0, visibleLines).map((line, i) => (
                 <motion.div
@@ -156,7 +78,7 @@ function FeaturedTerminal() {
                 >
                     {line.text}
                     {i === visibleLines - 1 && (
-                        <span style={{ borderRight: "2px solid #84A98C", marginLeft: 2, animation: "typing-cursor 1s step-end infinite" }} />
+                        <span style={{ borderRight: "2px solid var(--color-sage)", marginLeft: 2, animation: "typing-cursor 1s step-end infinite" }} />
                     )}
                 </motion.div>
             ))}
@@ -194,7 +116,7 @@ function TiltBentoCard({ children, className }: { children: React.ReactNode; cla
 }
 
 /* ── Hex icon badge ────────────────────────────── */
-function HexIcon({ Icon, color }: { Icon: typeof Shield; color: string }) {
+const HexIcon = memo(function HexIcon({ Icon, color }: { Icon: LucideIcon; color: string }) {
     return (
         <div
             style={{
@@ -204,176 +126,164 @@ function HexIcon({ Icon, color }: { Icon: typeof Shield; color: string }) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                background: "rgba(47,62,70,0.8)",
-                boxShadow: `3px 3px 8px rgba(30,43,49,0.8), -2px -2px 6px rgba(63,84,97,0.4), 0 0 12px ${color}22`,
-                border: `1px solid ${color}33`,
+                background: "color-mix(in srgb, var(--color-surface) 80%, transparent)",
+                boxShadow: `3px 3px 8px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), -2px -2px 6px color-mix(in srgb, var(--color-neu-light) 40%, transparent), 0 0 12px color-mix(in srgb, ${color} 13%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${color} 20%, transparent)`,
                 flexShrink: 0,
             }}
         >
             <Icon size={20} color={color} />
         </div>
     );
-}
+});
 
-function BentoCard({ solution, index }: { solution: Solution; index: number }) {
+/* ── Featured card (AI group) ──────────────────── */
+function FeaturedCard({ solution }: { solution: Solution }) {
     const Icon = solution.icon;
     const [hovered, setHovered] = useState(false);
-    const colSpanClass = solution.colSpan === 2 ? "lg:col-span-2" : "lg:col-span-1";
-    const rowSpanClass = solution.rowSpan === 2 ? "lg:row-span-2" : "";
-
-    const variants = {
-        hidden: { opacity: 0, y: 30, scale: 0.97 },
-        visible: { opacity: 1, y: 0, scale: 1 },
-    };
-
-    if (solution.featured) {
-        return (
-            <motion.div
-                variants={variants}
-                transition={{ duration: 0.6, delay: 0.1 + index * 0.08 }}
-                className={`${colSpanClass} ${rowSpanClass}`}
-            >
-                <TiltBentoCard className="h-full">
-                    <Link
-                        href={solution.href}
-                        className="flex flex-col gap-0 h-full relative overflow-hidden group"
-                        style={{
-                            background: "linear-gradient(145deg, #354F52 0%, #2F3E46 60%, #354F52 100%)",
-                            borderRadius: "20px",
-                            border: "1px solid rgba(82,121,111,0.35)",
-                            boxShadow: "8px 8px 20px #1e2b31, -4px -4px 12px #3f5461",
-                            padding: "28px",
-                        }}
-                        onMouseEnter={() => setHovered(true)}
-                        onMouseLeave={() => setHovered(false)}
-                    >
-                        {/* Animated top accent border */}
-                        <div style={{
-                            position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-                            background: "linear-gradient(90deg, transparent, #84A98C, #52796F, transparent)",
-                            opacity: hovered ? 1 : 0.5,
-                            transition: "opacity 0.3s ease",
-                        }} />
-
-                        {/* Scan line animation */}
-                        <div style={{
-                            position: "absolute", left: 0, right: 0, height: "1px",
-                            background: "linear-gradient(90deg, transparent, rgba(132,169,140,0.5), transparent)",
-                            animation: "scan-line 4s linear infinite",
-                            pointerEvents: "none",
-                        }} />
-
-                        {/* Corner glow */}
-                        <div style={{
-                            position: "absolute", top: 0, right: 0, width: "120px", height: "120px",
-                            background: "radial-gradient(circle at top right, rgba(132,169,140,0.12), transparent 70%)",
-                            pointerEvents: "none",
-                        }} />
-
-                        <div className="flex items-start justify-between mb-5">
-                            <HexIcon Icon={Icon} color="#84A98C" />
-                            <div style={{
-                                display: "flex", alignItems: "center", gap: 6,
-                                background: "rgba(30,43,49,0.6)", borderRadius: "999px",
-                                padding: "4px 12px",
-                                boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8), inset -1px -1px 4px rgba(63,84,97,0.3)",
-                                border: "1px solid rgba(82,121,111,0.2)",
-                            }}>
-                                <Zap size={10} color="#84A98C" />
-                                <span style={{ fontSize: "10px", color: "#84A98C", letterSpacing: "0.1em", fontWeight: 500 }}>LIVE</span>
-                            </div>
-                        </div>
-
-                        <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-                            <span style={{ fontSize: "2.5rem", fontWeight: 700, color: "#84A98C", lineHeight: 1, fontFamily: "var(--font-headline)" }}>
-                                {solution.impactValue}
-                            </span>
-                            <span style={{ fontSize: "11px", color: "rgba(202,210,197,0.5)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                                {solution.impact}
-                            </span>
-                        </div>
-
-                        <h3 style={{ fontSize: "1.35rem", fontWeight: 600, color: "#CAD2C5", marginBottom: 4, fontFamily: "var(--font-headline)" }}>
-                            {solution.title}
-                        </h3>
-                        <p style={{ fontSize: "12px", color: "rgba(202,210,197,0.45)", marginBottom: 16 }}>{solution.subtitle}</p>
-
-                        <FeaturedTerminal />
-
-                        <div style={{
-                            display: "flex", alignItems: "center", justifyContent: "space-between",
-                            marginTop: 16, paddingTop: 14,
-                            borderTop: "1px solid rgba(82,121,111,0.15)",
-                        }}>
-                            <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.55)", lineHeight: 1.5, maxWidth: "60%" }}>
-                                {solution.description}
-                            </p>
-                            <motion.div
-                                animate={{ x: hovered ? 4 : 0 }}
-                                transition={{ duration: 0.2 }}
-                                style={{
-                                    display: "flex", alignItems: "center", gap: 6,
-                                    color: "#84A98C", fontSize: "12px", fontWeight: 500, letterSpacing: "0.05em",
-                                    whiteSpace: "nowrap",
-                                }}
-                            >
-                                Learn more <ArrowRight size={13} />
-                            </motion.div>
-                        </div>
-                    </Link>
-                </TiltBentoCard>
-            </motion.div>
-        );
-    }
 
     return (
         <motion.div
-            variants={variants}
-            transition={{ duration: 0.5, delay: 0.1 + index * 0.08 }}
-            className={`${colSpanClass} ${rowSpanClass}`}
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6 }}
         >
             <TiltBentoCard className="h-full">
                 <Link
                     href={solution.href}
-                    className="flex flex-col gap-3 p-6 h-full relative overflow-hidden group shimmer-effect"
+                    className="flex flex-col gap-0 h-full relative overflow-hidden group"
                     style={{
-                        background: "linear-gradient(145deg, #354F52 0%, #2d4449 100%)",
+                        background: "linear-gradient(145deg, var(--color-secondary) 0%, var(--color-surface) 60%, var(--color-secondary) 100%)",
+                        borderRadius: "20px",
+                        border: "1px solid color-mix(in srgb, var(--color-pine) 35%, transparent)",
+                        boxShadow: "8px 8px 20px var(--color-neu-dark), -4px -4px 12px var(--color-neu-light)",
+                        padding: "28px",
+                    }}
+                    onMouseEnter={() => setHovered(true)}
+                    onMouseLeave={() => setHovered(false)}
+                >
+                    <div style={{
+                        position: "absolute", top: 0, left: 0, right: 0, height: "2px",
+                        background: "linear-gradient(90deg, transparent, var(--color-sage), var(--color-pine), transparent)",
+                        opacity: hovered ? 1 : 0.5,
+                        transition: "opacity 0.3s ease",
+                    }} />
+                    <div style={{
+                        position: "absolute", left: 0, right: 0, height: "1px",
+                        background: "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-sage) 50%, transparent), transparent)",
+                        animation: "scan-line 4s linear infinite",
+                        pointerEvents: "none",
+                    }} />
+                    <div style={{
+                        position: "absolute", top: 0, right: 0, width: "120px", height: "120px",
+                        background: "radial-gradient(circle at top right, color-mix(in srgb, var(--color-sage) 12%, transparent), transparent 70%)",
+                        pointerEvents: "none",
+                    }} />
+
+                    <div className="flex items-start justify-between mb-5">
+                        <HexIcon Icon={Icon} color="var(--color-sage)" />
+                        <div style={{
+                            display: "flex", alignItems: "center", gap: 6,
+                            background: "color-mix(in srgb, var(--color-neu-dark) 60%, transparent)", borderRadius: "999px",
+                            padding: "4px 12px",
+                            boxShadow: "inset 2px 2px 5px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), inset -1px -1px 4px color-mix(in srgb, var(--color-neu-light) 30%, transparent)",
+                            border: "1px solid var(--color-border)",
+                        }}>
+                            <Zap size={10} color="var(--color-sage)" />
+                            <span style={{ fontSize: "10px", color: "var(--color-sage)", letterSpacing: "0.1em", fontWeight: 500 }}>LIVE</span>
+                        </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-8 items-start">
+                        <div>
+                            <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+                                <span style={{ fontSize: "2.5rem", fontWeight: 700, color: "var(--color-sage)", lineHeight: 1, fontFamily: "var(--font-headline)" }}>
+                                    {solution.metric}
+                                </span>
+                                <span style={{ fontSize: "11px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                                    {solution.metricLabel}
+                                </span>
+                            </div>
+
+                            <h3 style={{ fontSize: "1.6rem", fontWeight: 600, color: "var(--color-mist)", marginBottom: 6, fontFamily: "var(--font-headline)" }}>
+                                {solution.title}
+                            </h3>
+                            <p style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", marginBottom: 16 }}>{solution.subtitle}</p>
+                            <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 60%, transparent)", lineHeight: 1.6 }}>
+                                {solution.description}
+                            </p>
+                        </div>
+                        <FeaturedTerminal />
+                    </div>
+
+                    <div style={{
+                        display: "flex", alignItems: "center", justifyContent: "flex-end",
+                        marginTop: 20, paddingTop: 14,
+                        borderTop: "1px solid color-mix(in srgb, var(--color-pine) 15%, transparent)",
+                    }}>
+                        <motion.div
+                            animate={{ x: hovered ? 4 : 0 }}
+                            transition={{ duration: 0.2 }}
+                            style={{
+                                display: "flex", alignItems: "center", gap: 6,
+                                color: "var(--color-sage)", fontSize: "12px", fontWeight: 500, letterSpacing: "0.05em",
+                                whiteSpace: "nowrap",
+                            }}
+                        >
+                            Learn more <ArrowRight size={13} />
+                        </motion.div>
+                    </div>
+                </Link>
+            </TiltBentoCard>
+        </motion.div>
+    );
+}
+
+/* ── Standard card (Security + Engineering groups) ── */
+function SolutionCard({ solution, index }: { solution: Solution; index: number }) {
+    const Icon = solution.icon;
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.97 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5, delay: index * 0.08 }}
+            className="h-full"
+        >
+            <TiltBentoCard className="h-full">
+                <Link
+                    href={solution.href}
+                    className="solution-card flex flex-col gap-3 p-6 h-full relative overflow-hidden group shimmer-effect"
+                    style={{
+                        background: "linear-gradient(145deg, var(--color-secondary) 0%, var(--color-glass-mid) 100%)",
                         borderRadius: "18px",
-                        border: "1px solid rgba(82,121,111,0.2)",
-                        boxShadow: `6px 6px 16px #1e2b31, -3px -3px 10px #3f5461`,
-                        transition: "all 0.35s ease",
-                        position: "relative",
-                    }}
-                    onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = `inset 4px 4px 10px #1e2b31, inset -2px -2px 8px #3f5461, 0 0 20px ${solution.accentColor}15`;
-                        e.currentTarget.style.borderColor = `${solution.accentColor}40`;
-                    }}
-                    onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = "6px 6px 16px #1e2b31, -3px -3px 10px #3f5461";
-                        e.currentTarget.style.borderColor = "rgba(82,121,111,0.2)";
+                        border: "1px solid var(--color-border)",
+                        boxShadow: "6px 6px 16px var(--color-neu-dark), -3px -3px 10px var(--color-neu-light)",
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        ["--accent" as any]: solution.accentColor,
                     }}
                 >
-                    {/* Accent left border strip */}
                     <div style={{
                         position: "absolute", top: 0, left: 0, bottom: 0, width: "3px",
-                        background: `linear-gradient(to bottom, ${solution.accentColor}80, transparent)`,
+                        background: `linear-gradient(to bottom, ${solution.accentColor}, transparent)`,
                         borderRadius: "18px 0 0 18px",
                         opacity: 0,
                         transition: "opacity 0.35s ease",
                     }} className="group-hover:opacity-100" />
 
                     <div className="flex items-center justify-between">
-                        <HexIcon Icon={Icon} color={solution.accentColor || "#84A98C"} />
-                        {/* Impact metric pill */}
+                        <HexIcon Icon={Icon} color={solution.accentColor} />
                         <div style={{
-                            background: "rgba(30,43,49,0.7)",
-                            border: `1px solid ${solution.accentColor}33`,
+                            background: "color-mix(in srgb, var(--color-neu-dark) 70%, transparent)",
+                            border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`,
                             borderRadius: "999px",
                             padding: "3px 10px",
-                            boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8), inset -1px -1px 3px rgba(63,84,97,0.3)",
+                            boxShadow: "inset 2px 2px 5px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), inset -1px -1px 3px color-mix(in srgb, var(--color-neu-light) 30%, transparent)",
                         }}>
                             <span style={{ fontSize: "13px", fontWeight: 700, color: solution.accentColor, fontFamily: "var(--font-headline)" }}>
-                                {solution.impactValue}
+                                {solution.metric}
                             </span>
                         </div>
                     </div>
@@ -382,32 +292,32 @@ function BentoCard({ solution, index }: { solution: Solution; index: number }) {
                         <h3 style={{
                             fontSize: "1.1rem",
                             fontWeight: 600,
-                            color: "#CAD2C5",
+                            color: "var(--color-mist)",
                             marginBottom: 3,
                             fontFamily: "var(--font-headline)",
                             lineHeight: 1.3,
                         }}>
                             {solution.title}
                         </h3>
-                        <p style={{ fontSize: "11px", color: "rgba(202,210,197,0.4)", letterSpacing: "0.03em" }}>{solution.subtitle}</p>
+                        <p style={{ fontSize: "11px", color: "color-mix(in srgb, var(--color-mist) 40%, transparent)", letterSpacing: "0.03em" }}>{solution.subtitle}</p>
                     </div>
 
-                    <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.55)", lineHeight: 1.6, flex: 1 }}>
+                    <p style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 55%, transparent)", lineHeight: 1.6, flex: 1 }}>
                         {solution.description}
                     </p>
 
                     <div style={{
                         display: "flex", alignItems: "center", justifyContent: "space-between",
-                        paddingTop: 12, borderTop: "1px solid rgba(82,121,111,0.12)",
+                        paddingTop: 12, borderTop: "1px solid color-mix(in srgb, var(--color-pine) 12%, transparent)",
                         marginTop: "auto",
                     }}>
-                        <span style={{ fontSize: "10px", color: "rgba(202,210,197,0.35)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
-                            {solution.impact}
+                        <span style={{ fontSize: "10px", color: "color-mix(in srgb, var(--color-mist) 35%, transparent)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                            {solution.metricLabel}
                         </span>
                         <div style={{
                             display: "flex", alignItems: "center", gap: 5,
-                            color: "#84A98C", fontSize: "11px",
-                            transition: "gap 0.2s ease, color 0.2s ease",
+                            color: solution.accentColor, fontSize: "11px",
+                            transition: "gap 0.2s ease",
                         }}
                             className="group-hover:gap-2"
                         >
@@ -420,10 +330,65 @@ function BentoCard({ solution, index }: { solution: Solution; index: number }) {
     );
 }
 
+/* ── One group section (eyebrow + heading + card grid) ── */
+function SolutionGroupBlock({ groupId, gridClass }: { groupId: "security" | "ai" | "engineering"; gridClass: string }) {
+    const meta = solutionGroups.find((g) => g.id === groupId)!;
+    const items = getSolutionsByGroup(groupId);
+
+    return (
+        <div className="mb-16 last:mb-0">
+            <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5 }}
+                className="mb-6"
+            >
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                    <div style={{
+                        width: 6, height: 6, borderRadius: "50%", backgroundColor: "var(--color-pine)",
+                        boxShadow: "0 0 8px color-mix(in srgb, var(--color-pine) 80%, transparent)",
+                    }} className="animate-pulse-dot" />
+                    <p style={{
+                        fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
+                        color: "var(--color-pine)", fontWeight: 500,
+                    }}>
+                        {meta.eyebrow}
+                    </p>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                    <h3 style={{
+                        fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)",
+                        fontWeight: 600,
+                        color: "var(--color-mist)",
+                        fontFamily: "var(--font-headline)",
+                        letterSpacing: "-0.01em",
+                    }}>
+                        {meta.label}
+                    </h3>
+                    <p style={{ fontSize: "13px", color: "var(--color-text-muted)", maxWidth: "48ch" }}>
+                        {meta.description}
+                    </p>
+                </div>
+            </motion.div>
+
+            {groupId === "ai" ? (
+                <FeaturedCard solution={items[0]} />
+            ) : (
+                <div className={gridClass}>
+                    {items.map((solution, index) => (
+                        <SolutionCard key={solution.slug} solution={solution} index={index} />
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+
 export function SolutionsSection() {
     const containerRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start end", "end start"] });
-    
+
     const y1 = useTransform(scrollYProgress, [0, 1], [0, 120]);
     const y2 = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
@@ -431,29 +396,27 @@ export function SolutionsSection() {
         <section ref={containerRef} className="section-gap relative overflow-clip" id="solutions" style={{ backgroundColor: "var(--color-surface)" }}>
             {/* Split-diagonal background base */}
             <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-                {/* Large angled stripe */}
                 <div style={{
                     position: "absolute", top: "-20%", right: "-10%", width: "120%", height: "80%",
-                    background: "linear-gradient(135deg, rgba(82,121,111,0.05) 0%, transparent 100%)",
+                    background: "linear-gradient(135deg, color-mix(in srgb, var(--color-pine) 5%, transparent) 0%, transparent 100%)",
                     transform: "rotate(-12deg)",
                 }} />
-                
-                {/* Floating frosted glass panes */}
+
                 <motion.div style={{
                     y: y1,
                     position: "absolute", top: "15%", left: "5%", width: "400px", height: "400px",
-                    background: "rgba(132, 169, 140, 0.03)",
-                    border: "1px solid rgba(132, 169, 140, 0.1)",
+                    background: "color-mix(in srgb, var(--color-sage) 3%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--color-sage) 10%, transparent)",
                     borderRadius: "30px",
                     backdropFilter: "blur(40px)",
                     transform: "rotate(15deg)",
                 }} />
-                
+
                 <motion.div style={{
                     y: y2,
                     position: "absolute", bottom: "10%", right: "10%", width: "500px", height: "300px",
-                    background: "rgba(82, 121, 111, 0.03)",
-                    border: "1px solid rgba(82, 121, 111, 0.1)",
+                    background: "color-mix(in srgb, var(--color-pine) 3%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--color-pine) 10%, transparent)",
                     borderRadius: "40px",
                     backdropFilter: "blur(60px)",
                     transform: "rotate(-8deg)",
@@ -468,16 +431,16 @@ export function SolutionsSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="mb-14"
+                    className="mb-16"
                 >
                     <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
                         <div style={{
-                            width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F",
-                            boxShadow: "0 0 8px rgba(82,121,111,0.8)",
+                            width: 6, height: 6, borderRadius: "50%", backgroundColor: "var(--color-pine)",
+                            boxShadow: "0 0 8px color-mix(in srgb, var(--color-pine) 80%, transparent)",
                         }} className="animate-pulse-dot" />
                         <p style={{
                             fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
-                            color: "#52796F", fontWeight: 500,
+                            color: "var(--color-pine)", fontWeight: 500,
                         }}>
                             what we do
                         </p>
@@ -485,28 +448,20 @@ export function SolutionsSection() {
                     <h2 style={{
                         fontSize: "clamp(2rem, 4vw, 3rem)",
                         fontWeight: 600,
-                        color: "#CAD2C5",
+                        color: "var(--color-mist)",
                         fontFamily: "var(--font-headline)",
                         lineHeight: 1.15,
                         letterSpacing: "-0.02em",
-                        maxWidth: "14ch",
+                        maxWidth: "22ch",
                     }}>
-                        six disciplines.{" "}
-                        <span style={{ color: "#84A98C" }}>one</span> engineering studio.
+                        three disciplines.{" "}
+                        <span className="text-gradient-sage">one</span> engineering studio.
                     </h2>
                 </motion.div>
 
-                <motion.div
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-60px" }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-                    style={{ gridAutoRows: "minmax(220px, auto)" }}
-                >
-                    {solutions.map((solution, index) => (
-                        <BentoCard key={solution.title} solution={solution} index={index} />
-                    ))}
-                </motion.div>
+                <SolutionGroupBlock groupId="security" gridClass="grid grid-cols-1 md:grid-cols-2 gap-4" />
+                <SolutionGroupBlock groupId="ai" gridClass="" />
+                <SolutionGroupBlock groupId="engineering" gridClass="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" />
             </div>
         </section>
     );

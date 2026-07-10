@@ -2,30 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { CheckCircle, ArrowRight, Shield, Cloud, Brain, Globe, Smartphone, Workflow } from "lucide-react";
-
-export type Solution = {
-    iconName: string;
-    title: string;
-    subtitle: string;
-    risk: string;
-    description: string;
-    href: string;
-    capabilities: string[];
-    accentColor: string;
-    metric: string;
-    metricLabel: string;
-};
-
-const iconMap: Record<string, React.ElementType> = {
-    Shield, Cloud, Brain, Globe, Smartphone, Workflow
-};
+import { CheckCircle, ArrowRight } from "lucide-react";
+import { solutionGroups, getSolutionsByGroup, type Solution, type SolutionGroup } from "@/lib/solutions-data";
 
 /* ── Individual card ─────────────────────────────── */
 function SolutionCard({ solution, index }: { solution: Solution; index: number }) {
-    const offset = index % 3;
-    const indentClass = offset === 1 ? "lg:ml-16" : offset === 2 ? "lg:ml-32" : "";
-    const IconComponent = iconMap[solution.iconName] || Shield;
+    const offset = index % 2;
+    const indentClass = offset === 1 ? "lg:ml-16" : "";
+    const IconComponent = solution.icon;
 
     return (
         <motion.div
@@ -37,35 +21,23 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
         >
             <Link href={solution.href} className="block group">
                 <div
-                    className="neu-sol-card"
+                    className="neu-sol-card solution-card"
                     style={{
                         borderRadius: "22px",
                         padding: "clamp(24px, 4vw, 36px)",
                         position: "relative",
                         overflow: "hidden",
-                        background: "linear-gradient(145deg, #354F52, #2d4449)",
+                        background: "linear-gradient(145deg, var(--color-secondary), #2d4449)",
                         border: "1px solid rgba(82,121,111,0.18)",
                         boxShadow: "7px 7px 18px #1e2b31, -3px -3px 12px #3f5461",
-                        transition: "all 0.35s ease",
-                        // pass accent color as CSS custom property
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ["--accent" as any]: solution.accentColor,
                     }}
-                    onMouseEnter={(e) => {
-                        const el = e.currentTarget as HTMLDivElement;
-                        el.style.boxShadow = `inset 4px 4px 12px #1e2b31, inset -2px -2px 8px #3f5461`;
-                        el.style.borderColor = `${solution.accentColor}40`;
-                    }}
-                    onMouseLeave={(e) => {
-                        const el = e.currentTarget as HTMLDivElement;
-                        el.style.boxShadow = "7px 7px 18px #1e2b31, -3px -3px 12px #3f5461";
-                        el.style.borderColor = "rgba(82,121,111,0.18)";
-                    }}
                 >
                     {/* Top accent */}
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${solution.accentColor}80, transparent)` }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${solution.accentColor}, transparent)` }} />
                     {/* Corner glow */}
-                    <div style={{ position: "absolute", top: 0, right: 0, width: 120, height: 120, background: `radial-gradient(circle at top right, ${solution.accentColor}10, transparent 70%)`, pointerEvents: "none" }} />
+                    <div style={{ position: "absolute", top: 0, right: 0, width: 120, height: 120, background: `radial-gradient(circle at top right, color-mix(in srgb, ${solution.accentColor} 10%, transparent), transparent 70%)`, pointerEvents: "none" }} />
 
                     <div className="flex flex-col lg:flex-row gap-8">
                         {/* Left column */}
@@ -73,15 +45,15 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
                             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
                                 <div style={{
                                     width: 50, height: 50, borderRadius: "14px",
-                                    background: "linear-gradient(145deg, #2a3d45, #354F52)",
-                                    border: `1px solid ${solution.accentColor}30`,
-                                    boxShadow: `3px 3px 8px #1e2b31, -2px -2px 6px #3f5461, 0 0 10px ${solution.accentColor}18`,
+                                    background: "linear-gradient(145deg, #2a3d45, var(--color-secondary))",
+                                    border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`,
+                                    boxShadow: `3px 3px 8px #1e2b31, -2px -2px 6px #3f5461, 0 0 10px color-mix(in srgb, ${solution.accentColor} 18%, transparent)`,
                                     display: "flex", alignItems: "center", justifyContent: "center",
                                     fontSize: "22px", flexShrink: 0,
                                 }}>
                                     <IconComponent size={24} color={solution.accentColor} />
                                 </div>
-                                <div style={{ background: "rgba(30,43,49,0.7)", border: `1px solid ${solution.accentColor}25`, borderRadius: "8px", padding: "4px 10px", boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8)" }}>
+                                <div style={{ background: "rgba(30,43,49,0.7)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 25%, transparent)`, borderRadius: "8px", padding: "4px 10px", boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8)" }}>
                                     <span style={{ fontSize: "10px", color: solution.accentColor, letterSpacing: "0.06em", fontWeight: 500 }}>▲ {solution.risk}</span>
                                 </div>
                             </div>
@@ -91,8 +63,8 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
                             </h3>
                             <p style={{ fontSize: "12px", color: "rgba(202,210,197,0.4)", marginBottom: 20 }}>{solution.subtitle}</p>
 
-                            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(30,43,49,0.6)", border: `1px solid ${solution.accentColor}30`, borderRadius: "14px", padding: "10px 16px", boxShadow: "inset 2px 2px 6px #1e2b31, inset -1px -1px 4px #3f5461" }}>
-                                <span style={{ fontFamily: "var(--font-headline)", fontSize: "1.8rem", fontWeight: 700, color: solution.accentColor, lineHeight: 1, textShadow: `0 0 16px ${solution.accentColor}40` }}>{solution.metric}</span>
+                            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(30,43,49,0.6)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`, borderRadius: "14px", padding: "10px 16px", boxShadow: "inset 2px 2px 6px #1e2b31, inset -1px -1px 4px #3f5461" }}>
+                                <span style={{ fontFamily: "var(--font-headline)", fontSize: "1.8rem", fontWeight: 700, color: solution.accentColor, lineHeight: 1 }}>{solution.metric}</span>
                                 <span style={{ fontSize: "10px", color: "rgba(202,210,197,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{solution.metricLabel}</span>
                             </div>
                         </div>
@@ -119,38 +91,49 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
     );
 }
 
-/* ── CTA button (client — needs hover state) ─────── */
-function CtaButton() {
-    return (
-        <Link href="/contact" style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            backgroundColor: "#CAD2C5", color: "#2F3E46",
-            borderRadius: "999px", padding: "14px 32px",
-            fontFamily: "var(--font-label)", fontSize: "0.75rem",
-            fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
-            textDecoration: "none",
-            boxShadow: "4px 4px 12px #1e2b31, -2px -2px 8px #3f5461",
-            transition: "all 0.25s ease",
-        }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#84A98C"; e.currentTarget.style.boxShadow = "inset 2px 2px 6px rgba(30,43,49,0.2)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "#CAD2C5"; e.currentTarget.style.boxShadow = "4px 4px 12px #1e2b31, -2px -2px 8px #3f5461"; }}
-        >
-            book a free consultation <ArrowRight size={14} />
-        </Link>
-    );
-}
+/* ── One group of solutions with its own heading ─── */
+function SolutionsGroupSection({ groupId }: { groupId: SolutionGroup }) {
+    const meta = solutionGroups.find((g) => g.id === groupId)!;
+    const items = getSolutionsByGroup(groupId);
 
-/* ── List exported for page.tsx ─────────────────────── */
-export function SolutionsList({ solutions }: { solutions: Solution[] }) {
     return (
-        <div className="space-y-6">
-            {solutions.map((solution, index) => (
-                <SolutionCard key={solution.title} solution={solution} index={index} />
-            ))}
+        <div className="mb-20 last:mb-0">
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-8">
+                <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#52796F", fontWeight: 600 }}>
+                    {meta.eyebrow}
+                </p>
+                <h2 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.5rem, 3vw, 2.1rem)", fontWeight: 600, color: "#CAD2C5" }}>
+                    {meta.label}
+                </h2>
+                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.45)", maxWidth: "48ch" }}>
+                    {meta.description}
+                </p>
+            </div>
+            <div className="space-y-6">
+                {items.map((solution, index) => (
+                    <SolutionCard key={solution.slug} solution={solution} index={index} />
+                ))}
+            </div>
         </div>
     );
 }
 
+/* ── Full grouped list, exported for page.tsx ─────── */
+export function SolutionsList() {
+    return (
+        <>
+            {solutionGroups.map((group) => (
+                <SolutionsGroupSection key={group.id} groupId={group.id} />
+            ))}
+        </>
+    );
+}
+
+/* ── CTA button (client — needs hover state) ─────── */
 export function SolutionsCtaButton() {
-    return <CtaButton />;
+    return (
+        <Link href="/contact" className="btn-primary" style={{ gap: 8, padding: "14px 32px" }}>
+            book a free consultation <ArrowRight size={14} />
+        </Link>
+    );
 }
