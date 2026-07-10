@@ -28,11 +28,11 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-white text-black font-medium hover:bg-neutral-200",
+    "bg-[var(--color-mist)] text-[var(--color-surface)] font-medium hover:bg-[var(--color-sage)]",
   outline:
-    "border border-white/20 text-white hover:bg-white/10",
+    "border border-[var(--color-mist)]/25 text-[var(--color-mist)] hover:border-[var(--color-sage)]/60 hover:text-[var(--color-sage)]",
   ghost:
-    "text-white/60 hover:text-white hover:bg-white/5",
+    "text-[var(--color-text-secondary)] hover:text-[var(--color-mist)] hover:bg-[var(--color-secondary)]",
 };
 
 function MagneticWrapper({ children, disabled }: { children: ReactNode; disabled?: boolean }) {
@@ -79,7 +79,7 @@ export function Button({
   const isMagnetic = magnetic && !disabled && variant === "primary";
 
   const shimmer = variant === "primary" ? (
-    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 z-0 pointer-events-none" />
+    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-[var(--color-surface)]/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 z-0 pointer-events-none" />
   ) : null;
 
   const inner = href ? (
