@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowRight, ShieldCheck, Cloud, Bot, Globe, Menu, MoreHorizontal, Maximize2, X } from "lucide-react";
+import { ShieldCheck, Cloud, Bot, Globe, Menu, MoreHorizontal, Maximize2 } from "lucide-react";
 import { useRef } from "react";
+import { stats } from "@/lib/stats-data";
 
 /* ─── Compliance dashboard mockup ──────────────────────────────
    Visible below the fold, partially clipped — like Craft's app
@@ -12,18 +13,16 @@ import { useRef } from "react";
    ─────────────────────────────────────────────────────────────── */
 
 const statusItems = [
-  { icon: ShieldCheck, label: "SOC2 Type II",     status: "COMPLIANT",  dot: "#84A98C" },
-  { icon: Cloud,       label: "Cloud Resilience", status: "MONITORED",  dot: "#84A98C" },
-  { icon: Bot,         label: "AI SOC Analyst",   status: "ACTIVE",     dot: "#84A98C" },
-  { icon: Globe,       label: "Web Delivery",     status: "LIVE",       dot: "#CAD2C5" },
+  { icon: ShieldCheck, label: "SOC2 Type II",     status: "COMPLIANT",  dot: "var(--color-sage)" },
+  { icon: Cloud,       label: "Cloud Resilience", status: "MONITORED",  dot: "var(--color-sage)" },
+  { icon: Bot,         label: "AI SOC Analyst",   status: "ACTIVE",     dot: "var(--color-sage)" },
+  { icon: Globe,       label: "Web Delivery",     status: "LIVE",       dot: "var(--color-mist)" },
 ];
 
-const metrics = [
-  { value: "100%", label: "Client satisfaction" },
-  { value: "15+",  label: "Projects delivered"  },
-  { value: "<1 hr",label: "Avg response time"   },
-  { value: "6",    label: "Solutions"            },
-];
+const metrics = ["satisfaction", "projects", "response-time", "solutions"].map((id) => {
+  const s = stats.find((stat) => stat.id === id)!;
+  return { value: s.display, label: s.label };
+});
 
 function DashboardMockup() {
   return (
@@ -32,19 +31,19 @@ function DashboardMockup() {
         width: "100%",
         maxWidth: "960px",
         margin: "0 auto",
-        background: "linear-gradient(145deg, #F0F4F2 0%, #E2EBE5 100%)", // Light neumorphic face, like Craft's bright app
-        border: "1px solid rgba(132,169,140,0.3)",
+        background: "linear-gradient(145deg, var(--color-mockup-bg) 0%, var(--color-mockup-bg-alt) 100%)", // Light neumorphic face, like Craft's bright app
+        border: "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)",
         borderRadius: "24px 24px 0 0",
         overflow: "hidden",
         position: "relative",
-        boxShadow: "0 24px 64px rgba(30,43,49,0.5), inset 2px 2px 5px #ffffff, inset -2px -2px 5px rgba(132,169,140,0.2)",
+        boxShadow: "0 24px 64px color-mix(in srgb, var(--color-neu-dark) 50%, transparent), inset 2px 2px 5px #ffffff, inset -2px -2px 5px color-mix(in srgb, var(--color-sage) 20%, transparent)",
       }}
     >
       {/* Window chrome - light style */}
       <div
         style={{
-          background: "#E2EBE5",
-          borderBottom: "1px solid rgba(132,169,140,0.2)",
+          background: "var(--color-mockup-bg-alt)",
+          borderBottom: "1px solid color-mix(in srgb, var(--color-sage) 20%, transparent)",
           padding: "16px 24px",
           display: "flex",
           alignItems: "center",
@@ -52,7 +51,7 @@ function DashboardMockup() {
         }}
       >
         {/* MacOS style window controls */}
-        {["#FF5F56", "#FFBD2E", "#27C93F"].map((c, i) => (
+        {["#FF5F56", "#FFBD2E", "#27C93F"].map((c) => (
           <span
             key={c}
             style={{
@@ -68,80 +67,80 @@ function DashboardMockup() {
         <div style={{
             margin: "0 auto",
             display: "flex", alignItems: "center", gap: 10,
-            background: "#F0F4F2", borderRadius: "8px", padding: "4px 16px",
-            boxShadow: "inset 2px 2px 5px rgba(132,169,140,0.2), inset -2px -2px 5px #ffffff"
+            background: "var(--color-mockup-bg)", borderRadius: "8px", padding: "4px 16px",
+            boxShadow: "inset 2px 2px 5px color-mix(in srgb, var(--color-sage) 20%, transparent), inset -2px -2px 5px #ffffff"
         }}>
-            <span style={{ fontSize: "11px", fontWeight: 600, color: "#52796F" }}>Defnix Security Dashboard</span>
+            <span style={{ fontSize: "11px", fontWeight: 600, color: "var(--color-pine)" }}>Defnix Security Dashboard</span>
         </div>
 
         {/* Right side icons */}
-        <div style={{ display: "flex", gap: 12, color: "#84A98C" }}>
+        <div style={{ display: "flex", gap: 12, color: "var(--color-sage)" }}>
             <Menu size={16} />
             <Maximize2 size={16} />
         </div>
       </div>
 
       {/* Dashboard body */}
-      <div style={{ padding: "32px", display: "grid", gridTemplateColumns: "1fr 2.5fr", gap: "24px" }}>
-        
+      <div className="dashboard-body" style={{ padding: "32px", display: "grid", gridTemplateColumns: "1fr 2.5fr", gap: "24px" }}>
+
         {/* Left Sidebar */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div className="dashboard-sidebar" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
             <div>
-                <h4 style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "#84A98C", fontWeight: 700, marginBottom: 12 }}>Workspaces</h4>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, background: "#CAD2C5", padding: "10px 14px", borderRadius: "10px", color: "#2F3E46", fontWeight: 600, fontSize: "13px", boxShadow: "2px 2px 6px rgba(132,169,140,0.4)" }}>
+                <h4 style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-sage)", fontWeight: 700, marginBottom: 12 }}>Workspaces</h4>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, background: "var(--color-mist)", padding: "10px 14px", borderRadius: "10px", color: "var(--color-surface)", fontWeight: 600, fontSize: "13px", boxShadow: "2px 2px 6px color-mix(in srgb, var(--color-sage) 40%, transparent)" }}>
                     🚀 Default Space
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", color: "#52796F", fontWeight: 500, fontSize: "13px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", color: "var(--color-pine)", fontWeight: 500, fontSize: "13px" }}>
                     🔒 Compliance
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", color: "#52796F", fontWeight: 500, fontSize: "13px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", color: "var(--color-pine)", fontWeight: 500, fontSize: "13px" }}>
                     ☁️ Cloud Config
                 </div>
             </div>
 
             <div>
-                <h4 style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "#84A98C", fontWeight: 700, marginBottom: 12 }}>Quick Stats</h4>
+                <h4 style={{ fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--color-sage)", fontWeight: 700, marginBottom: 12 }}>Quick Stats</h4>
                 {metrics.slice(0, 2).map(m => (
                     <div key={m.label} style={{ marginBottom: 16 }}>
-                        <div style={{ fontSize: "20px", fontWeight: 700, color: "#2F3E46", lineHeight: 1 }}>{m.value}</div>
-                        <div style={{ fontSize: "11px", color: "#52796F" }}>{m.label}</div>
+                        <div style={{ fontSize: "20px", fontWeight: 700, color: "var(--color-surface)", lineHeight: 1 }}>{m.value}</div>
+                        <div style={{ fontSize: "11px", color: "var(--color-pine)" }}>{m.label}</div>
                     </div>
                 ))}
             </div>
         </div>
 
         {/* Main Content Area */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
+        <div className="dashboard-main-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
             
-            {statusItems.map((item, i) => {
+            {statusItems.map((item) => {
                 const Icon = item.icon;
                 return (
                     <div key={item.label} style={{
-                        background: "#F0F4F2",
+                        background: "var(--color-mockup-bg)",
                         borderRadius: "16px",
                         padding: "24px",
-                        boxShadow: "4px 4px 10px rgba(132,169,140,0.2), -4px -4px 10px #ffffff",
+                        boxShadow: "4px 4px 10px color-mix(in srgb, var(--color-sage) 20%, transparent), -4px -4px 10px #ffffff",
                         display: "flex", flexDirection: "column", justifyContent: "space-between",
                         minHeight: "160px"
                     }}>
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                             <div style={{
                                 width: 36, height: 36, borderRadius: "10px",
-                                background: "#CAD2C5",
+                                background: "var(--color-mist)",
                                 display: "flex", alignItems: "center", justifyContent: "center",
-                                boxShadow: "inset 2px 2px 4px #ffffff, inset -2px -2px 4px rgba(132,169,140,0.4)"
+                                boxShadow: "inset 2px 2px 4px #ffffff, inset -2px -2px 4px color-mix(in srgb, var(--color-sage) 40%, transparent)"
                             }}>
-                                <Icon size={18} color="#2F3E46" />
+                                <Icon size={18} color="var(--color-surface)" />
                             </div>
-                            <MoreHorizontal size={18} color="#84A98C" />
+                            <MoreHorizontal size={18} color="var(--color-sage)" />
                         </div>
                         <div>
-                            <div style={{ fontSize: "16px", fontWeight: 700, color: "#2F3E46", marginBottom: 6 }}>{item.label}</div>
+                            <div style={{ fontSize: "16px", fontWeight: 700, color: "var(--color-surface)", marginBottom: 6 }}>{item.label}</div>
                             <div style={{
                                 display: "inline-flex", alignItems: "center", gap: 6,
-                                background: "#E2EBE5", padding: "4px 10px", borderRadius: "999px",
-                                fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", color: "#52796F",
-                                boxShadow: "inset 1px 1px 3px rgba(132,169,140,0.3)"
+                                background: "var(--color-mockup-bg-alt)", padding: "4px 10px", borderRadius: "999px",
+                                fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-pine)",
+                                boxShadow: "inset 1px 1px 3px color-mix(in srgb, var(--color-sage) 30%, transparent)"
                             }}>
                                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: item.dot }} />
                                 {item.status}
@@ -152,6 +151,13 @@ function DashboardMockup() {
             })}
         </div>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .dashboard-body { grid-template-columns: 1fr !important; padding: 20px !important; }
+          .dashboard-sidebar { flex-direction: row !important; flex-wrap: wrap !important; gap: 16px !important; }
+          .dashboard-main-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+        }
+      `}</style>
     </div>
   );
 }
@@ -169,8 +175,9 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
+      className="hero-section"
       style={{
-        backgroundColor: "#EAF0ED", // Light fresh background reminiscent of Craft
+        backgroundColor: "var(--color-mockup-sky)", // Light fresh background reminiscent of Craft
         minHeight: "130vh", // Extra height to allow scrolling the mockup
         display: "flex",
         flexDirection: "column",
@@ -183,7 +190,7 @@ export function HeroSection() {
         {/* ── Illustrative Background Layers (Craft style) ── */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
             {/* Base gradient */}
-            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, #CAD2C5 0%, #84A98C 40%, #2F3E46 100%)", opacity: 0.8 }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, var(--color-mist) 0%, var(--color-sage) 40%, var(--color-surface) 100%)", opacity: 0.8 }} />
             
             {/* Sun / Orb */}
             <motion.div style={{ y: y1, position: "absolute", top: "15%", left: "50%", transform: "translateX(-50%)", width: "400px", height: "400px", borderRadius: "50%", background: "radial-gradient(circle, #F4F8F6 0%, transparent 70%)", filter: "blur(40px)" }} />
@@ -191,14 +198,14 @@ export function HeroSection() {
             {/* Distant Hills / Waves */}
             <motion.div style={{ y: y2, position: "absolute", bottom: "30%", left: "-10%", width: "120%", height: "40%" }}>
                 <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style={{ width: "100%", height: "100%" }}>
-                    <path fill="#52796F" d="M0,160L48,165.3C96,171,192,181,288,165.3C384,149,480,107,576,96C672,85,768,107,864,122.7C960,139,1056,149,1152,144C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                    <path fill="var(--color-pine)" d="M0,160L48,165.3C96,171,192,181,288,165.3C384,149,480,107,576,96C672,85,768,107,864,122.7C960,139,1056,149,1152,144C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
                 </svg>
             </motion.div>
 
             {/* Foreground Hills / Waves */}
             <motion.div style={{ y: y3, position: "absolute", bottom: "10%", left: "-5%", width: "110%", height: "50%" }}>
                 <svg viewBox="0 0 1440 320" preserveAspectRatio="none" style={{ width: "100%", height: "100%" }}>
-                    <path fill="#2F3E46" d="M0,224L60,213.3C120,203,240,181,360,192C480,203,600,245,720,234.7C840,224,960,160,1080,149.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+                    <path fill="var(--color-surface)" d="M0,224L60,213.3C120,203,240,181,360,192C480,203,600,245,720,234.7C840,224,960,160,1080,149.3C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
                 </svg>
             </motion.div>
 
@@ -220,13 +227,13 @@ export function HeroSection() {
             fontSize: "clamp(3.5rem, 8vw, 7rem)", // Significantly larger
             lineHeight: 1.05,
             letterSpacing: "-0.04em",
-            color: "#18262E", // Dark text on the light sky background
+            color: "var(--color-glass-deep)", // Dark text on the light sky background
             textShadow: "0 4px 24px rgba(255,255,255,0.4)", // Subtle glow to stand out
             maxWidth: "14ch",
             margin: "0 auto 24px",
           }}
         >
-          Your partner for security and big ideas.
+          Security engineering that earns your customers&apos; trust.
         </motion.h1>
 
         {/* Sub-headline */}
@@ -239,16 +246,16 @@ export function HeroSection() {
             fontSize: "clamp(1.1rem, 2vw, 1.35rem)",
             fontWeight: 500,
             lineHeight: 1.5,
-            color: "#2F3E46",
+            color: "var(--color-surface)",
             maxWidth: "42ch",
             margin: "0 auto 48px",
             display: "block",
           }}
         >
-          Engineering-led SOC2 compliance, cloud resilience, and automation for modern startups.
+          SOC2 compliance, cloud resilience, and AI-driven security — plus the websites, apps, and automation to run your business.
         </motion.p>
 
-        {/* CTA — Big bold pill like Craft */}
+        {/* CTA — primary + secondary, clear hierarchy */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -256,36 +263,17 @@ export function HeroSection() {
           style={{
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
+            gap: 20,
+            flexWrap: "wrap",
             marginBottom: 80,
           }}
         >
-          <Link
-            href="/contact"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#F0F4F2", // Bright white/light-gray pill
-              color: "#18262E",
-              borderRadius: "999px",
-              padding: "20px 48px",
-              fontFamily: "var(--font-headline)",
-              fontSize: "1.1rem",
-              fontWeight: 700,
-              boxShadow: "0 12px 32px rgba(30,43,49,0.3), inset 2px 2px 4px #ffffff",
-              textDecoration: "none",
-              transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow = "0 16px 40px rgba(30,43,49,0.4), inset 2px 2px 4px #ffffff";
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 12px 32px rgba(30,43,49,0.3), inset 2px 2px 4px #ffffff";
-            }}
-          >
-            Start Building Free
+          <Link href="/contact" className="hero-cta-primary">
+            Book a Free Consultation
+          </Link>
+          <Link href="/solutions" className="hero-cta-secondary">
+            Explore Solutions
           </Link>
         </motion.div>
       </div>

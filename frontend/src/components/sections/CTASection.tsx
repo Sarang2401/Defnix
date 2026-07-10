@@ -13,8 +13,8 @@ export function CTASection() {
             {/* Massive bottom wave transitioning into footer */}
             <div style={{ position: "absolute", bottom: -1, left: 0, right: 0, zIndex: 0, overflow: "hidden", lineHeight: 0 }}>
                 <svg viewBox="0 0 1440 200" preserveAspectRatio="none" style={{ display: "block", width: "calc(100% + 1.3px)", height: "200px" }}>
-                    <path fill="rgba(45,68,73,1)" d="M0,64L80,69.3C160,75,320,85,480,85.3C640,85,800,75,960,69.3C1120,64,1280,64,1360,64L1440,64L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
-                    <path fill="#18262E" d="M0,128L80,122.7C160,117,320,107,480,117.3C640,128,800,160,960,160C1120,160,1280,128,1360,112L1440,96L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
+                    <path fill="var(--color-glass-mid)" d="M0,64L80,69.3C160,75,320,85,480,85.3C640,85,800,75,960,69.3C1120,64,1280,64,1360,64L1440,64L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
+                    <path fill="var(--color-glass-deep)" d="M0,128L80,122.7C160,117,320,107,480,117.3C640,128,800,160,960,160C1120,160,1280,128,1360,112L1440,96L1440,200L1360,200C1280,200,1120,200,960,200C800,200,640,200,480,200C320,200,160,200,80,200L0,200Z"></path>
                 </svg>
             </div>
             
@@ -31,9 +31,9 @@ export function CTASection() {
                         position: "relative",
                         borderRadius: "28px",
                         overflow: "hidden",
-                        background: "linear-gradient(145deg, #354F52 0%, #2F3E46 50%, #354F52 100%)",
-                        border: "1px solid rgba(82,121,111,0.25)",
-                        boxShadow: "10px 10px 28px #1e2b31, -5px -5px 18px #3f5461",
+                        background: "linear-gradient(145deg, var(--color-secondary) 0%, var(--color-surface) 50%, var(--color-secondary) 100%)",
+                        border: "1px solid color-mix(in srgb, var(--color-pine) 25%, transparent)",
+                        boxShadow: "10px 10px 28px var(--color-neu-dark), -5px -5px 18px var(--color-neu-light)",
                         padding: "clamp(48px, 8vw, 80px) clamp(32px, 6vw, 80px)",
                         textAlign: "center",
                     }}>
@@ -43,7 +43,7 @@ export function CTASection() {
                             top: "-60px", left: "-40px",
                             width: "280px", height: "280px",
                             borderRadius: "50%",
-                            background: "radial-gradient(circle, rgba(82,121,111,0.18) 0%, transparent 70%)",
+                            background: "radial-gradient(circle, color-mix(in srgb, var(--color-pine) 18%, transparent) 0%, transparent 70%)",
                             pointerEvents: "none",
                             filter: "blur(40px)",
                         }} />
@@ -52,7 +52,7 @@ export function CTASection() {
                             bottom: "-80px", right: "-60px",
                             width: "320px", height: "320px",
                             borderRadius: "50%",
-                            background: "radial-gradient(circle, rgba(132,169,140,0.12) 0%, transparent 70%)",
+                            background: "radial-gradient(circle, color-mix(in srgb, var(--color-sage) 12%, transparent) 0%, transparent 70%)",
                             pointerEvents: "none",
                             filter: "blur(50px)",
                         }} />
@@ -60,7 +60,7 @@ export function CTASection() {
                         {/* Top decorative gradient border */}
                         <div style={{
                             position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-                            background: "linear-gradient(90deg, transparent, rgba(82,121,111,0.6), rgba(132,169,140,0.6), rgba(82,121,111,0.6), transparent)",
+                            background: "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-pine) 60%, transparent), color-mix(in srgb, var(--color-sage) 60%, transparent), color-mix(in srgb, var(--color-pine) 60%, transparent), transparent)",
                         }} />
 
                         {/* Dot grid overlay */}
@@ -70,13 +70,13 @@ export function CTASection() {
                         <div style={{
                             position: "absolute", top: 0, left: 0,
                             width: "200px", height: "200px",
-                            background: "radial-gradient(circle at top left, rgba(82,121,111,0.1), transparent 60%)",
+                            background: "radial-gradient(circle at top left, color-mix(in srgb, var(--color-pine) 10%, transparent), transparent 60%)",
                             pointerEvents: "none",
                         }} />
                         <div style={{
                             position: "absolute", bottom: 0, right: 0,
                             width: "200px", height: "200px",
-                            background: "radial-gradient(circle at bottom right, rgba(132,169,140,0.08), transparent 60%)",
+                            background: "radial-gradient(circle at bottom right, color-mix(in srgb, var(--color-sage) 8%, transparent), transparent 60%)",
                             pointerEvents: "none",
                         }} />
 
@@ -92,15 +92,15 @@ export function CTASection() {
                             >
                                 <div style={{
                                     display: "inline-flex", alignItems: "center", gap: 7,
-                                    background: "rgba(30,43,49,0.6)",
-                                    border: "1px solid rgba(82,121,111,0.25)",
+                                    background: "color-mix(in srgb, var(--color-neu-dark) 60%, transparent)",
+                                    border: "1px solid color-mix(in srgb, var(--color-pine) 25%, transparent)",
                                     borderRadius: "999px",
                                     padding: "6px 16px",
-                                    boxShadow: "inset 2px 2px 6px rgba(30,43,49,0.8), inset -1px -1px 4px rgba(63,84,97,0.2)",
+                                    boxShadow: "inset 2px 2px 6px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), inset -1px -1px 4px color-mix(in srgb, var(--color-neu-light) 20%, transparent)",
                                 }}>
-                                    <Sparkles size={12} color="#84A98C" />
+                                    <Sparkles size={12} color="var(--color-sage)" />
                                     <span style={{
-                                        fontSize: "11px", color: "#84A98C",
+                                        fontSize: "11px", color: "var(--color-sage)",
                                         fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase",
                                     }}>
                                         free consultation
@@ -121,7 +121,7 @@ export function CTASection() {
                                     letterSpacing: "-0.03em",
                                     lineHeight: 1.1,
                                     marginBottom: 20,
-                                    background: "linear-gradient(135deg, #CAD2C5 0%, #84A98C 100%)",
+                                    background: "linear-gradient(135deg, var(--color-mist) 0%, var(--color-sage) 100%)",
                                     WebkitBackgroundClip: "text",
                                     WebkitTextFillColor: "transparent",
                                     backgroundClip: "text",
@@ -138,7 +138,7 @@ export function CTASection() {
                                 transition={{ duration: 0.5, delay: 0.22 }}
                                 style={{
                                     fontSize: "clamp(0.95rem, 1.5vw, 1.1rem)",
-                                    color: "rgba(202,210,197,0.55)",
+                                    color: "color-mix(in srgb, var(--color-mist) 55%, transparent)",
                                     fontFamily: "var(--font-body)",
                                     lineHeight: 1.7,
                                     maxWidth: "52ch",
@@ -164,8 +164,8 @@ export function CTASection() {
                                     onMouseLeave={() => setBtnHovered(false)}
                                     style={{
                                         display: "inline-flex", alignItems: "center", gap: 8,
-                                        backgroundColor: btnHovered ? "#84A98C" : "#CAD2C5",
-                                        color: "#2F3E46",
+                                        backgroundColor: btnHovered ? "var(--color-sage)" : "var(--color-mist)",
+                                        color: "var(--color-surface)",
                                         borderRadius: "999px",
                                         padding: "14px 32px",
                                         fontFamily: "var(--font-label)",
@@ -175,8 +175,8 @@ export function CTASection() {
                                         textTransform: "uppercase",
                                         textDecoration: "none",
                                         boxShadow: btnHovered
-                                            ? "inset 2px 2px 6px rgba(30,43,49,0.2), 0 0 20px rgba(132,169,140,0.3)"
-                                            : "5px 5px 14px #1e2b31, -2px -2px 8px #3f5461",
+                                            ? "inset 2px 2px 6px color-mix(in srgb, var(--color-neu-dark) 20%, transparent), 0 0 20px color-mix(in srgb, var(--color-sage) 30%, transparent)"
+                                            : "5px 5px 14px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light)",
                                         transform: btnHovered ? "scale(0.98)" : "scale(1)",
                                         transition: "all 0.25s ease",
                                     }}
@@ -190,34 +190,24 @@ export function CTASection() {
                                 {/* Secondary CTA */}
                                 <Link
                                     href="/solutions"
+                                    className="cta-secondary-link"
                                     style={{
                                         display: "inline-flex", alignItems: "center", gap: 8,
                                         background: "transparent",
-                                        color: "rgba(202,210,197,0.65)",
+                                        color: "color-mix(in srgb, var(--color-mist) 65%, transparent)",
                                         borderRadius: "999px",
                                         padding: "13px 28px",
-                                        border: "1px solid rgba(202,210,197,0.2)",
+                                        border: "1px solid color-mix(in srgb, var(--color-mist) 20%, transparent)",
                                         fontFamily: "var(--font-label)",
                                         fontSize: "0.75rem",
                                         fontWeight: 500,
                                         letterSpacing: "0.1em",
                                         textTransform: "uppercase",
                                         textDecoration: "none",
-                                        boxShadow: "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461",
-                                        transition: "all 0.25s ease",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                        e.currentTarget.style.color = "#CAD2C5";
-                                        e.currentTarget.style.borderColor = "rgba(202,210,197,0.4)";
-                                        e.currentTarget.style.boxShadow = "inset 2px 2px 5px #1e2b31, inset -1px -1px 3px #3f5461";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                        e.currentTarget.style.color = "rgba(202,210,197,0.65)";
-                                        e.currentTarget.style.borderColor = "rgba(202,210,197,0.2)";
-                                        e.currentTarget.style.boxShadow = "3px 3px 8px #1e2b31, -2px -2px 6px #3f5461";
+                                        boxShadow: "3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light)",
                                     }}
                                 >
-                                    see solutions
+                                    explore all solutions
                                 </Link>
                             </motion.div>
                         </div>
