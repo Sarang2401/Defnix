@@ -170,7 +170,7 @@ export function TestimonialSection() {
                             marginBottom: 40,
                             maxWidth: "480px"
                         }}>
-                            Our customers love our services! Read their reviews to discover why they're raving about our engineering quality, support, and overall experience. Join the satisfied ranks today!
+                            Our customers love our services! Read their reviews to discover why they&apos;re raving about our engineering quality, support, and overall experience. Join the satisfied ranks today!
                         </p>
 
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>

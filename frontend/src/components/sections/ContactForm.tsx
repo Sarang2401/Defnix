@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "../ui/Button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 
 type FormStatus = "idle" | "submitting" | "success" | "error";

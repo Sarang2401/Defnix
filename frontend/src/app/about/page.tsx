@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import * as motion from "framer-motion/client";
 import { Sparkles } from "lucide-react";
 import { ValueCard, AboutCtaButton } from "./AboutClient";
