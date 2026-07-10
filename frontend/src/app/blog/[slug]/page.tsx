@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { ArrowLeft, Clock, Tag, User, Share2, Twitter, Linkedin } from "lucide-react";
 import { BlogEnhancements } from "@/components/sections/BlogEnhancements";
 import { CopyLinkButton } from "@/components/ui/CopyLinkButton";
+import { Breadcrumb } from "@/components/ui/Breadcrumb";
 
 /* ---------- Types ---------- */
 interface PostShape {
@@ -309,9 +310,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
                     elements.push(
                         <pre
                             key={`code-${i}`}
-                            className="bg-neutral-900 border border-white/10 rounded-xl p-5 overflow-x-auto my-6"
+                            className="rounded-xl p-5 overflow-x-auto my-6"
+                            style={{ backgroundColor: "var(--color-secondary)", border: "1px solid var(--color-border)" }}
                         >
-                            <code className="text-sm text-white/70">
+                            <code className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                                 {codeLines.join("\n")}
                             </code>
                         </pre>
@@ -335,7 +337,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <h2
                         key={i}
-                        className="text-2xl sm:text-3xl text-white font-medium mt-12 mb-4"
+                        className="text-2xl sm:text-3xl font-medium mt-12 mb-4"
+                        style={{ fontFamily: "var(--font-headline)", color: "var(--color-mist)" }}
                     >
                         {text}
                     </h2>
@@ -345,7 +348,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <h3
                         key={i}
-                        className="text-xl text-white font-medium mt-8 mb-3"
+                        className="text-xl font-medium mt-8 mb-3"
+                        style={{ fontFamily: "var(--font-headline)", color: "var(--color-mist)" }}
                     >
                         {text}
                     </h3>
@@ -356,9 +360,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <li
                         key={i}
-                        className="flex items-start gap-3 text-white/60 leading-relaxed ml-1"
+                        className="flex items-start gap-3 leading-relaxed ml-1"
+                        style={{ color: "var(--color-text-secondary)" }}
                     >
-                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-white/40 flex-shrink-0" />
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: "var(--color-sage)" }} />
                         <span>{line.slice(2).replace(/\*\*(.*?)\*\*/g, "$1")}</span>
                     </li>
                 );
@@ -369,7 +374,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 elements.push(
                     <li
                         key={i}
-                        className="text-white/60 leading-relaxed ml-5 list-decimal"
+                        className="leading-relaxed ml-5 list-decimal"
+                        style={{ color: "var(--color-text-secondary)" }}
                     >
                         {text.replace(/\*\*(.*?)\*\*/g, "$1")}
                     </li>
@@ -380,12 +386,13 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 // Handle inline code
                 const rendered = line.replace(
                     /`([^`]+)`/g,
-                    '<code class="text-white text-sm bg-white/10 px-1.5 py-0.5 rounded">$1</code>'
+                    '<code style="color: var(--color-mist); background: rgba(132,169,140,0.12);" class="text-sm px-1.5 py-0.5 rounded">$1</code>'
                 );
                 elements.push(
                     <p
                         key={i}
-                        className="text-white/60 leading-relaxed my-4"
+                        className="leading-relaxed my-4"
+                        style={{ color: "var(--color-text-secondary)" }}
                         dangerouslySetInnerHTML={{ __html: rendered }}
                     />
                 );
@@ -403,11 +410,13 @@ export default async function BlogDetailPage({ params }: PageProps) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
                 />
                 <BlogEnhancements headings={headings} />
+                <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post.title }]} />
                 {/* Back link */}
                 <PageTransition>
                     <Link
                         href="/blog"
-                        className="inline-flex items-center gap-2 text-sm text-white/40 hover:text-white transition-colors mb-8"
+                        className="footer-link inline-flex items-center gap-2 text-sm mb-8"
+                        style={{ color: "var(--color-text-muted)" }}
                     >
                         <ArrowLeft size={14} />
                         back to blog
@@ -421,7 +430,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                             {post.tags.map((tag) => (
                                 <span
                                     key={tag}
-                                    className="flex items-center gap-1 text-xs text-white tracking-wider uppercase px-3 py-1 rounded-full bg-white/10"
+                                    className="flex items-center gap-1 text-xs tracking-wider uppercase px-3 py-1 rounded-full"
+                                    style={{ color: "var(--color-sage)", backgroundColor: "rgba(132,169,140,0.12)" }}
                                 >
                                     <Tag size={10} />
                                     {tag}
@@ -429,11 +439,17 @@ export default async function BlogDetailPage({ params }: PageProps) {
                             ))}
                         </div>
 
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl text-white font-medium mb-6 leading-tight">
+                        <h1
+                            className="text-3xl sm:text-4xl lg:text-5xl font-medium mb-6 leading-tight"
+                            style={{ fontFamily: "var(--font-headline)", color: "var(--color-mist)" }}
+                        >
                             {post.title}
                         </h1>
 
-                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/40 pb-8 border-b border-white/10">
+                        <div
+                            className="flex flex-wrap items-center gap-4 text-sm pb-8"
+                            style={{ color: "var(--color-text-muted)", borderBottom: "1px solid var(--color-border)" }}
+                        >
                             <span className="flex items-center gap-1.5">
                                 <User size={14} />
                                 {post.author}
@@ -471,10 +487,10 @@ export default async function BlogDetailPage({ params }: PageProps) {
 
                 {/* Share + CTA */}
                 <PageTransition delay={0.3}>
-                    <div className="mt-16 pt-8 border-t border-white/10">
+                    <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--color-border)" }}>
                         {/* Share buttons */}
                         <div className="flex items-center gap-4 mb-10">
-                            <span className="text-sm text-white/40 flex items-center gap-2">
+                            <span className="text-sm flex items-center gap-2" style={{ color: "var(--color-text-muted)" }}>
                                 <Share2 size={14} />
                                 share
                             </span>
@@ -482,7 +498,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                                 href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-neutral-900 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors"
+                                className="tint-sage-hover w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                                style={{ backgroundColor: "var(--color-secondary)", border: "1px solid var(--color-border)", color: "var(--color-text-muted)" }}
                             >
                                 <Twitter size={14} />
                             </a>
@@ -490,7 +507,8 @@ export default async function BlogDetailPage({ params }: PageProps) {
                                 href={`https://linkedin.com/sharing/share-offsite/`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="w-8 h-8 rounded-full bg-neutral-900 border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 transition-colors"
+                                className="tint-sage-hover w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                                style={{ backgroundColor: "var(--color-secondary)", border: "1px solid var(--color-border)", color: "var(--color-text-muted)" }}
                             >
                                 <Linkedin size={14} />
                             </a>
@@ -534,16 +552,16 @@ export default async function BlogDetailPage({ params }: PageProps) {
                         </div>
 
                         {/* CTA */}
-                        <div className="rounded-xl bg-neutral-900 border border-white/10 p-8 text-center">
-                            <h3 className="text-xl text-white font-medium mb-3">
+                        <div className="neu-raised-surface rounded-xl p-8 text-center" style={{ border: "1px solid var(--color-border)" }}>
+                            <h3 className="text-xl font-medium mb-3" style={{ fontFamily: "var(--font-headline)", color: "var(--color-mist)" }}>
                                 need help implementing this?
                             </h3>
-                            <p className="text-sm text-white/60 mb-6 max-w-md mx-auto">
+                            <p className="text-sm mb-6 max-w-md mx-auto" style={{ color: "var(--color-text-secondary)" }}>
                                 our engineering team can help you build the controls,
                                 automation, and infrastructure discussed in this article.
                             </p>
                             <Button variant="primary" size="md" href="/contact">
-                                book a consultation
+                                book a free consultation
                             </Button>
                         </div>
                     </div>
