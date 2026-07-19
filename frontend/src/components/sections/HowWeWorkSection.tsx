@@ -12,7 +12,7 @@ const steps = [
         action: "We audit your current stack, controls, and operational bottlenecks with precision.",
         outcome: "A prioritized engineering roadmap with clear risk signals and ROI targets.",
         icon: Search,
-        accentColor: "#84A98C",
+        accentColor: "var(--color-sage)",
     },
     {
         number: "02",
@@ -21,7 +21,7 @@ const steps = [
         action: "We design resilient systems, automation workflows, and compliance controls.",
         outcome: "A build plan that balances speed, security, and long-term maintainability.",
         icon: Layers,
-        accentColor: "#52796F",
+        accentColor: "var(--color-pine)",
     },
     {
         number: "03",
@@ -30,7 +30,7 @@ const steps = [
         action: "We ship implementations, evidence pipelines, and operating runbooks.",
         outcome: "Measurable outcomes: faster audits, safer cloud posture, less manual work.",
         icon: Rocket,
-        accentColor: "#CAD2C5",
+        accentColor: "var(--color-mist)",
     },
 ];
 
@@ -47,7 +47,7 @@ function AnimatedConnector({ active }: { active: boolean }) {
             {/* Base line */}
             <div style={{
                 position: "absolute", inset: 0,
-                background: "rgba(82,121,111,0.2)",
+                background: "color-mix(in srgb, var(--color-pine) 20%, transparent)",
                 borderRadius: "2px",
             }} />
             {/* Animated dash */}
@@ -57,7 +57,7 @@ function AnimatedConnector({ active }: { active: boolean }) {
                 style={{
                     position: "absolute", top: 0, left: 0,
                     width: "40%", height: "100%",
-                    background: "linear-gradient(90deg, transparent, #84A98C, transparent)",
+                    background: "linear-gradient(90deg, transparent, var(--color-sage), transparent)",
                     borderRadius: "2px",
                 }}
             />
@@ -73,17 +73,17 @@ function StepBadge({ number, color }: { number: string; color: string }) {
             <div style={{
                 position: "absolute", inset: -3,
                 borderRadius: "50%",
-                border: `1px solid ${color}25`,
-                boxShadow: `0 0 12px ${color}15`,
+                border: `1px solid color-mix(in srgb, ${color} 25%, transparent)`,
+                boxShadow: `0 0 12px color-mix(in srgb, ${color} 15%, transparent)`,
             }} />
             {/* Badge */}
             <div style={{
                 width: 52, height: 52,
                 borderRadius: "50%",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                background: "linear-gradient(145deg, #2d4449, #354F52)",
-                border: `1px solid ${color}35`,
-                boxShadow: `4px 4px 10px #1e2b31, -2px -2px 8px #3f5461, 0 0 10px ${color}20`,
+                background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-secondary))",
+                border: `1px solid color-mix(in srgb, ${color} 35%, transparent)`,
+                boxShadow: `4px 4px 10px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light), 0 0 10px color-mix(in srgb, ${color} 20%, transparent)`,
                 fontFamily: "var(--font-headline)",
                 fontSize: "15px",
                 fontWeight: 700,
@@ -122,18 +122,18 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
                 height: "100%",
                 display: "flex", flexDirection: "column",
                 position: "relative", overflow: "hidden",
-                background: "linear-gradient(145deg, #354F52 0%, #2d4449 100%)",
-                border: `1px solid ${hovered ? step.accentColor + "45" : "rgba(82,121,111,0.18)"}`,
+                background: "linear-gradient(145deg, var(--color-secondary) 0%, var(--color-glass-mid) 100%)",
+                border: `1px solid ${hovered ? `color-mix(in srgb, ${step.accentColor} 45%, transparent)` : "var(--color-border)"}`,
                 boxShadow: hovered
-                    ? `inset 4px 4px 12px #1e2b31, inset -2px -2px 8px #3f5461, 0 0 28px ${step.accentColor}10`
-                    : `7px 7px 18px #1e2b31, -4px -4px 12px #3f5461`,
+                    ? `inset 4px 4px 12px var(--color-neu-dark), inset -2px -2px 8px var(--color-neu-light), 0 0 28px color-mix(in srgb, ${step.accentColor} 10%, transparent)`
+                    : `7px 7px 18px var(--color-neu-dark), -4px -4px 12px var(--color-neu-light)`,
                 transition: "all 0.4s ease",
                 cursor: "default",
             }}>
                 {/* Top accent line */}
                 <div style={{
                     position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-                    background: `linear-gradient(90deg, ${step.accentColor}80, transparent)`,
+                    background: `linear-gradient(90deg, color-mix(in srgb, ${step.accentColor} 80%, transparent), transparent)`,
                     opacity: hovered ? 1 : 0.4,
                     transition: "opacity 0.35s ease",
                 }} />
@@ -142,7 +142,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
                 <div style={{
                     position: "absolute", top: 0, right: 0,
                     width: 100, height: 100,
-                    background: `radial-gradient(circle at top right, ${step.accentColor}10, transparent 70%)`,
+                    background: `radial-gradient(circle at top right, color-mix(in srgb, ${step.accentColor} 10%, transparent), transparent 70%)`,
                     pointerEvents: "none",
                 }} />
 
@@ -152,11 +152,11 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
 
                     <div style={{
                         display: "flex", alignItems: "center", gap: 6,
-                        background: "rgba(30,43,49,0.6)",
-                        border: `1px solid ${step.accentColor}25`,
+                        background: "color-mix(in srgb, var(--color-neu-dark) 60%, transparent)",
+                        border: `1px solid color-mix(in srgb, ${step.accentColor} 25%, transparent)`,
                         borderRadius: "999px",
                         padding: "4px 12px",
-                        boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8), inset -1px -1px 3px rgba(63,84,97,0.2)",
+                        boxShadow: "inset 2px 2px 5px color-mix(in srgb, var(--color-neu-dark) 80%, transparent), inset -1px -1px 3px color-mix(in srgb, var(--color-neu-light) 20%, transparent)",
                     }}>
                         <span style={{ fontSize: "11px", color: step.accentColor, fontWeight: 500, letterSpacing: "0.08em" }}>
                             {step.window}
@@ -166,13 +166,13 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
 
                 {/* Step name */}
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: 8, background: `rgba(255,255,255,0.05)` }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 32, height: 32, borderRadius: 8, background: "color-mix(in srgb, var(--color-mist) 5%, transparent)" }}>
                         <Icon size={18} color={step.accentColor} />
                     </div>
                     <h3 style={{
                         fontSize: "1.45rem",
                         fontWeight: 700,
-                        color: "#CAD2C5",
+                        color: "var(--color-mist)",
                         fontFamily: "var(--font-headline)",
                         letterSpacing: "-0.01em",
                     }}>
@@ -183,7 +183,7 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
                 {/* Action description */}
                 <p style={{
                     fontSize: "14px",
-                    color: hovered ? "rgba(202,210,197,0.7)" : "rgba(202,210,197,0.5)",
+                    color: hovered ? "color-mix(in srgb, var(--color-mist) 70%, transparent)" : "color-mix(in srgb, var(--color-mist) 50%, transparent)",
                     lineHeight: 1.7,
                     flex: 1,
                     transition: "color 0.35s ease",
@@ -196,22 +196,22 @@ function StepCard({ step, index }: { step: typeof steps[0]; index: number }) {
                     marginTop: 20,
                     padding: "14px 16px",
                     borderRadius: "12px",
-                    background: "rgba(30,43,49,0.5)",
-                    border: `1px solid ${step.accentColor}18`,
-                    boxShadow: "inset 2px 2px 6px rgba(30,43,49,0.6), inset -1px -1px 4px rgba(63,84,97,0.15)",
+                    background: "color-mix(in srgb, var(--color-neu-dark) 50%, transparent)",
+                    border: `1px solid color-mix(in srgb, ${step.accentColor} 18%, transparent)`,
+                    boxShadow: "inset 2px 2px 6px color-mix(in srgb, var(--color-neu-dark) 60%, transparent), inset -1px -1px 4px color-mix(in srgb, var(--color-neu-light) 15%, transparent)",
                 }}>
                     <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                         <CheckCircle size={13} color={step.accentColor} style={{ flexShrink: 0, marginTop: 2 }} />
                         <div>
                             <p style={{
                                 fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.12em",
-                                color: "rgba(202,210,197,0.3)", marginBottom: 4, fontWeight: 600,
+                                color: "color-mix(in srgb, var(--color-mist) 30%, transparent)", marginBottom: 4, fontWeight: 600,
                             }}>
                                 outcome
                             </p>
                             <p style={{
                                 fontSize: "12.5px",
-                                color: hovered ? step.accentColor : "rgba(202,210,197,0.4)",
+                                color: hovered ? step.accentColor : "color-mix(in srgb, var(--color-mist) 40%, transparent)",
                                 lineHeight: 1.55,
                                 transition: "color 0.35s ease",
                             }}>
@@ -229,16 +229,16 @@ export function HowWeWorkSection() {
     return (
         <section
             className="section-gap relative"
-            style={{ overflow: "clip", borderTop: "1px solid rgba(82,121,111,0.08)", background: "var(--color-surface)" }}
+            style={{ overflow: "clip", borderTop: "1px solid color-mix(in srgb, var(--color-pine) 8%, transparent)", background: "var(--color-surface)" }}
             id="how-we-work"
         >
             {/* Background Orbs */}
             <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: 0, pointerEvents: "none" }}>
                 <motion.div
-                    animate={{ 
+                    animate={{
                         x: [0, 100, 0],
                         y: [0, -50, 0],
-                        scale: [1, 1.1, 1] 
+                        scale: [1, 1.1, 1]
                     }}
                     transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
                     style={{
@@ -248,15 +248,15 @@ export function HowWeWorkSection() {
                         width: "60vw",
                         height: "60vw",
                         borderRadius: "50%",
-                        background: "radial-gradient(circle, rgba(132,169,140,0.05) 0%, transparent 60%)",
+                        background: "radial-gradient(circle, color-mix(in srgb, var(--color-sage) 5%, transparent) 0%, transparent 60%)",
                         filter: "blur(60px)",
                     }}
                 />
                 <motion.div
-                    animate={{ 
+                    animate={{
                         x: [0, -80, 0],
                         y: [0, 60, 0],
-                        scale: [1, 1.2, 1] 
+                        scale: [1, 1.2, 1]
                     }}
                     transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                     style={{
@@ -266,7 +266,7 @@ export function HowWeWorkSection() {
                         width: "50vw",
                         height: "50vw",
                         borderRadius: "50%",
-                        background: "radial-gradient(circle, rgba(82,121,111,0.06) 0%, transparent 60%)",
+                        background: "radial-gradient(circle, color-mix(in srgb, var(--color-pine) 6%, transparent) 0%, transparent 60%)",
                         filter: "blur(60px)",
                     }}
                 />
@@ -281,28 +281,17 @@ export function HowWeWorkSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                            <div style={{
-                                width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F",
-                                boxShadow: "0 0 8px rgba(82,121,111,0.8)",
-                            }} className="animate-pulse-dot" />
-                            <p style={{
-                                fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
-                                color: "#52796F", fontWeight: 500,
-                            }}>
-                                how we work
-                            </p>
-                        </div>
+                        <p className="eyebrow" style={{ marginBottom: 16 }}>how we work</p>
                         <h2 style={{
                             fontSize: "clamp(2rem, 4.5vw, 3.25rem)",
                             fontWeight: 600,
-                            color: "#CAD2C5",
+                            color: "var(--color-mist)",
                             fontFamily: "var(--font-headline)",
                             lineHeight: 1.15,
                             letterSpacing: "-0.02em",
                         }}>
                             diagnose.{" "}
-                            <span style={{ color: "#84A98C" }}>architect.</span>{" "}
+                            <span style={{ color: "var(--color-sage)" }}>architect.</span>{" "}
                             deliver.
                         </h2>
                     </motion.div>
@@ -332,7 +321,7 @@ export function HowWeWorkSection() {
                                 {i < steps.length - 1 && (
                                     <div style={{
                                         width: "2px", flex: 1, marginTop: 8, minHeight: 32,
-                                        background: `linear-gradient(to bottom, ${step.accentColor}40, transparent)`,
+                                        background: `linear-gradient(to bottom, color-mix(in srgb, ${step.accentColor} 40%, transparent), transparent)`,
                                     }} />
                                 )}
                             </div>
@@ -341,29 +330,29 @@ export function HowWeWorkSection() {
                             <div style={{
                                 flex: 1, marginBottom: 8,
                                 borderRadius: "16px",
-                                background: "linear-gradient(145deg, #354F52, #2d4449)",
-                                border: `1px solid rgba(82,121,111,0.2)`,
-                                boxShadow: "5px 5px 14px #1e2b31, -2px -2px 8px #3f5461",
+                                background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                                border: "1px solid color-mix(in srgb, var(--color-pine) 20%, transparent)",
+                                boxShadow: "5px 5px 14px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light)",
                                 padding: "20px",
                             }}>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
                                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                         <step.icon size={16} color={step.accentColor} />
-                                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "#CAD2C5", fontFamily: "var(--font-headline)" }}>
+                                        <h3 style={{ fontSize: "1.1rem", fontWeight: 700, color: "var(--color-mist)", fontFamily: "var(--font-headline)" }}>
                                             {step.name}
                                         </h3>
                                     </div>
                                     <span style={{ fontSize: "10px", color: step.accentColor, fontWeight: 500 }}>{step.window}</span>
                                 </div>
-                                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.5)", lineHeight: 1.6, marginBottom: 12 }}>
+                                <p style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", lineHeight: 1.6, marginBottom: 12 }}>
                                     {step.action}
                                 </p>
                                 <div style={{
                                     padding: "10px 12px", borderRadius: "10px",
-                                    background: "rgba(30,43,49,0.5)",
-                                    border: `1px solid ${step.accentColor}18`,
+                                    background: "color-mix(in srgb, var(--color-neu-dark) 50%, transparent)",
+                                    border: `1px solid color-mix(in srgb, ${step.accentColor} 18%, transparent)`,
                                 }}>
-                                    <p style={{ fontSize: "11px", color: "rgba(202,210,197,0.35)" }}>{step.outcome}</p>
+                                    <p style={{ fontSize: "11px", color: "color-mix(in srgb, var(--color-mist) 35%, transparent)" }}>{step.outcome}</p>
                                 </div>
                             </div>
                         </motion.div>

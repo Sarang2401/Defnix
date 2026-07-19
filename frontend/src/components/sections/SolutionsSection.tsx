@@ -344,18 +344,9 @@ function SolutionGroupBlock({ groupId, gridClass }: { groupId: "security" | "ai"
                 transition={{ duration: 0.5 }}
                 className="mb-6"
             >
-                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <div style={{
-                        width: 6, height: 6, borderRadius: "50%", backgroundColor: "var(--color-pine)",
-                        boxShadow: "0 0 8px color-mix(in srgb, var(--color-pine) 80%, transparent)",
-                    }} className="animate-pulse-dot" />
-                    <p style={{
-                        fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
-                        color: "var(--color-pine)", fontWeight: 500,
-                    }}>
-                        {meta.eyebrow}
-                    </p>
-                </div>
+                <p className="eyebrow" style={{ marginBottom: 10 }}>
+                    {meta.eyebrow}
+                </p>
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                     <h3 style={{
                         fontSize: "clamp(1.4rem, 2.5vw, 1.9rem)",
@@ -433,18 +424,9 @@ export function SolutionsSection() {
                     transition={{ duration: 0.5 }}
                     className="mb-16"
                 >
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                        <div style={{
-                            width: 6, height: 6, borderRadius: "50%", backgroundColor: "var(--color-pine)",
-                            boxShadow: "0 0 8px color-mix(in srgb, var(--color-pine) 80%, transparent)",
-                        }} className="animate-pulse-dot" />
-                        <p style={{
-                            fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase",
-                            color: "var(--color-pine)", fontWeight: 500,
-                        }}>
-                            what we do
-                        </p>
-                    </div>
+                    <p className="eyebrow" style={{ marginBottom: 16 }}>
+                        what we do
+                    </p>
                     <h2 style={{
                         fontSize: "clamp(2rem, 4vw, 3rem)",
                         fontWeight: 600,
@@ -459,8 +441,20 @@ export function SolutionsSection() {
                     </h2>
                 </motion.div>
 
+                {/* Security + AI operations — the security-engineering side */}
                 <SolutionGroupBlock groupId="security" gridClass="grid grid-cols-1 md:grid-cols-2 gap-4" />
                 <SolutionGroupBlock groupId="ai" gridClass="" />
+
+                {/* Divider marks the shift from security/SecOps to product engineering */}
+                <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "8px 0 40px" }}>
+                    <hr className="divider-gradient flex-1" />
+                    <span className="type-label" style={{ color: "var(--color-text-muted)", whiteSpace: "nowrap" }}>
+                        apps &amp; development
+                    </span>
+                    <hr className="divider-gradient flex-1" />
+                </div>
+
+                {/* Websites, mobile, and automation — the product-engineering side */}
                 <SolutionGroupBlock groupId="engineering" gridClass="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" />
             </div>
         </section>

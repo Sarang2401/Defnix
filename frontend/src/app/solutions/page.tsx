@@ -16,8 +16,8 @@ export default function SolutionsPage() {
                 <svg width="100%" height="100%">
                     <defs>
                         <pattern id="isometricGrid" width="60" height="60" patternUnits="userSpaceOnUse">
-                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(132,169,140,0.15)" strokeWidth="1"/>
-                            <rect width="60" height="60" fill="rgba(82,121,111,0.02)"/>
+                            <path d="M 60 0 L 0 0 0 60" fill="none" stroke="color-mix(in srgb, var(--color-sage) 15%, transparent)" strokeWidth="1"/>
+                            <rect width="60" height="60" fill="color-mix(in srgb, var(--color-pine) 2%, transparent)"/>
                         </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#isometricGrid)" />
@@ -32,20 +32,17 @@ export default function SolutionsPage() {
             </section>
             <section className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                        <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F", boxShadow: "0 0 8px rgba(82,121,111,0.8)" }} className="animate-pulse-dot" />
-                        <p style={{ fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#52796F", fontWeight: 500 }}>what we do</p>
-                    </div>
+                    <p className="eyebrow" style={{ marginBottom: 20 }}>what we do</p>
                     <h1 style={{
                         fontFamily: "var(--font-headline)",
                         fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
                         fontWeight: 700, lineHeight: 1.08,
-                        letterSpacing: "-0.03em", color: "#CAD2C5", marginBottom: 20,
+                        letterSpacing: "-0.03em", color: "var(--color-mist)", marginBottom: 20,
                     }}>
                         three disciplines.{" "}
                         <span className="text-gradient-sage">one</span>{" "}engineering studio.
                     </h1>
-                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "56ch" }}>
+                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "color-mix(in srgb, var(--color-mist) 55%, transparent)", maxWidth: "56ch" }}>
                         security &amp; compliance, ai-driven operations, and product engineering — organized so you can find the right fit fast, whether that&apos;s an audit deadline or a new website.
                     </p>
                 </motion.div>
@@ -67,14 +64,14 @@ export default function SolutionsPage() {
                         borderRadius: "24px", textAlign: "center",
                         padding: "clamp(40px, 6vw, 64px)",
                         position: "relative", overflow: "hidden",
-                        background: "linear-gradient(145deg, #354F52, #2F3E46, #354F52)",
-                        border: "1px solid rgba(82,121,111,0.22)",
-                        boxShadow: "8px 8px 22px #1e2b31, -4px -4px 14px #3f5461",
+                        background: "linear-gradient(145deg, var(--color-secondary), var(--color-surface), var(--color-secondary))",
+                        border: "1px solid color-mix(in srgb, var(--color-pine) 22%, transparent)",
+                        boxShadow: "8px 8px 22px var(--color-neu-dark), -4px -4px 14px var(--color-neu-light)",
                     }}
                 >
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, rgba(132,169,140,0.5), transparent)" }} />
-                    <div style={{ position: "absolute", top: "-40px", left: "-40px", width: 200, height: 200, background: "radial-gradient(circle, rgba(82,121,111,0.12), transparent 70%)", filter: "blur(30px)", animation: "float-orb-a 12s ease-in-out infinite" }} />
-                    <div style={{ position: "absolute", bottom: "-40px", right: "-40px", width: 180, height: 180, background: "radial-gradient(circle, rgba(132,169,140,0.1), transparent 70%)", filter: "blur(30px)", animation: "float-orb-b 15s ease-in-out infinite" }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-sage) 50%, transparent), transparent)" }} />
+                    <div style={{ position: "absolute", top: "-40px", left: "-40px", width: 200, height: 200, background: "radial-gradient(circle, color-mix(in srgb, var(--color-pine) 12%, transparent), transparent 70%)", filter: "blur(30px)", animation: "float-orb-a 12s ease-in-out infinite" }} />
+                    <div style={{ position: "absolute", bottom: "-40px", right: "-40px", width: 180, height: 180, background: "radial-gradient(circle, color-mix(in srgb, var(--color-sage) 10%, transparent), transparent 70%)", filter: "blur(30px)", animation: "float-orb-b 15s ease-in-out infinite" }} />
 
                     <div style={{ position: "relative", zIndex: 10 }}>
                         <h2 style={{
@@ -84,7 +81,7 @@ export default function SolutionsPage() {
                         }} className="text-gradient-sage">
                             not sure which solution fits?
                         </h2>
-                        <p style={{ fontSize: "15px", color: "rgba(202,210,197,0.55)", lineHeight: 1.7, maxWidth: "48ch", margin: "0 auto 32px" }}>
+                        <p style={{ fontSize: "15px", color: "color-mix(in srgb, var(--color-mist) 55%, transparent)", lineHeight: 1.7, maxWidth: "48ch", margin: "0 auto 32px" }}>
                             book a free 30-minute call — we&apos;ll map your goals to the right discipline and next steps.
                         </p>
                         <SolutionsCtaButton />

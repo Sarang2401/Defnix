@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function SOC2Page() {
     return (
         <SolutionPageLayout
+            slug="soc2-failure-prevention"
             iconName="Shield"
             label="Compliance Readiness Engineering"
             title="SOC2 Failure Prevention"

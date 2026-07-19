@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function CloudInsurancePage() {
     return (
         <SolutionPageLayout
+            slug="cloud-insurance"
             iconName="Cloud"
             label="Cloud Risk Reduction & Incident Readiness"
             title="Cloud Insurance"

@@ -88,7 +88,7 @@ export default async function BlogPage() {
             {/* Morphing blob background */}
             <div style={{ position: "absolute", top: -150, left: -100, width: "800px", height: "800px", zIndex: 0, opacity: 0.7, pointerEvents: "none" }}>
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "100%" }}>
-                    <path fill="rgba(82,121,111,0.06)" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18.1,96.4,-3C96,-12.1,89.2,-19.1,81.1,-26.6C73,-34.1,63.6,-42.2,52,-48.6C40.4,-55,26.6,-59.7,12.7,-64.1C-1.2,-68.5,-15.1,-72.6,-28.9,-71.4C-42.7,-70.2,-56.4,-63.7,-67.2,-53.8C-78,-43.9,-85.9,-30.6,-89.6,-16.5C-93.3,-2.4,-92.8,12.5,-86.7,25.6C-80.6,38.7,-68.9,50.1,-56,58.8C-43.1,67.5,-29.1,73.5,-14.8,76.6C-0.5,79.7,14,79.9,28,76.5C42,73.1,55.5,66.1,66.1,56.2C76.7,46.3,84.4,33.5,88.4,19.6C92.4,5.7,92.7,-9.3,87.6,-23.1C82.5,-36.9,72,-49.5,59.3,-58.5C46.6,-67.5,31.7,-72.9,16.5,-75.7C1.3,-78.5,-14.2,-78.7,-27.9,-74.6L44.7,-76.4Z">
+                    <path fill="color-mix(in srgb, var(--color-pine) 6%, transparent)" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18.1,96.4,-3C96,-12.1,89.2,-19.1,81.1,-26.6C73,-34.1,63.6,-42.2,52,-48.6C40.4,-55,26.6,-59.7,12.7,-64.1C-1.2,-68.5,-15.1,-72.6,-28.9,-71.4C-42.7,-70.2,-56.4,-63.7,-67.2,-53.8C-78,-43.9,-85.9,-30.6,-89.6,-16.5C-93.3,-2.4,-92.8,12.5,-86.7,25.6C-80.6,38.7,-68.9,50.1,-56,58.8C-43.1,67.5,-29.1,73.5,-14.8,76.6C-0.5,79.7,14,79.9,28,76.5C42,73.1,55.5,66.1,66.1,56.2C76.7,46.3,84.4,33.5,88.4,19.6C92.4,5.7,92.7,-9.3,87.6,-23.1C82.5,-36.9,72,-49.5,59.3,-58.5C46.6,-67.5,31.7,-72.9,16.5,-75.7C1.3,-78.5,-14.2,-78.7,-27.9,-74.6L44.7,-76.4Z">
                         <animate attributeName="d" dur="15s" repeatCount="indefinite"
                             values="
                             M44.7,-76.4C58.8,-69.2,71.8,-59.1,81.3,-46.3C90.8,-33.5,96.8,-18.1,96.4,-3C96,-12.1,89.2,-19.1,81.1,-26.6C73,-34.1,63.6,-42.2,52,-48.6C40.4,-55,26.6,-59.7,12.7,-64.1C-1.2,-68.5,-15.1,-72.6,-28.9,-71.4C-42.7,-70.2,-56.4,-63.7,-67.2,-53.8C-78,-43.9,-85.9,-30.6,-89.6,-16.5C-93.3,-2.4,-92.8,12.5,-86.7,25.6C-80.6,38.7,-68.9,50.1,-56,58.8C-43.1,67.5,-29.1,73.5,-14.8,76.6C-0.5,79.7,14,79.9,28,76.5C42,73.1,55.5,66.1,66.1,56.2C76.7,46.3,84.4,33.5,88.4,19.6C92.4,5.7,92.7,-9.3,87.6,-23.1C82.5,-36.9,72,-49.5,59.3,-58.5C46.6,-67.5,31.7,-72.9,16.5,-75.7C1.3,-78.5,-14.2,-78.7,-27.9,-74.6L44.7,-76.4Z;
@@ -103,24 +103,21 @@ export default async function BlogPage() {
             {/* ── Header ─────────────────────────────── */}
             <section className="max-w-7xl mx-auto px-6 mb-14 relative z-10">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                        <div className="animate-pulse-dot" style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F", boxShadow: "0 0 8px rgba(82,121,111,0.8)" }} />
-                        <p style={{ fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#52796F", fontWeight: 500 }}>technical blog</p>
-                    </div>
+                    <p className="eyebrow" style={{ marginBottom: 20 }}>technical blog</p>
 
                     <h1 style={{
                         fontFamily: "var(--font-headline)",
                         fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
                         fontWeight: 700, lineHeight: 1.08, letterSpacing: "-0.03em",
-                        color: "#CAD2C5", marginBottom: 20,
+                        color: "var(--color-mist)", marginBottom: 20,
                     }}>
                         engineering{" "}
-                        <span style={{ background: "linear-gradient(135deg, #84A98C, #CAD2C5)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                        <span className="text-gradient-sage" style={{ fontFamily: "var(--font-accent)", fontStyle: "italic", fontWeight: 500 }}>
                             insights.
                         </span>
                     </h1>
 
-                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "55ch" }}>
+                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "color-mix(in srgb, var(--color-mist) 55%, transparent)", maxWidth: "55ch" }}>
                         deep technical articles on soc2 compliance, cloud security architecture,
                         and ai-driven security operations — written by engineers, for engineers.
                     </p>

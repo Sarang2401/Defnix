@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import * as motion from "framer-motion/client";
-import { CaseStudiesList, FilterPills, CaseStudiesCtaButton, type CaseStudy } from "./CaseStudiesClient";
+import { CaseStudiesExplorer, CaseStudiesCtaButton, type CaseStudy } from "./CaseStudiesClient";
 
 export const metadata: Metadata = {
     title: "Case Studies — Defnix",
@@ -23,8 +23,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "10 wk",
         metricLabel: "To SOC2 Type II",
-        accentColor: "#84A98C",
+        accentColor: "var(--color-sage)",
         iconName: "ShieldCheck",
+        category: "Security",
     },
     {
         slug: "startup-cloud-resilience",
@@ -41,8 +42,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "<30m",
         metricLabel: "Recovery time",
-        accentColor: "#52796F",
+        accentColor: "var(--color-pine)",
         iconName: "Cloud",
+        category: "Security",
     },
     {
         slug: "security-alert-optimization",
@@ -59,8 +61,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "35%",
         metricLabel: "Alert reduction",
-        accentColor: "#CAD2C5",
+        accentColor: "var(--color-mist)",
         iconName: "Activity",
+        category: "Security",
     },
     {
         slug: "cafe-website-melbourne",
@@ -77,8 +80,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "12d",
         metricLabel: "To go live",
-        accentColor: "#84A98C",
+        accentColor: "var(--color-sage)",
         iconName: "Globe",
+        category: "Web",
     },
     {
         slug: "dental-clinic-booking-app",
@@ -95,8 +99,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "30%",
         metricLabel: "Fewer no-shows",
-        accentColor: "#52796F",
+        accentColor: "var(--color-pine)",
         iconName: "Smartphone",
+        category: "Mobile",
     },
     {
         slug: "creator-automation-pipeline",
@@ -113,8 +118,9 @@ const staticCaseStudies: CaseStudy[] = [
         ],
         metric: "12hr",
         metricLabel: "Saved per week",
-        accentColor: "#84A98C",
+        accentColor: "var(--color-sage)",
         iconName: "Zap",
+        category: "Automation",
     },
 ];
 
@@ -135,8 +141,9 @@ async function getCaseStudies(): Promise<CaseStudy[]> {
             results: typeof cs.results === "string" ? cs.results.split("\n").filter(Boolean) : Array.isArray(cs.results) ? cs.results : [],
             metric: staticCaseStudies[i % staticCaseStudies.length]?.metric || "",
             metricLabel: staticCaseStudies[i % staticCaseStudies.length]?.metricLabel || "",
-            accentColor: staticCaseStudies[i % staticCaseStudies.length]?.accentColor || "#84A98C",
+            accentColor: staticCaseStudies[i % staticCaseStudies.length]?.accentColor || "var(--color-sage)",
             iconName: staticCaseStudies[i % staticCaseStudies.length]?.iconName || "Zap",
+            category: staticCaseStudies[i % staticCaseStudies.length]?.category || "Security",
         }));
     } catch {
         return staticCaseStudies;
@@ -155,11 +162,11 @@ export default async function CaseStudiesPage() {
                     <path d="M 800 200 L 800 1000 L 600 1000 L 600 700 L 400 700 L 400 300 L 800 200" fill="url(#angularGrad2)" />
                     <defs>
                         <linearGradient id="angularGrad1" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="rgba(82,121,111,0.06)" />
+                            <stop offset="0%" stopColor="color-mix(in srgb, var(--color-pine) 6%, transparent)" />
                             <stop offset="100%" stopColor="transparent" />
                         </linearGradient>
                         <linearGradient id="angularGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-                            <stop offset="0%" stopColor="rgba(132,169,140,0.04)" />
+                            <stop offset="0%" stopColor="color-mix(in srgb, var(--color-sage) 4%, transparent)" />
                             <stop offset="100%" stopColor="transparent" />
                         </linearGradient>
                     </defs>
@@ -169,33 +176,35 @@ export default async function CaseStudiesPage() {
             {/* ── Header ─────────────────────────────── */}
             <section className="max-w-7xl mx-auto px-6 mb-20 relative z-10">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20 }}>
-                        <div className="animate-pulse-dot" style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#52796F", boxShadow: "0 0 8px rgba(82,121,111,0.8)" }} />
-                        <p style={{ fontSize: "11px", letterSpacing: "0.18em", textTransform: "uppercase", color: "#52796F", fontWeight: 500 }}>case studies</p>
-                    </div>
+                    <p className="eyebrow" style={{ marginBottom: 20 }}>case studies</p>
 
                     <h1 style={{
                         fontFamily: "var(--font-headline)",
                         fontSize: "clamp(3rem, 8vw, 6rem)",
                         fontWeight: 700, lineHeight: 1.05,
-                        letterSpacing: "-0.04em", color: "#CAD2C5", marginBottom: 20,
+                        letterSpacing: "-0.04em", color: "var(--color-mist)", marginBottom: 20,
                     }}>
                         proof,{" "}
-                        <span style={{ color: "rgba(202,210,197,0.3)" }}>not promises.</span>
+                        <span style={{ color: "var(--color-text-muted)" }}>not promises.</span>
                     </h1>
 
-                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "rgba(202,210,197,0.55)", maxWidth: "52ch", marginBottom: 32 }}>
+                    <p style={{ fontSize: "1.05rem", lineHeight: 1.7, color: "var(--color-text-secondary)", maxWidth: "56ch", marginBottom: 8 }}>
                         delivery stories across security, web, mobile, and automation projects.
                     </p>
+                    <p style={{
+                        fontFamily: "var(--font-accent)", fontStyle: "italic", fontWeight: 500,
+                        fontSize: "1.05rem", color: "var(--color-sage)", maxWidth: "56ch", marginBottom: 32,
+                    }}>
+                        real startups &amp; small businesses, real outcomes — no enterprise case studies to hide behind.
+                    </p>
 
-                    {/* Filter pills */}
-                    <FilterPills />
+                    {/* Filter pills + list share filter state, so they live in one client component */}
                 </motion.div>
             </section>
 
             {/* ── Case study list ─────────────────────── */}
             <section className="max-w-7xl mx-auto px-6 relative z-10">
-                <CaseStudiesList studies={caseStudies} />
+                <CaseStudiesExplorer studies={caseStudies} />
             </section>
 
             {/* ── CTA ──────────────────────────────────── */}
@@ -205,27 +214,24 @@ export default async function CaseStudiesPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}
+                    className="neu-raised"
                     style={{
-                        borderRadius: "24px", textAlign: "center",
+                        textAlign: "center",
                         padding: "clamp(40px, 6vw, 64px)",
                         position: "relative", overflow: "hidden",
-                        background: "linear-gradient(145deg, #354F52, #2F3E46, #354F52)",
-                        border: "1px solid rgba(82,121,111,0.22)",
-                        boxShadow: "8px 8px 22px #1e2b31, -4px -4px 14px #3f5461",
+                        background: "linear-gradient(145deg, var(--color-secondary), var(--color-surface), var(--color-secondary))",
                     }}
                 >
-                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, rgba(132,169,140,0.5), transparent)" }} />
-                    <div style={{ position: "absolute", top: "-40px", left: "-40px", width: 200, height: 200, background: "radial-gradient(circle, rgba(82,121,111,0.12), transparent 70%)", filter: "blur(30px)", animation: "float-orb-a 12s ease-in-out infinite" }} />
+                    <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-sage) 50%, transparent), transparent)" }} />
+                    <div style={{ position: "absolute", top: "-40px", left: "-40px", width: 200, height: 200, background: "radial-gradient(circle, color-mix(in srgb, var(--color-pine) 12%, transparent), transparent 70%)", filter: "blur(30px)" }} className="animate-orb-a" />
 
                     <div style={{ position: "relative", zIndex: 10 }}>
                         <h2 style={{
                             fontFamily: "var(--font-headline)",
                             fontSize: "clamp(1.75rem, 4vw, 3rem)", fontWeight: 700, letterSpacing: "-0.03em",
-                            background: "linear-gradient(135deg, #CAD2C5, #84A98C)",
-                            WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text",
                             marginBottom: 16,
-                        }}>want results like these?</h2>
-                        <p style={{ fontSize: "15px", color: "rgba(202,210,197,0.55)", lineHeight: 1.7, maxWidth: "48ch", margin: "0 auto 32px" }}>
+                        }} className="text-gradient-sage">want results like these?</h2>
+                        <p style={{ fontSize: "15px", color: "var(--color-text-secondary)", lineHeight: 1.7, maxWidth: "48ch", margin: "0 auto 32px" }}>
                             every engagement starts with a free assessment call. let&apos;s talk about your challenges.
                         </p>
                         <CaseStudiesCtaButton />

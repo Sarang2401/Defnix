@@ -49,7 +49,7 @@ function LiveClock() {
   const t = useSyncExternalStore(subscribeToClock, formatClock, getServerClockSnapshot);
   return (
     <span style={{
-      fontFamily:"'Inter',monospace", fontSize:"0.72rem", fontWeight:600,
+      fontFamily:"ui-monospace, 'SF Mono', monospace", fontSize:"0.72rem", fontWeight:600,
       letterSpacing:"0.05em", color:"color-mix(in srgb, var(--color-mist) 55%, transparent)",
       userSelect:"none", flexShrink:0,
     }}>{t}</span>
@@ -156,7 +156,7 @@ export function Header() {
                     style={{
                       display:"inline-flex", alignItems:"center", position:"relative",
                       padding:"0 15px", height:"100%",
-                      fontFamily:"'Inter',sans-serif", fontSize:"0.65rem",
+                      fontFamily:"var(--font-label)", fontSize:"0.65rem",
                       fontWeight: active ? 700 : 500,
                       letterSpacing:"0.11em", textTransform:"uppercase",
                       textDecoration:"none", whiteSpace:"nowrap",
@@ -183,7 +183,7 @@ export function Header() {
               margin:"5px",
               color:"var(--color-glass-deep)",
               borderRadius:10, padding:"8px 22px",
-              fontFamily:"'Inter',sans-serif", fontSize:"0.65rem",
+              fontFamily:"var(--font-label)", fontSize:"0.65rem",
               fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase",
               textDecoration:"none", whiteSpace:"nowrap", flexShrink:0,
             }}
@@ -218,7 +218,7 @@ export function Header() {
             }}
           >
             <span style={{
-              fontFamily:"'Inter',sans-serif", fontSize:"0.6rem", fontWeight:700,
+              fontFamily:"var(--font-label)", fontSize:"0.6rem", fontWeight:700,
               letterSpacing:"0.16em", textTransform:"uppercase",
               color:"color-mix(in srgb, var(--color-mist) 55%, transparent)",
             }}>Menu</span>

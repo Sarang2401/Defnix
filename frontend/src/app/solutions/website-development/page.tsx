@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function WebsiteDevelopmentPage() {
     return (
         <SolutionPageLayout
+            slug="website-development"
             iconName="Globe"
             label="Website Development for Small Businesses"
             title="Your Website Should Bring Customers In"

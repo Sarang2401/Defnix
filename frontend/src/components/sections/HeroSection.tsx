@@ -39,6 +39,16 @@ function DashboardMockup() {
         boxShadow: "0 24px 64px color-mix(in srgb, var(--color-neu-dark) 50%, transparent), inset 2px 2px 5px #ffffff, inset -2px -2px 5px color-mix(in srgb, var(--color-sage) 20%, transparent)",
       }}
     >
+      {/* Scan line — a "live system" tell, ties the mockup to the security-engineering brand */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: 0, left: 0, right: 0, height: "2px", zIndex: 2,
+          background: "linear-gradient(90deg, transparent, var(--color-pine), transparent)",
+          animation: "scan-line 4s ease-in-out infinite",
+        }}
+      />
+
       {/* Window chrome - light style */}
       <div
         style={{
@@ -144,6 +154,9 @@ function DashboardMockup() {
                             }}>
                                 <span style={{ width: 6, height: 6, borderRadius: "50%", background: item.dot }} />
                                 {item.status}
+                                {item.label === "AI SOC Analyst" && (
+                                    <span className="animate-typing-cursor" style={{ color: "var(--color-pine)" }}>_</span>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -216,7 +229,25 @@ export function HeroSection() {
       {/* ── Headline block ──────────────────────────────────── */}
       <div style={{ textAlign: "center", padding: "0 24px", zIndex: 10, width: "100%", maxWidth: "1200px" }}>
 
-        {/* Main headline — Craft style: Massive, confident, elegant */}
+        {/* Kicker — names the audience before the headline makes the promise */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            fontFamily: "var(--font-accent)",
+            fontStyle: "italic",
+            fontWeight: 500,
+            fontSize: "clamp(1rem, 1.6vw, 1.25rem)",
+            color: "var(--color-pine)",
+            marginBottom: 16,
+          }}
+        >
+          for startups &amp; small businesses, not enterprises
+        </motion.p>
+
+        {/* Main headline — two-tone: the promise, then who it's for. Sized to
+            read as a strong statement, not to fill the whole viewport. */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -224,16 +255,17 @@ export function HeroSection() {
           style={{
             fontFamily: "var(--font-headline)",
             fontWeight: 700,
-            fontSize: "clamp(3.5rem, 8vw, 7rem)", // Significantly larger
-            lineHeight: 1.05,
-            letterSpacing: "-0.04em",
+            fontSize: "clamp(2.3rem, 5.4vw, 4.6rem)",
+            lineHeight: 1.08,
+            letterSpacing: "-0.03em",
             color: "var(--color-glass-deep)", // Dark text on the light sky background
             textShadow: "0 4px 24px rgba(255,255,255,0.4)", // Subtle glow to stand out
-            maxWidth: "14ch",
-            margin: "0 auto 24px",
+            maxWidth: "17ch",
+            margin: "0 auto 18px",
           }}
         >
-          Security engineering that earns your customers&apos; trust.
+          Enterprise-grade security engineering,{" "}
+          <span style={{ color: "var(--color-pine)" }}>without the enterprise overhead.</span>
         </motion.h1>
 
         {/* Sub-headline */}
@@ -243,16 +275,16 @@ export function HeroSection() {
           transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           style={{
             fontFamily: "var(--font-body)",
-            fontSize: "clamp(1.1rem, 2vw, 1.35rem)",
+            fontSize: "clamp(1rem, 1.7vw, 1.2rem)",
             fontWeight: 500,
             lineHeight: 1.5,
             color: "var(--color-surface)",
-            maxWidth: "42ch",
-            margin: "0 auto 48px",
+            maxWidth: "44ch",
+            margin: "0 auto 32px",
             display: "block",
           }}
         >
-          SOC2 compliance, cloud resilience, and AI-driven security — plus the websites, apps, and automation to run your business.
+          We build SOC2 compliance, cloud resilience, and AI-driven security — plus the websites, apps, and automation a lean team needs to punch above its weight.
         </motion.p>
 
         {/* CTA — primary + secondary, clear hierarchy */}
@@ -266,7 +298,7 @@ export function HeroSection() {
             alignItems: "center",
             gap: 20,
             flexWrap: "wrap",
-            marginBottom: 80,
+            marginBottom: 36,
           }}
         >
           <Link href="/contact" className="hero-cta-primary">
@@ -275,6 +307,61 @@ export function HeroSection() {
           <Link href="/solutions" className="hero-cta-secondary">
             Explore Solutions
           </Link>
+        </motion.div>
+
+        {/* Stat strip — credibility, visible without needing to scroll into the mockup.
+            Wrapped in a light card so it reads as a deliberate proof point, not an
+            afterthought trailing off the bottom of the headline block. */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            display: "inline-flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "0",
+            marginBottom: 40,
+            padding: "16px 8px",
+            borderRadius: "16px",
+            background: "color-mix(in srgb, var(--color-mockup-bg) 55%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--color-surface) 10%, transparent)",
+            boxShadow: "0 8px 24px color-mix(in srgb, var(--color-neu-dark) 15%, transparent)",
+          }}
+        >
+          {metrics.map((m, i) => (
+            <div
+              key={m.label}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: "0 28px",
+                borderLeft: i > 0 ? "1px solid color-mix(in srgb, var(--color-surface) 18%, transparent)" : "none",
+              }}
+            >
+              <span style={{
+                fontFamily: "var(--font-headline)",
+                fontWeight: 700,
+                fontSize: "1.6rem",
+                color: "var(--color-glass-deep)",
+                lineHeight: 1,
+              }}>
+                {m.value}
+              </span>
+              <span style={{
+                fontFamily: "var(--font-label)",
+                fontSize: "0.68rem",
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "color-mix(in srgb, var(--color-surface) 65%, transparent)",
+                marginTop: 4,
+              }}>
+                {m.label}
+              </span>
+            </div>
+          ))}
         </motion.div>
       </div>
 

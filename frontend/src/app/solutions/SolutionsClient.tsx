@@ -27,9 +27,9 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
                         padding: "clamp(24px, 4vw, 36px)",
                         position: "relative",
                         overflow: "hidden",
-                        background: "linear-gradient(145deg, var(--color-secondary), #2d4449)",
-                        border: "1px solid rgba(82,121,111,0.18)",
-                        boxShadow: "7px 7px 18px #1e2b31, -3px -3px 12px #3f5461",
+                        background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                        border: "1px solid color-mix(in srgb, var(--color-pine) 18%, transparent)",
+                        boxShadow: "7px 7px 18px var(--color-neu-dark), -3px -3px 12px var(--color-neu-light)",
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         ["--accent" as any]: solution.accentColor,
                     }}
@@ -45,38 +45,38 @@ function SolutionCard({ solution, index }: { solution: Solution; index: number }
                             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 20 }}>
                                 <div style={{
                                     width: 50, height: 50, borderRadius: "14px",
-                                    background: "linear-gradient(145deg, #2a3d45, var(--color-secondary))",
+                                    background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-secondary))",
                                     border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`,
-                                    boxShadow: `3px 3px 8px #1e2b31, -2px -2px 6px #3f5461, 0 0 10px color-mix(in srgb, ${solution.accentColor} 18%, transparent)`,
+                                    boxShadow: `3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light), 0 0 10px color-mix(in srgb, ${solution.accentColor} 18%, transparent)`,
                                     display: "flex", alignItems: "center", justifyContent: "center",
                                     fontSize: "22px", flexShrink: 0,
                                 }}>
                                     <IconComponent size={24} color={solution.accentColor} />
                                 </div>
-                                <div style={{ background: "rgba(30,43,49,0.7)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 25%, transparent)`, borderRadius: "8px", padding: "4px 10px", boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8)" }}>
+                                <div style={{ background: "color-mix(in srgb, var(--color-neu-dark) 70%, transparent)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 25%, transparent)`, borderRadius: "8px", padding: "4px 10px", boxShadow: "inset 2px 2px 5px color-mix(in srgb, var(--color-neu-dark) 80%, transparent)" }}>
                                     <span style={{ fontSize: "10px", color: solution.accentColor, letterSpacing: "0.06em", fontWeight: 500 }}>▲ {solution.risk}</span>
                                 </div>
                             </div>
 
-                            <h3 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)", fontWeight: 700, color: "#CAD2C5", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 6 }}>
+                            <h3 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)", fontWeight: 700, color: "var(--color-mist)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 6 }}>
                                 {solution.title}
                             </h3>
-                            <p style={{ fontSize: "12px", color: "rgba(202,210,197,0.4)", marginBottom: 20 }}>{solution.subtitle}</p>
+                            <p style={{ fontSize: "12px", color: "color-mix(in srgb, var(--color-mist) 40%, transparent)", marginBottom: 20 }}>{solution.subtitle}</p>
 
-                            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(30,43,49,0.6)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`, borderRadius: "14px", padding: "10px 16px", boxShadow: "inset 2px 2px 6px #1e2b31, inset -1px -1px 4px #3f5461" }}>
+                            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "color-mix(in srgb, var(--color-neu-dark) 60%, transparent)", border: `1px solid color-mix(in srgb, ${solution.accentColor} 30%, transparent)`, borderRadius: "14px", padding: "10px 16px", boxShadow: "inset 2px 2px 6px var(--color-neu-dark), inset -1px -1px 4px var(--color-neu-light)" }}>
                                 <span style={{ fontFamily: "var(--font-headline)", fontSize: "1.8rem", fontWeight: 700, color: solution.accentColor, lineHeight: 1 }}>{solution.metric}</span>
-                                <span style={{ fontSize: "10px", color: "rgba(202,210,197,0.4)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{solution.metricLabel}</span>
+                                <span style={{ fontSize: "10px", color: "color-mix(in srgb, var(--color-mist) 40%, transparent)", textTransform: "uppercase", letterSpacing: "0.08em" }}>{solution.metricLabel}</span>
                             </div>
                         </div>
 
                         {/* Right column */}
                         <div style={{ flex: 1, minWidth: 0 }}>
-                            <p style={{ fontSize: "14.5px", color: "rgba(202,210,197,0.6)", lineHeight: 1.75, marginBottom: 24 }}>{solution.description}</p>
+                            <p style={{ fontSize: "14.5px", color: "color-mix(in srgb, var(--color-mist) 60%, transparent)", lineHeight: 1.75, marginBottom: 24 }}>{solution.description}</p>
                             <ul style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 20px", marginBottom: 24 }}>
                                 {solution.capabilities.map((cap) => (
                                     <li key={cap} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                                         <CheckCircle size={12} color={solution.accentColor} style={{ marginTop: 3, flexShrink: 0 }} />
-                                        <span style={{ fontSize: "13px", color: "rgba(202,210,197,0.5)", lineHeight: 1.5 }}>{cap}</span>
+                                        <span style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", lineHeight: 1.5 }}>{cap}</span>
                                     </li>
                                 ))}
                             </ul>
@@ -99,13 +99,13 @@ function SolutionsGroupSection({ groupId }: { groupId: SolutionGroup }) {
     return (
         <div className="mb-20 last:mb-0">
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 mb-8">
-                <p style={{ fontSize: "11px", letterSpacing: "0.16em", textTransform: "uppercase", color: "#52796F", fontWeight: 600 }}>
+                <p className="eyebrow-muted">
                     {meta.eyebrow}
                 </p>
-                <h2 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.5rem, 3vw, 2.1rem)", fontWeight: 600, color: "#CAD2C5" }}>
+                <h2 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.5rem, 3vw, 2.1rem)", fontWeight: 600, color: "var(--color-mist)" }}>
                     {meta.label}
                 </h2>
-                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.45)", maxWidth: "48ch" }}>
+                <p style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 55%, transparent)", maxWidth: "48ch" }}>
                     {meta.description}
                 </p>
             </div>
@@ -123,7 +123,19 @@ export function SolutionsList() {
     return (
         <>
             {solutionGroups.map((group) => (
-                <SolutionsGroupSection key={group.id} groupId={group.id} />
+                <div key={group.id}>
+                    {/* Divider marks the shift from security/SecOps to product engineering */}
+                    {group.id === "engineering" && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 16, margin: "8px 0 40px" }}>
+                            <hr className="divider-gradient flex-1" />
+                            <span className="type-label" style={{ color: "var(--color-text-muted)", whiteSpace: "nowrap" }}>
+                                apps &amp; development
+                            </span>
+                            <hr className="divider-gradient flex-1" />
+                        </div>
+                    )}
+                    <SolutionsGroupSection groupId={group.id} />
+                </div>
             ))}
         </>
     );

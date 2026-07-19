@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function MobileDevelopmentPage() {
     return (
         <SolutionPageLayout
+            slug="mobile-development"
             iconName="Smartphone"
             label="Mobile App Development"
             title="Give Your Customers an App They'll Actually Use"

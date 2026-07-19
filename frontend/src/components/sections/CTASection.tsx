@@ -127,7 +127,7 @@ export function CTASection() {
                                     backgroundClip: "text",
                                 }}
                             >
-                                ready to build something great?
+                                ready to scale without the enterprise overhead?
                             </motion.h2>
 
                             {/* Sub-copy */}
@@ -145,8 +145,8 @@ export function CTASection() {
                                     margin: "0 auto 40px",
                                 }}
                             >
-                                whether it&apos;s soc2 compliance, a website for your cafe, a booking app,
-                                or automating your workflows — book a free consultation and let&apos;s talk.
+                                whether it&apos;s soc2 compliance, a customer-facing website, a booking app,
+                                or workflow automation — we start by understanding your business, then engineer what actually moves it forward.
                             </motion.p>
 
                             {/* CTA buttons */}
@@ -181,7 +181,7 @@ export function CTASection() {
                                         transition: "all 0.25s ease",
                                     }}
                                 >
-                                    book a consultation
+                                    book a free consultation
                                     <motion.span animate={{ x: btnHovered ? 3 : 0 }} transition={{ duration: 0.2 }}>
                                         <ArrowRight size={14} />
                                     </motion.span>
@@ -207,7 +207,7 @@ export function CTASection() {
                                         boxShadow: "3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light)",
                                     }}
                                 >
-                                    explore all solutions
+                                    explore solutions
                                 </Link>
                             </motion.div>
                         </div>

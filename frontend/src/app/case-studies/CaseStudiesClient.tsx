@@ -2,7 +2,10 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Building2, CheckCircle, ArrowRight, ShieldCheck, Cloud, Activity, Globe, Smartphone, Zap } from "lucide-react";
+import { useState } from "react";
+import { CheckCircle, ArrowRight, ShieldCheck, Cloud, Activity, Globe, Smartphone, Zap } from "lucide-react";
+
+export type CaseStudyCategory = "Security" | "Web" | "Mobile" | "Automation";
 
 export type CaseStudy = {
     slug: string;
@@ -16,40 +19,16 @@ export type CaseStudy = {
     metricLabel: string;
     accentColor: string;
     iconName: string;
+    category: CaseStudyCategory;
 };
 
 const iconMap: Record<string, React.ElementType> = {
     ShieldCheck, Cloud, Activity, Globe, Smartphone, Zap
 };
 
-const filters = ["All", "Security", "Web", "Mobile", "Automation"];
+const filters: Array<"All" | CaseStudyCategory> = ["All", "Security", "Web", "Mobile", "Automation"];
 
-/* ── Filter pills ─────────────────────────────────── */
-export function FilterPills() {
-    return (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-            {filters.map((filter) => (
-                <div key={filter} style={{
-                    borderRadius: "999px",
-                    border: "1px solid rgba(82,121,111,0.2)",
-                    background: "rgba(53,79,82,0.25)",
-                    padding: "6px 18px", fontSize: "11px",
-                    textTransform: "uppercase", letterSpacing: "0.12em",
-                    color: "rgba(202,210,197,0.5)",
-                    boxShadow: "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461",
-                    cursor: "pointer", transition: "all 0.2s ease", fontWeight: 500,
-                }}
-                    onMouseEnter={(e) => { e.currentTarget.style.color = "#CAD2C5"; e.currentTarget.style.borderColor = "rgba(132,169,140,0.4)"; e.currentTarget.style.boxShadow = "inset 2px 2px 5px #1e2b31, inset -1px -1px 3px #3f5461"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(202,210,197,0.5)"; e.currentTarget.style.borderColor = "rgba(82,121,111,0.2)"; e.currentTarget.style.boxShadow = "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461"; }}
-                >
-                    {filter}
-                </div>
-            ))}
-        </div>
-    );
-}
-
-/* ── Case study card ─────────────────────────────── */
+/* ── Case file dossier card ───────────────────────── */
 function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
     const offset = index % 3;
     const indentClass = offset === 1 ? "lg:ml-[7.5%] lg:w-[85%]" : offset === 2 ? "lg:ml-[15%] lg:w-[85%]" : "lg:w-[85%]";
@@ -57,65 +36,97 @@ function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
 
     return (
         <motion.div
+            layout
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.3) }}
             className={indentClass}
+            style={{ position: "relative" }}
         >
+            {/* Folder tab — case file identifier, sits flush above the card */}
             <div style={{
-                borderRadius: "22px", padding: "clamp(24px, 4vw, 44px)",
-                position: "relative", overflow: "hidden",
-                background: "linear-gradient(145deg, #354F52, #2d4449)",
-                border: "1px solid rgba(82,121,111,0.18)",
-                boxShadow: "7px 7px 18px #1e2b31, -3px -3px 12px #3f5461",
+                display: "inline-flex", alignItems: "center", gap: 8,
+                background: "var(--color-secondary)",
+                border: "1px solid color-mix(in srgb, " + study.accentColor + " 30%, transparent)",
+                borderBottom: "none",
+                borderRadius: "10px 10px 0 0",
+                padding: "8px 18px",
+                marginLeft: "clamp(24px, 4vw, 44px)",
+                position: "relative",
+                zIndex: 1,
             }}>
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, ${study.accentColor}80, transparent)` }} />
-                <div style={{ position: "absolute", top: 0, right: 0, width: 150, height: 150, background: `radial-gradient(circle at top right, ${study.accentColor}08, transparent 70%)`, pointerEvents: "none" }} />
+                <IconComponent size={12} color={study.accentColor} />
+                <span style={{
+                    fontFamily: "ui-monospace, 'SF Mono', monospace",
+                    fontSize: "10px",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: study.accentColor,
+                }}>
+                    case file № {String(index + 1).padStart(2, "0")}
+                </span>
+            </div>
+
+            <div style={{
+                borderRadius: "0 22px 22px 22px",
+                padding: "clamp(24px, 4vw, 44px)",
+                position: "relative", overflow: "hidden",
+                background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                border: `1px solid color-mix(in srgb, ${study.accentColor} 18%, var(--color-border))`,
+                boxShadow: "7px 7px 18px var(--color-neu-dark), -3px -3px 12px var(--color-neu-light)",
+            }}>
+                <div style={{ position: "absolute", top: 0, right: 0, width: 150, height: 150, background: `radial-gradient(circle at top right, color-mix(in srgb, ${study.accentColor} 8%, transparent), transparent 70%)`, pointerEvents: "none" }} />
 
                 <div className="flex flex-col lg:flex-row gap-10 lg:gap-14">
                     {/* Content */}
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, flexWrap: "wrap" }}>
-                            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(30,43,49,0.6)", border: `1px solid ${study.accentColor}25`, borderRadius: "999px", padding: "4px 12px", boxShadow: "inset 2px 2px 5px rgba(30,43,49,0.8)" }}>
-                                <IconComponent size={14} color={study.accentColor} />
-                                <Building2 size={10} color={study.accentColor} />
-                                <span style={{ fontSize: "10px", color: study.accentColor, letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 500 }}>{study.industry}</span>
-                            </div>
-                            <span style={{ fontSize: "11px", color: "rgba(202,210,197,0.4)", letterSpacing: "0.08em" }}>{study.client}</span>
+                            <span style={{
+                                fontFamily: "ui-monospace, 'SF Mono', monospace",
+                                fontSize: "11px", color: "var(--color-text-muted)", letterSpacing: "0.04em",
+                            }}>
+                                {"// "}{study.client} · {study.industry}
+                            </span>
                         </div>
 
-                        <h2 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.2rem, 2.5vw, 1.75rem)", fontWeight: 700, color: "#CAD2C5", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 24 }}>{study.title}</h2>
+                        <h2 style={{ fontFamily: "var(--font-headline)", fontSize: "clamp(1.2rem, 2.5vw, 1.75rem)", fontWeight: 700, color: "var(--color-mist)", letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 24 }}>{study.title}</h2>
 
                         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px", marginBottom: 24 }}>
                             <div>
-                                <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(202,210,197,0.3)", marginBottom: 8, fontWeight: 600 }}>challenge</p>
-                                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.5)", lineHeight: 1.7 }}>{study.challenge}</p>
+                                <p className="type-label" style={{ color: "var(--color-text-muted)", marginBottom: 8 }}>challenge</p>
+                                <p style={{ fontSize: "13px", color: "var(--color-text-secondary)", lineHeight: 1.7 }}>{study.challenge}</p>
                             </div>
                             <div>
-                                <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(202,210,197,0.3)", marginBottom: 8, fontWeight: 600 }}>solution</p>
-                                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.5)", lineHeight: 1.7 }}>{study.solution}</p>
+                                <p className="type-label" style={{ color: "var(--color-text-muted)", marginBottom: 8 }}>solution</p>
+                                <p style={{ fontSize: "13px", color: "var(--color-text-secondary)", lineHeight: 1.7 }}>{study.solution}</p>
                             </div>
                         </div>
 
-                        <div style={{ padding: "16px 20px", borderRadius: "14px", background: "rgba(30,43,49,0.5)", border: `1px solid ${study.accentColor}15`, boxShadow: "inset 2px 2px 6px rgba(30,43,49,0.6), inset -1px -1px 4px rgba(63,84,97,0.15)" }}>
-                            <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(202,210,197,0.3)", marginBottom: 12, fontWeight: 600 }}>results</p>
+                        <div className="neu-inset" style={{ padding: "16px 20px" }}>
+                            <p className="type-label" style={{ color: "var(--color-text-muted)", marginBottom: 12 }}>results</p>
                             <ul style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px 16px" }}>
                                 {study.results.map((result) => (
                                     <li key={result} style={{ display: "flex", alignItems: "flex-start", gap: 7 }}>
                                         <CheckCircle size={11} color={study.accentColor} style={{ marginTop: 3, flexShrink: 0 }} />
-                                        <span style={{ fontSize: "12px", color: "rgba(202,210,197,0.55)", lineHeight: 1.5 }}>{result}</span>
+                                        <span style={{ fontSize: "12px", color: "var(--color-text-secondary)", lineHeight: 1.5 }}>{result}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     </div>
 
-                    {/* Metric callout */}
-                    <div style={{ flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, borderLeft: "1px solid rgba(82,121,111,0.15)", paddingLeft: "clamp(24px, 3vw, 40px)", minWidth: 140 }} className="hidden lg:flex">
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "24px 20px", borderRadius: "18px", background: "rgba(30,43,49,0.6)", border: `1px solid ${study.accentColor}25`, boxShadow: `inset 3px 3px 8px #1e2b31, inset -1px -1px 5px #3f5461, 0 0 16px ${study.accentColor}10` }}>
-                            <span style={{ fontFamily: "var(--font-headline)", fontSize: "3rem", fontWeight: 800, color: study.accentColor, lineHeight: 1, textShadow: `0 0 24px ${study.accentColor}60` }}>{study.metric}</span>
-                            <span style={{ fontSize: "10px", color: "rgba(202,210,197,0.4)", textTransform: "uppercase", letterSpacing: "0.1em", textAlign: "center" }}>{study.metricLabel}</span>
+                    {/* Metric — rendered as a rotated ink-stamp seal */}
+                    <div style={{ flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", minWidth: 150 }} className="hidden lg:flex">
+                        <div style={{
+                            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6,
+                            width: 148, height: 148, borderRadius: "50%",
+                            border: `2px dashed color-mix(in srgb, ${study.accentColor} 55%, transparent)`,
+                            transform: "rotate(-8deg)",
+                            padding: "12px",
+                        }}>
+                            <span style={{ fontFamily: "var(--font-headline)", fontSize: "2.35rem", fontWeight: 800, color: study.accentColor, lineHeight: 1, textShadow: `0 0 24px color-mix(in srgb, ${study.accentColor} 40%, transparent)` }}>{study.metric}</span>
+                            <span style={{ fontSize: "9px", color: "var(--color-text-muted)", textTransform: "uppercase", letterSpacing: "0.08em", textAlign: "center" }}>{study.metricLabel}</span>
                         </div>
                     </div>
                 </div>
@@ -124,32 +135,62 @@ function CaseStudyCard({ study, index }: { study: CaseStudy; index: number }) {
     );
 }
 
-export function CaseStudiesList({ studies }: { studies: CaseStudy[] }) {
+/* ── Explorer — interactive filter + filtered list ───────────── */
+export function CaseStudiesExplorer({ studies }: { studies: CaseStudy[] }) {
+    const [active, setActive] = useState<"All" | CaseStudyCategory>("All");
+    const filtered = active === "All" ? studies : studies.filter((s) => s.category === active);
+
     return (
-        <div className="space-y-6">
-            {studies.map((study, index) => (
-                <CaseStudyCard key={study.slug} study={study} index={index} />
-            ))}
+        <div>
+            <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                style={{ display: "flex", flexWrap: "wrap", gap: 10, marginBottom: 48 }}
+                role="group"
+                aria-label="Filter case studies by category"
+            >
+                {filters.map((filter) => (
+                    <button
+                        key={filter}
+                        type="button"
+                        onClick={() => setActive(filter)}
+                        aria-pressed={active === filter}
+                        className="blog-category-pill"
+                        data-active={active === filter || undefined}
+                        style={{
+                            borderRadius: "999px",
+                            border: "1px solid var(--color-border)",
+                            padding: "6px 18px", fontSize: "11px",
+                            textTransform: "uppercase", letterSpacing: "0.12em",
+                            fontWeight: 500,
+                            cursor: "pointer",
+                        }}
+                    >
+                        {filter}
+                    </button>
+                ))}
+            </motion.div>
+
+            {filtered.length === 0 ? (
+                <p style={{ color: "var(--color-text-muted)", fontSize: "14px", padding: "40px 0" }}>
+                    No case studies in this category yet.
+                </p>
+            ) : (
+                <div className="space-y-6">
+                    {filtered.map((study, index) => (
+                        <CaseStudyCard key={study.slug} study={study} index={index} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
 
 export function CaseStudiesCtaButton() {
     return (
-        <Link href="/contact" style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
-            backgroundColor: "#CAD2C5", color: "#2F3E46",
-            borderRadius: "999px", padding: "14px 32px",
-            fontFamily: "var(--font-label)", fontSize: "0.75rem",
-            fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
-            textDecoration: "none",
-            boxShadow: "4px 4px 12px #1e2b31, -2px -2px 8px #3f5461",
-            transition: "all 0.25s ease",
-        }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#84A98C"; e.currentTarget.style.boxShadow = "inset 2px 2px 6px rgba(30,43,49,0.2)"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "#CAD2C5"; e.currentTarget.style.boxShadow = "4px 4px 12px #1e2b31, -2px -2px 8px #3f5461"; }}
-        >
-            book a consultation <ArrowRight size={14} />
+        <Link href="/contact" className="btn-primary" style={{ gap: 8 }}>
+            book a free consultation <ArrowRight size={14} />
         </Link>
     );
 }

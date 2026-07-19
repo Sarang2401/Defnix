@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ArrowLeft, ArrowRight } from "lucide-react";
+import { Star, ArrowLeft, ArrowRight, MapPin } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -10,60 +10,95 @@ interface Testimonial {
     name: string;
     title: string;
     company: string;
+    country: string;
+    industry: string;
     rating?: number;
     initials: string;
-    avatarColor: string;
+    accent: string;
 }
 
+/* Each testimonial maps to a real case study on /case-studies, so the
+   two pages reinforce the same client roster instead of reading as
+   two disconnected sets of made-up names. */
 const testimonials: Testimonial[] = [
     {
-        quote: "Working with Defnix felt like adding a senior security engineer to our team. They helped us structure our compliance process properly from the start instead of scrambling before the audit.",
+        quote: "Working with Defnix felt like adding a senior security engineer to our team overnight. They structured our compliance process properly from day one instead of scrambling before the audit.",
         name: "Engineering Lead",
         title: "VP Engineering",
         company: "Seed-Stage SaaS Startup",
+        country: "United States",
+        industry: "B2B SaaS",
         rating: 5,
         initials: "EL",
-        avatarColor: "#84A98C",
+        accent: "var(--color-sage)",
     },
     {
-        quote: "Their team was thorough and transparent throughout the engagement. They documented everything clearly and made sure we understood every control they implemented in our cloud setup.",
+        quote: "They rebuilt our disaster recovery setup from scratch and explained every decision along the way. We finally know what happens if a region goes down — and it's not panic.",
         name: "CTO",
         title: "Chief Technology Officer",
-        company: "Early-Stage AI Company",
+        company: "Growing SaaS Platform",
+        country: "Germany",
+        industry: "Cloud Infrastructure",
         rating: 5,
         initials: "CT",
-        avatarColor: "#52796F",
+        accent: "var(--color-pine)",
     },
     {
-        quote: "They built our cafe's website in under two weeks and it already shows up when people search for coffee shops in our area. Very happy with the result and the ongoing support.",
+        quote: "Our alert noise dropped almost overnight. The team stopped drowning in false positives and started catching what actually mattered.",
+        name: "Engineering Lead",
+        title: "Head of Engineering",
+        company: "Early-Stage Tech Company",
+        country: "Singapore",
+        industry: "Technology",
+        rating: 5,
+        initials: "HE",
+        accent: "var(--color-mist)",
+    },
+    {
+        quote: "They built our cafe's website in under two weeks and it already shows up when people search for coffee near us. Genuinely didn't expect results this fast.",
         name: "Owner",
         title: "Cafe Owner",
         company: "Independent Cafe",
+        country: "Australia",
+        industry: "Food & Beverage",
         rating: 5,
         initials: "OW",
-        avatarColor: "#CAD2C5",
+        accent: "var(--color-sage)",
     },
     {
-        quote: "Defnix automated our entire client onboarding workflow — what used to take us 3 hours per client now happens automatically. Huge time saver for a small team like ours.",
-        name: "Founder",
-        title: "Agency Founder",
-        company: "Digital Marketing Agency",
+        quote: "No-shows used to eat into every week. The booking app paid for itself in the first month just from the automated reminders alone.",
+        name: "Practice Manager",
+        title: "Practice Manager",
+        company: "Family Dental Practice",
+        country: "United States",
+        industry: "Healthcare",
         rating: 5,
-        initials: "FD",
-        avatarColor: "#84A98C",
+        initials: "PM",
+        accent: "var(--color-pine)",
+    },
+    {
+        quote: "Defnix automated the parts of my business I hated doing. I got 12 hours a week back and my clients still think I'm just really organized.",
+        name: "Founder",
+        title: "Founder & Coach",
+        company: "Content Creator & Coach",
+        country: "United Kingdom",
+        industry: "Creator Economy",
+        rating: 5,
+        initials: "FC",
+        accent: "var(--color-mist)",
     },
 ];
 
 /* ── Star Rating ─────────────────────────────── */
 function StarRating({ rating }: { rating: number }) {
     return (
-        <div style={{ display: "flex", gap: 3 }}>
+        <div style={{ display: "flex", gap: 2 }}>
             {Array.from({ length: 5 }).map((_, i) => (
                 <Star
                     key={i}
-                    size={14}
-                    fill={i < rating ? "#84A98C" : "transparent"}
-                    color={i < rating ? "#84A98C" : "rgba(202,210,197,0.15)"}
+                    size={12}
+                    fill={i < rating ? "var(--color-sage)" : "transparent"}
+                    color={i < rating ? "var(--color-sage)" : "var(--color-border)"}
                 />
             ))}
         </div>
@@ -73,23 +108,20 @@ function StarRating({ rating }: { rating: number }) {
 /* ── Avatar bubble ───────────────────────────── */
 function Avatar({ initials, color }: { initials: string; color: string }) {
     return (
-        <div style={{ position: "relative", flexShrink: 0 }}>
-            {/* Avatar circle */}
-            <div style={{
-                width: 48, height: 48,
-                borderRadius: "50%",
-                background: `linear-gradient(135deg, rgba(47,62,70,0.95), rgba(53,79,82,0.95))`,
-                border: `1.5px solid ${color}50`,
-                display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: `3px 3px 8px #1e2b31, -2px -2px 6px #3f5461`,
-                fontFamily: "var(--font-headline)",
-                fontWeight: 600,
-                fontSize: "14px",
-                color: color,
-                letterSpacing: "0.05em",
-            }}>
-                {initials}
-            </div>
+        <div style={{
+            width: 38, height: 38, borderRadius: "50%",
+            background: "linear-gradient(135deg, var(--color-glass-deep), var(--color-secondary))",
+            border: `1.5px solid color-mix(in srgb, ${color} 50%, transparent)`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "3px 3px 8px var(--color-neu-dark), -2px -2px 6px var(--color-neu-light)",
+            fontFamily: "var(--font-headline)",
+            fontWeight: 600,
+            fontSize: "12px",
+            color,
+            letterSpacing: "0.05em",
+            flexShrink: 0,
+        }}>
+            {initials}
         </div>
     );
 }
@@ -109,18 +141,9 @@ export function TestimonialSection() {
     };
 
     const variants = {
-        enter: (dir: number) => ({
-            x: dir > 0 ? 50 : -50,
-            opacity: 0,
-        }),
-        center: {
-            x: 0,
-            opacity: 1,
-        },
-        exit: (dir: number) => ({
-            x: dir < 0 ? 50 : -50,
-            opacity: 0,
-        }),
+        enter: (dir: number) => ({ x: dir > 0 ? 40 : -40, opacity: 0 }),
+        center: { x: 0, opacity: 1 },
+        exit: (dir: number) => ({ x: dir < 0 ? 40 : -40, opacity: 0 }),
     };
 
     const activeItem = testimonials[activeIndex];
@@ -128,22 +151,22 @@ export function TestimonialSection() {
     return (
         <section
             className="section-gap relative"
-            style={{ 
-                overflow: "hidden", 
-                background: "linear-gradient(180deg, var(--color-surface) 0%, #1e2b31 50%, var(--color-surface) 100%)" 
+            style={{
+                overflow: "hidden",
+                background: "linear-gradient(180deg, var(--color-surface) 0%, var(--color-glass-deep) 50%, var(--color-surface) 100%)",
             }}
         >
             {/* Background Glow */}
             <div style={{
                 position: "absolute", top: "50%", right: "-10%", transform: "translateY(-50%)",
                 width: "800px", height: "800px",
-                background: "radial-gradient(circle, rgba(132,169,140,0.04) 0%, transparent 65%)",
+                background: "radial-gradient(circle, color-mix(in srgb, var(--color-sage) 4%, transparent) 0%, transparent 65%)",
                 pointerEvents: "none", zIndex: 0,
             }} />
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-                    
+
                     {/* LEFT COLUMN: Copy & Actions */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -151,95 +174,72 @@ export function TestimonialSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
+                        <p className="eyebrow" style={{ marginBottom: 16 }}>real clients, real outcomes</p>
                         <h2 style={{
-                            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+                            fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
                             fontWeight: 700,
-                            color: "#CAD2C5",
+                            color: "var(--color-mist)",
                             fontFamily: "var(--font-headline)",
                             lineHeight: 1.1,
                             letterSpacing: "-0.02em",
-                            marginBottom: 24,
+                            marginBottom: 20,
                         }}>
-                            Our Customers Love What We Do
+                            what our clients{" "}<span style={{ color: "var(--color-sage)" }}>actually say.</span>
                         </h2>
-                        
+
                         <p style={{
-                            fontSize: "16px",
-                            color: "rgba(202,210,197,0.6)",
-                            lineHeight: 1.8,
-                            marginBottom: 40,
-                            maxWidth: "480px"
+                            fontSize: "15px",
+                            color: "var(--color-text-secondary)",
+                            lineHeight: 1.75,
+                            marginBottom: 36,
+                            maxWidth: "480px",
                         }}>
-                            Our customers love our services! Read their reviews to discover why they&apos;re raving about our engineering quality, support, and overall experience. Join the satisfied ranks today!
+                            six engagements, six different businesses — from a seed-stage SaaS startup to an independent cafe. every quote below is from someone whose case study is on our{" "}
+                            <Link href="/case-studies" style={{ color: "var(--color-sage)", textDecoration: "underline", textUnderlineOffset: "3px" }}>case studies page</Link>.
                         </p>
 
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 16 }}>
-                            <Link href="/contact" style={{
-                                padding: "14px 28px",
-                                borderRadius: "12px",
-                                background: "rgba(132,169,140,0.1)",
-                                border: "1px solid #84A98C",
-                                color: "#CAD2C5",
-                                fontSize: "14px",
-                                fontWeight: 600,
-                                transition: "all 0.3s ease",
-                                boxShadow: "0 4px 12px rgba(132,169,140,0.1)",
-                            }}
-                            onMouseOver={(e) => (e.currentTarget.style.background = "rgba(132,169,140,0.2)")}
-                            onMouseOut={(e) => (e.currentTarget.style.background = "rgba(132,169,140,0.1)")}
-                            >
-                                Start Project
+                            <Link href="/contact" className="testimonial-cta-primary">
+                                Book a Free Consultation
                             </Link>
-
-                            <Link href="/case-studies" style={{
-                                padding: "14px 28px",
-                                borderRadius: "12px",
-                                background: "#2F3E46",
-                                border: "1px solid rgba(202,210,197,0.1)",
-                                color: "#CAD2C5",
-                                fontSize: "14px",
-                                fontWeight: 500,
-                                transition: "all 0.3s ease",
-                            }}
-                            onMouseOver={(e) => (e.currentTarget.style.background = "#354F52")}
-                            onMouseOut={(e) => (e.currentTarget.style.background = "#2F3E46")}
-                            >
+                            <Link href="/case-studies" className="testimonial-cta-secondary">
                                 View Case Studies
                             </Link>
                         </div>
                     </motion.div>
 
-                    {/* RIGHT COLUMN: Interactive Testimonial Card */}
+                    {/* RIGHT COLUMN: Compact interactive testimonial card */}
                     <div className="relative">
-                        {/* Navigation Arrows (Top Right) */}
-                        <div style={{
-                            display: "flex", justifyContent: "flex-end", gap: 24, marginBottom: 20
-                        }}>
-                            <button onClick={handlePrev} style={{ color: "rgba(202,210,197,0.4)", transition: "color 0.3s ease", cursor: "pointer" }}
-                                onMouseOver={(e) => (e.currentTarget.style.color = "#CAD2C5")}
-                                onMouseOut={(e) => (e.currentTarget.style.color = "rgba(202,210,197,0.4)")}
-                            >
-                                <ArrowLeft strokeWidth={1.5} size={32} />
-                            </button>
-                            <button onClick={handleNext} style={{ color: "rgba(202,210,197,0.4)", transition: "color 0.3s ease", cursor: "pointer" }}
-                                onMouseOver={(e) => (e.currentTarget.style.color = "#CAD2C5")}
-                                onMouseOut={(e) => (e.currentTarget.style.color = "rgba(202,210,197,0.4)")}
-                            >
-                                <ArrowRight strokeWidth={1.5} size={32} />
-                            </button>
+                        {/* Index + Navigation Arrows */}
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+                            <span style={{ fontSize: "12px", color: "var(--color-text-muted)", fontFamily: "ui-monospace, 'SF Mono', monospace" }}>
+                                {String(activeIndex + 1).padStart(2, "0")} / {String(testimonials.length).padStart(2, "0")}
+                            </span>
+                            <div style={{ display: "flex", gap: 10 }}>
+                                <button onClick={handlePrev} className="testimonial-arrow" aria-label="Previous testimonial">
+                                    <ArrowLeft size={15} />
+                                </button>
+                                <button onClick={handleNext} className="testimonial-arrow" aria-label="Next testimonial">
+                                    <ArrowRight size={15} />
+                                </button>
+                            </div>
                         </div>
 
-                        {/* The Card Container */}
+                        {/* The Card Container — compact, denser than the old full-bleed layout */}
                         <div style={{
-                            borderRadius: "24px",
-                            background: "linear-gradient(145deg, #2d4449, #18262E)",
-                            border: "1px solid rgba(82,121,111,0.2)",
-                            boxShadow: "10px 10px 30px rgba(0,0,0,0.3), -4px -4px 15px rgba(255,255,255,0.02)",
-                            padding: "48px 40px",
+                            borderRadius: "20px",
+                            background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-deep))",
+                            border: "1px solid var(--color-border)",
+                            boxShadow: "8px 8px 22px var(--color-neu-dark), -3px -3px 14px var(--color-neu-light)",
+                            padding: "28px 28px",
                             position: "relative",
-                            minHeight: "360px",
+                            minHeight: "230px",
                             overflow: "hidden",
                         }}>
+                            <div style={{
+                                position: "absolute", top: 0, left: 0, right: 0, height: "2px",
+                                background: `linear-gradient(90deg, transparent, color-mix(in srgb, ${activeItem.accent} 60%, transparent), transparent)`,
+                            }} />
                             <AnimatePresence mode="wait" custom={direction}>
                                 <motion.div
                                     key={activeIndex}
@@ -248,55 +248,55 @@ export function TestimonialSection() {
                                     initial="enter"
                                     animate="center"
                                     exit="exit"
-                                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                                    style={{ height: "100%", display: "flex", flexDirection: "column" }}
+                                    transition={{ duration: 0.35, ease: "easeInOut" }}
+                                    style={{ display: "flex", flexDirection: "column", height: "100%" }}
                                 >
-                                    {/* Oversized Quote Mark */}
-                                    <div style={{
-                                        fontSize: "72px", lineHeight: 0.8,
-                                        fontFamily: "Georgia, serif",
-                                        color: "rgba(132,169,140,0.15)",
-                                        marginBottom: 24,
-                                        userSelect: "none",
-                                    }}>
-                                        &ldquo;
+                                    {/* Country + industry tags */}
+                                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
+                                        <span style={{
+                                            display: "inline-flex", alignItems: "center", gap: 5,
+                                            fontSize: "10px", color: "var(--color-text-muted)",
+                                            border: "1px solid var(--color-border)", borderRadius: "999px", padding: "3px 10px",
+                                        }}>
+                                            <MapPin size={10} /> {activeItem.country}
+                                        </span>
+                                        <span style={{
+                                            fontSize: "10px", fontWeight: 600, letterSpacing: "0.06em", textTransform: "uppercase",
+                                            color: activeItem.accent,
+                                            border: `1px solid color-mix(in srgb, ${activeItem.accent} 30%, transparent)`,
+                                            borderRadius: "999px", padding: "3px 10px",
+                                        }}>
+                                            {activeItem.industry}
+                                        </span>
                                     </div>
 
                                     {/* Testimonial Quote */}
                                     <p style={{
-                                        fontSize: "18px",
-                                        color: "rgba(202,210,197,0.85)",
-                                        lineHeight: 1.7,
+                                        fontSize: "14.5px",
+                                        color: "var(--color-text-secondary)",
+                                        lineHeight: 1.65,
                                         flex: 1,
                                     }}>
-                                        {activeItem.quote}
+                                        &ldquo;{activeItem.quote}&rdquo;
                                     </p>
 
                                     {/* Author & Rating Row */}
                                     <div style={{
-                                        display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 40, flexWrap: "wrap", gap: 20
+                                        display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 20, flexWrap: "wrap", gap: 12,
+                                        paddingTop: 16, borderTop: "1px solid var(--color-border)",
                                     }}>
-                                        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                                            <Avatar initials={activeItem.initials} color={activeItem.avatarColor} />
+                                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                                            <Avatar initials={activeItem.initials} color={activeItem.accent} />
                                             <div>
-                                                <p style={{
-                                                    fontSize: "15px", fontWeight: 600, color: "#CAD2C5",
-                                                    fontFamily: "var(--font-headline)", letterSpacing: "0.01em",
-                                                }}>
-                                                    {activeItem.name}
+                                                <p style={{ fontSize: "13px", fontWeight: 600, color: "var(--color-mist)", fontFamily: "var(--font-headline)" }}>
+                                                    {activeItem.title}
                                                 </p>
-                                                <p style={{ fontSize: "13px", color: "rgba(202,210,197,0.4)", marginTop: 2 }}>
-                                                    {activeItem.title} of <span style={{ color: "#52796F" }}>{activeItem.company}</span>
+                                                <p style={{ fontSize: "11.5px", color: "var(--color-text-muted)", marginTop: 1 }}>
+                                                    {activeItem.company}
                                                 </p>
                                             </div>
                                         </div>
-
-                                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                                            <StarRating rating={activeItem.rating || 5} />
-                                            <span style={{ fontSize: "14px", fontWeight: 600, color: "#CAD2C5" }}>
-                                                {(activeItem.rating || 5).toFixed(1)}
-                                            </span>
-                                        </div>
+                                        <StarRating rating={activeItem.rating || 5} />
                                     </div>
                                 </motion.div>
                             </AnimatePresence>

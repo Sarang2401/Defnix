@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { X, MapPin, ArrowRight } from "lucide-react";
 
 interface NavOverlayProps {
   isOpen: boolean;
@@ -69,17 +70,17 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
                 />
               </div>
 
-              <Link href="/contact" onClick={onClose} className="header-cta-link" style={{
-                display:"inline-flex", alignItems:"center",
-                color:"var(--color-glass-deep)",
-                borderRadius:8, padding:"7px 16px",
-                fontFamily:"'Inter',sans-serif", fontSize:"0.62rem",
-                fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase",
-                textDecoration:"none", whiteSpace:"nowrap",
+              {/* Close — top-right, next to the logo, so it's the first thing
+                  a user reaches for to dismiss the panel (conventional pattern). */}
+              <button onClick={onClose} aria-label="Close navigation menu" className="nav-overlay-close" style={{
+                display:"inline-flex", alignItems:"center", justifyContent:"center",
+                width:34, height:34, borderRadius:"50%",
+                border:"1px solid color-mix(in srgb, var(--color-pine) 24%, transparent)",
+                color:"var(--color-mist)", cursor:"pointer",
               }}
               >
-                Let&apos;s Talk
-              </Link>
+                <X size={16} />
+              </button>
             </div>
 
             {/* Nav links */}
@@ -99,7 +100,7 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
                   >
                     <span className="nav-overlay-arrow" style={{ fontSize:"1.05rem", lineHeight:1 }}>→</span>
                     <span className="nav-overlay-label" style={{
-                      fontFamily:"'Inter',sans-serif", fontSize:"0.7rem", fontWeight:700,
+                      fontFamily:"var(--font-label)", fontSize:"0.7rem", fontWeight:700,
                       letterSpacing:"0.16em", textTransform:"uppercase",
                     }}>{item.label}</span>
                   </Link>
@@ -107,30 +108,26 @@ export function NavOverlay({ isOpen, onClose }: NavOverlayProps) {
               ))}
             </div>
 
-            {/* Bottom bar */}
+            {/* Bottom bar — the panel's primary conversion action, given real
+                visual weight instead of sharing a small pill with the logo. */}
             <div style={{
               borderTop:"1px solid color-mix(in srgb, var(--color-pine) 15%, transparent)",
-              padding:"14px 20px",
-              display:"flex", alignItems:"center", justifyContent:"space-between",
+              padding:"18px 20px",
+              display:"flex", flexDirection:"column", gap:12,
               backgroundColor:"var(--color-glass-deep)",
             }}>
               <span style={{
-                fontFamily:"'Inter',sans-serif", fontSize:"0.56rem", fontWeight:500,
-                letterSpacing:"0.14em", textTransform:"uppercase",
-                color:"color-mix(in srgb, var(--color-mist) 26%, transparent)",
-              }}>Bengaluru · India</span>
+                display:"inline-flex", alignItems:"center", gap:6,
+                fontFamily:"var(--font-label)", fontSize:"0.62rem", fontWeight:500,
+                letterSpacing:"0.12em", textTransform:"uppercase",
+                color:"color-mix(in srgb, var(--color-mist) 40%, transparent)",
+              }}>
+                <MapPin size={12} /> Bengaluru · India
+              </span>
 
-              <button onClick={onClose} className="nav-overlay-close" style={{
-                display:"inline-flex", alignItems:"center", gap:7,
-                border:"1px solid color-mix(in srgb, var(--color-pine) 24%, transparent)",
-                borderRadius:999, padding:"6px 16px",
-                fontFamily:"'Inter',sans-serif", fontSize:"0.6rem", fontWeight:700,
-                letterSpacing:"0.14em", textTransform:"uppercase",
-                color:"var(--color-mist)", cursor:"pointer",
-              }}
-              >
-                Close ×
-              </button>
+              <Link href="/contact" onClick={onClose} className="btn-primary" style={{ width:"100%", gap:8 }}>
+                Let&apos;s Talk <ArrowRight size={14} />
+              </Link>
             </div>
           </motion.nav>
         </>

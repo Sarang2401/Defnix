@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function BusinessAutomationPage() {
     return (
         <SolutionPageLayout
+            slug="business-automation"
             iconName="Workflow"
             label="Business Automation & Workflows"
             title="Stop Doing Manually What a Workflow Can Do Automatically"

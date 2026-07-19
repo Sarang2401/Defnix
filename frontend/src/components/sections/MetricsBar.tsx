@@ -48,24 +48,6 @@ const AnimatedNumber = memo(function AnimatedNumber({
     );
 });
 
-const Pill = memo(function Pill({ text, color = "var(--color-sage)" }: { text: string; color?: string }) {
-    return (
-        <div style={{
-            background: "color-mix(in srgb, var(--color-sage) 15%, transparent)",
-            border: "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)",
-            borderRadius: "999px",
-            padding: "4px 10px",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-        }}>
-            <span style={{ color, fontSize: "11px", fontWeight: 700, letterSpacing: "0.05em" }}>
-                {text}
-            </span>
-        </div>
-    );
-});
-
 function AbstractAvatars() {
     const colors = [
         "linear-gradient(135deg, var(--color-sage), var(--color-pine))",
@@ -159,8 +141,8 @@ export function MetricsBar() {
                             className="flex-1 flex flex-col justify-between"
                             style={{
                                 borderRadius: "24px",
-                                background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-glass-deep))",
-                                border: "1px solid var(--color-border)",
+                                background: "linear-gradient(145deg, color-mix(in srgb, var(--color-pine) 16%, var(--color-glass-mid)), var(--color-glass-deep))",
+                                border: "1px solid color-mix(in srgb, var(--color-pine) 25%, var(--color-border))",
                                 boxShadow: "inset 2px 2px 8px var(--color-neu-light), 8px 8px 20px #111a20",
                                 padding: "32px",
                                 position: "relative",
@@ -168,14 +150,13 @@ export function MetricsBar() {
                                 minHeight: "220px",
                             }}
                         >
-                            <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", fontWeight: 500, marginBottom: 8 }}>
-                                Projects Shipped
-                            </p>
-                            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 24 }}>
+                            <div>
                                 <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, textShadow: "0 2px 10px color-mix(in srgb, var(--color-sage) 20%, transparent)" }}>
                                     <AnimatedNumber value={projectsStat.value} suffix={projectsStat.suffix} color="var(--color-sage)" animate={isInView} />
                                 </div>
-                                <Pill text="on time" color="var(--color-sage)" />
+                                <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", marginTop: 6, fontWeight: 500 }}>
+                                    projects shipped, on time
+                                </p>
                             </div>
                             <AnimatedBarChart animate={isInView} />
                         </motion.div>
@@ -278,15 +259,12 @@ export function MetricsBar() {
                                     pointerEvents: "auto",
                                 }}
                             >
-                                <p style={{ fontSize: "13.5px", color: "var(--color-text-secondary)", fontWeight: 500, marginBottom: 8 }}>
-                                    Avg. Delivery
-                                </p>
-                                <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-                                    <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, color: "var(--color-mist)" }}>
-                                        <AnimatedNumber value={deliveryStat.value} suffix={deliveryStat.suffix} color="var(--color-mist)" animate={isInView} />
-                                    </div>
-                                    <Pill text="30% faster" color="var(--color-mist)" />
+                                <div style={{ fontSize: "2.4rem", fontWeight: 700, lineHeight: 1, color: "var(--color-mist)" }}>
+                                    <AnimatedNumber value={deliveryStat.value} suffix={deliveryStat.suffix} color="var(--color-mist)" animate={isInView} />
                                 </div>
+                                <p style={{ fontSize: "13.5px", color: "var(--color-text-secondary)", fontWeight: 500, marginTop: 6 }}>
+                                    average delivery — 30% faster than typical agency timelines
+                                </p>
                             </motion.div>
 
                             {/* Bottom Right Floating Card */}
@@ -296,41 +274,24 @@ export function MetricsBar() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.6, delay: 0.6 }}
                                 style={{
-                                    background: "color-mix(in srgb, var(--color-glass-deep) 75%, transparent)",
+                                    background: "linear-gradient(145deg, color-mix(in srgb, var(--color-pine) 65%, var(--color-glass-deep)), color-mix(in srgb, var(--color-pine) 25%, var(--color-glass-deep)))",
                                     backdropFilter: "blur(16px)",
                                     WebkitBackdropFilter: "blur(16px)",
-                                    border: "1px solid color-mix(in srgb, var(--color-mist) 15%, transparent)",
+                                    border: "1px solid color-mix(in srgb, var(--color-pine) 60%, transparent)",
                                     borderRadius: "20px",
                                     padding: "24px 32px",
-                                    boxShadow: "0 12px 32px rgba(0,0,0,0.4)",
+                                    boxShadow: "0 12px 32px rgba(0,0,0,0.4), 0 0 30px color-mix(in srgb, var(--color-pine) 20%, transparent)",
                                     pointerEvents: "auto",
                                     width: "100%",
                                     maxWidth: "340px",
                                 }}
                             >
-                                <p style={{ fontSize: "13.5px", color: "var(--color-text-secondary)", fontWeight: 500, marginBottom: 8 }}>
-                                    Countries Served
+                                <div style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1, color: "var(--color-mist)" }}>
+                                    <AnimatedNumber value={countriesStat.value} suffix={countriesStat.suffix} color="var(--color-mist)" animate={isInView} />
+                                </div>
+                                <p style={{ fontSize: "13.5px", color: "color-mix(in srgb, var(--color-mist) 85%, transparent)", fontWeight: 500, marginTop: 6 }}>
+                                    countries served globally
                                 </p>
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-                                    <div style={{ fontSize: "2rem", fontWeight: 700, lineHeight: 1, color: "var(--color-sage)" }}>
-                                        <AnimatedNumber value={countriesStat.value} suffix={countriesStat.suffix} color="var(--color-sage)" animate={isInView} />
-                                    </div>
-                                    <Pill text="Global" color="var(--color-sage)" />
-                                </div>
-                                
-                                {/* Horizontal Progress Bar */}
-                                <div style={{ height: 6, background: "var(--color-border)", borderRadius: 3, overflow: "hidden" }}>
-                                    <motion.div
-                                        initial={{ width: 0 }}
-                                        animate={{ width: isInView ? "85%" : 0 }}
-                                        transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-                                        style={{
-                                            height: "100%",
-                                            background: "linear-gradient(90deg, var(--color-pine), var(--color-sage))",
-                                            borderRadius: 3,
-                                        }}
-                                    />
-                                </div>
                             </motion.div>
 
                         </div>

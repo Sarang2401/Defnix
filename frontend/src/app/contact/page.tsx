@@ -19,10 +19,10 @@ function NeuField({
             <label htmlFor={id} style={{
                 fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600,
                 letterSpacing: "0.12em", textTransform: "uppercase",
-                color: focused ? "#84A98C" : "rgba(202,210,197,0.5)",
+                color: focused ? "var(--color-sage)" : "color-mix(in srgb, var(--color-mist) 50%, transparent)",
                 transition: "color 0.2s ease",
             }}>
-                {label}{required && <span style={{ color: "#84A98C", marginLeft: 3 }}>*</span>}
+                {label}{required && <span style={{ color: "var(--color-sage)", marginLeft: 3 }}>*</span>}
             </label>
             <div style={{ position: "relative" }}>
                 <input
@@ -34,20 +34,20 @@ function NeuField({
                     style={{
                         width: "100%",
                         background: focused
-                            ? "linear-gradient(145deg, #253540, #2a3d45)"
-                            : "linear-gradient(145deg, #2a3d45, #2F3E46)",
+                            ? "linear-gradient(145deg, color-mix(in srgb, var(--color-surface) 55%, var(--color-neu-dark)), var(--color-glass-mid))"
+                            : "linear-gradient(145deg, var(--color-glass-mid), var(--color-surface))",
                         border: focused
-                            ? `1px solid rgba(132,169,140,0.4)`
-                            : "1px solid rgba(82,121,111,0.2)",
+                            ? `1px solid color-mix(in srgb, var(--color-sage) 40%, transparent)`
+                            : "1px solid color-mix(in srgb, var(--color-pine) 20%, transparent)",
                         borderRadius: "12px",
-                        color: "#CAD2C5",
+                        color: "var(--color-mist)",
                         fontFamily: "var(--font-body)",
                         fontSize: "0.95rem",
                         padding: "12px 16px",
                         outline: "none",
                         boxShadow: focused
-                            ? `inset 3px 3px 8px #1e2b31, inset -2px -2px 5px #3a4e57, 0 0 0 1px rgba(132,169,140,0.15)`
-                            : "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461",
+                            ? `inset 3px 3px 8px var(--color-neu-dark), inset -2px -2px 5px color-mix(in srgb, var(--color-neu-light) 75%, var(--color-surface)), 0 0 0 1px color-mix(in srgb, var(--color-sage) 15%, transparent)`
+                            : "3px 3px 8px var(--color-neu-dark), -1px -1px 5px var(--color-neu-light)",
                         transition: "all 0.25s ease",
                     }}
                 />
@@ -70,10 +70,10 @@ function NeuTextarea({
             <label htmlFor={id} style={{
                 fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600,
                 letterSpacing: "0.12em", textTransform: "uppercase",
-                color: focused ? "#84A98C" : "rgba(202,210,197,0.5)",
+                color: focused ? "var(--color-sage)" : "color-mix(in srgb, var(--color-mist) 50%, transparent)",
                 transition: "color 0.2s ease",
             }}>
-                {label}{required && <span style={{ color: "#84A98C", marginLeft: 3 }}>*</span>}
+                {label}{required && <span style={{ color: "var(--color-sage)", marginLeft: 3 }}>*</span>}
             </label>
             <textarea
                 id={id} name={id} rows={rows} placeholder={placeholder}
@@ -83,21 +83,21 @@ function NeuTextarea({
                 style={{
                     width: "100%", resize: "none",
                     background: focused
-                        ? "linear-gradient(145deg, #253540, #2a3d45)"
-                        : "linear-gradient(145deg, #2a3d45, #2F3E46)",
+                        ? "linear-gradient(145deg, color-mix(in srgb, var(--color-surface) 55%, var(--color-neu-dark)), var(--color-glass-mid))"
+                        : "linear-gradient(145deg, var(--color-glass-mid), var(--color-surface))",
                     border: focused
-                        ? "1px solid rgba(132,169,140,0.4)"
-                        : "1px solid rgba(82,121,111,0.2)",
+                        ? "1px solid color-mix(in srgb, var(--color-sage) 40%, transparent)"
+                        : "1px solid color-mix(in srgb, var(--color-pine) 20%, transparent)",
                     borderRadius: "12px",
-                    color: "#CAD2C5",
+                    color: "var(--color-mist)",
                     fontFamily: "var(--font-body)",
                     fontSize: "0.95rem",
                     lineHeight: 1.7,
                     padding: "12px 16px",
                     outline: "none",
                     boxShadow: focused
-                        ? "inset 3px 3px 8px #1e2b31, inset -2px -2px 5px #3a4e57, 0 0 0 1px rgba(132,169,140,0.15)"
-                        : "3px 3px 8px #1e2b31, -1px -1px 5px #3f5461",
+                        ? "inset 3px 3px 8px var(--color-neu-dark), inset -2px -2px 5px color-mix(in srgb, var(--color-neu-light) 75%, var(--color-surface)), 0 0 0 1px color-mix(in srgb, var(--color-sage) 15%, transparent)"
+                        : "3px 3px 8px var(--color-neu-dark), -1px -1px 5px var(--color-neu-light)",
                     transition: "all 0.25s ease",
                 }}
             />
@@ -154,18 +154,18 @@ function ContactFormInline() {
             >
                 <div style={{
                     width: 64, height: 64, borderRadius: "50%",
-                    background: "linear-gradient(145deg, #2a3d45, #354F52)",
-                    border: "1px solid rgba(132,169,140,0.3)",
-                    boxShadow: "4px 4px 12px #1e2b31, -2px -2px 8px #3f5461, 0 0 20px rgba(132,169,140,0.15)",
+                    background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-secondary))",
+                    border: "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)",
+                    boxShadow: "4px 4px 12px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light), 0 0 20px color-mix(in srgb, var(--color-sage) 15%, transparent)",
                     display: "flex", alignItems: "center", justifyContent: "center",
                     margin: "0 auto 20px",
                 }}>
-                    <CheckCircle size={28} color="#84A98C" />
+                    <CheckCircle size={28} color="var(--color-sage)" />
                 </div>
-                <h3 style={{ fontFamily: "var(--font-headline)", fontSize: "1.4rem", color: "#CAD2C5", marginBottom: 8 }}>
+                <h3 style={{ fontFamily: "var(--font-headline)", fontSize: "1.4rem", color: "var(--color-mist)", marginBottom: 8 }}>
                     message sent!
                 </h3>
-                <p style={{ fontSize: "14px", color: "rgba(202,210,197,0.5)", lineHeight: 1.6 }}>
+                <p style={{ fontSize: "14px", color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", lineHeight: 1.6 }}>
                     we&apos;ll get back within one business day.
                 </p>
             </motion.div>
@@ -179,7 +179,7 @@ function ContactFormInline() {
                 <p style={{
                     fontFamily: "var(--font-label)", fontSize: "0.7rem", fontWeight: 600,
                     letterSpacing: "0.12em", textTransform: "uppercase",
-                    color: "rgba(202,210,197,0.4)", marginBottom: 12,
+                    color: "color-mix(in srgb, var(--color-mist) 40%, transparent)", marginBottom: 12,
                 }}>
                     I&apos;m interested in
                 </p>
@@ -194,13 +194,13 @@ function ContactFormInline() {
                                 fontFamily: "var(--font-label)", fontWeight: 500,
                                 cursor: "pointer", border: "none", transition: "all 0.2s ease",
                                 background: active
-                                    ? "linear-gradient(145deg, #2a3d45, #354F52)"
-                                    : "linear-gradient(145deg, #354F52, #2d4449)",
-                                color: active ? "#84A98C" : "rgba(202,210,197,0.45)",
+                                    ? "linear-gradient(145deg, var(--color-glass-mid), var(--color-secondary))"
+                                    : "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                                color: active ? "var(--color-sage)" : "color-mix(in srgb, var(--color-mist) 45%, transparent)",
                                 boxShadow: active
-                                    ? `inset 2px 2px 6px #1e2b31, inset -1px -1px 4px #3f5461, 0 0 8px rgba(132,169,140,0.15)`
-                                    : "2px 2px 6px #1e2b31, -1px -1px 4px #3f5461",
-                                outline: active ? "1px solid rgba(132,169,140,0.3)" : "none",
+                                    ? `inset 2px 2px 6px var(--color-neu-dark), inset -1px -1px 4px var(--color-neu-light), 0 0 8px color-mix(in srgb, var(--color-sage) 15%, transparent)`
+                                    : "2px 2px 6px var(--color-neu-dark), -1px -1px 4px var(--color-neu-light)",
+                                outline: active ? "1px solid color-mix(in srgb, var(--color-sage) 30%, transparent)" : "none",
                             }}>
                                 {s}
                             </button>
@@ -223,7 +223,7 @@ function ContactFormInline() {
 
             {/* Error */}
             {status === "error" && (
-                <div style={{ display: "flex", alignItems: "center", gap: 8, color: "rgba(202,210,197,0.5)", fontSize: "13px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, color: "color-mix(in srgb, var(--color-mist) 50%, transparent)", fontSize: "13px" }}>
                     <AlertCircle size={14} />
                     something went wrong. please try again or email us directly.
                 </div>
@@ -238,15 +238,15 @@ function ContactFormInline() {
                     onMouseLeave={() => setBtnHovered(false)}
                     style={{
                         display: "inline-flex", alignItems: "center", gap: 8,
-                        backgroundColor: btnHovered ? "#84A98C" : "#CAD2C5",
-                        color: "#2F3E46",
+                        backgroundColor: btnHovered ? "var(--color-sage)" : "var(--color-mist)",
+                        color: "var(--color-surface)",
                         borderRadius: "999px", padding: "14px 32px",
                         fontFamily: "var(--font-label)", fontSize: "0.75rem",
                         fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase",
                         border: "none", cursor: "pointer",
                         boxShadow: btnHovered
-                            ? "inset 2px 2px 6px rgba(30,43,49,0.2), 0 0 20px rgba(132,169,140,0.25)"
-                            : "5px 5px 14px #1e2b31, -2px -2px 8px #3f5461",
+                            ? "inset 2px 2px 6px color-mix(in srgb, var(--color-neu-dark) 20%, transparent), 0 0 20px color-mix(in srgb, var(--color-sage) 25%, transparent)"
+                            : "5px 5px 14px var(--color-neu-dark), -2px -2px 8px var(--color-neu-light)",
                         transform: btnHovered ? "scale(0.98)" : "scale(1)",
                         transition: "all 0.25s ease",
                         opacity: status === "submitting" ? 0.7 : 1,
@@ -266,22 +266,22 @@ function InfoChip({ icon, label, value }: { icon: React.ReactNode; label: string
         <div style={{
             display: "flex", alignItems: "center", gap: 12,
             padding: "14px 18px", borderRadius: "14px",
-            background: "linear-gradient(145deg, #2a3d45, #2F3E46)",
-            border: "1px solid rgba(82,121,111,0.2)",
-            boxShadow: "inset 2px 2px 6px #1e2b31, inset -1px -1px 4px #3f5461",
+            background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-surface))",
+            border: "1px solid color-mix(in srgb, var(--color-pine) 20%, transparent)",
+            boxShadow: "inset 2px 2px 6px var(--color-neu-dark), inset -1px -1px 4px var(--color-neu-light)",
         }}>
             <div style={{
                 width: 34, height: 34, borderRadius: "10px", flexShrink: 0,
-                background: "linear-gradient(145deg, #354F52, #2d4449)",
-                border: "1px solid rgba(82,121,111,0.22)",
-                boxShadow: "2px 2px 5px #1e2b31, -1px -1px 3px #3f5461",
+                background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                border: "1px solid color-mix(in srgb, var(--color-pine) 22%, transparent)",
+                boxShadow: "2px 2px 5px var(--color-neu-dark), -1px -1px 3px var(--color-neu-light)",
                 display: "flex", alignItems: "center", justifyContent: "center",
             }}>
                 {icon}
             </div>
             <div>
-                <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.12em", color: "rgba(202,210,197,0.35)", marginBottom: 2, fontWeight: 600 }}>{label}</p>
-                <p style={{ fontSize: "13px", color: "#CAD2C5" }}>{value}</p>
+                <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.12em", color: "color-mix(in srgb, var(--color-mist) 35%, transparent)", marginBottom: 2, fontWeight: 600 }}>{label}</p>
+                <p style={{ fontSize: "13px", color: "var(--color-mist)" }}>{value}</p>
             </div>
         </div>
     );
@@ -298,15 +298,15 @@ export default function ContactPage() {
             {/* Diagonal split tone background */}
             <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, overflow: "hidden", pointerEvents: "none" }}>
                 <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ width: "100%", height: "100%" }}>
-                    <polygon points="0,0 100,0 100,100" fill="rgba(82,121,111,0.03)" />
-                    <polygon points="0,0 100,100 0,100" fill="rgba(132,169,140,0.015)" />
-                    <line x1="0" y1="0" x2="100" y2="100" stroke="rgba(82,121,111,0.08)" strokeWidth="0.2" />
+                    <polygon points="0,0 100,0 100,100" fill="color-mix(in srgb, var(--color-pine) 3%, transparent)" />
+                    <polygon points="0,0 100,100 0,100" fill="color-mix(in srgb, var(--color-sage) 2%, transparent)" />
+                    <line x1="0" y1="0" x2="100" y2="100" stroke="color-mix(in srgb, var(--color-pine) 8%, transparent)" strokeWidth="0.2" />
                 </svg>
             </div>
 
             {/* Floating orbs */}
-            <div style={{ position: "fixed", top: "20%", left: "5%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(82,121,111,0.07), transparent 70%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0, animation: "float-orb-a 14s ease-in-out infinite" }} />
-            <div style={{ position: "fixed", bottom: "10%", right: "5%", width: 350, height: 350, borderRadius: "50%", background: "radial-gradient(circle, rgba(132,169,140,0.06), transparent 70%)", filter: "blur(50px)", pointerEvents: "none", zIndex: 0, animation: "float-orb-b 18s ease-in-out infinite" }} />
+            <div style={{ position: "fixed", top: "20%", left: "5%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, color-mix(in srgb, var(--color-pine) 7%, transparent), transparent 70%)", filter: "blur(60px)", pointerEvents: "none", zIndex: 0, animation: "float-orb-a 14s ease-in-out infinite" }} />
+            <div style={{ position: "fixed", bottom: "10%", right: "5%", width: 350, height: 350, borderRadius: "50%", background: "radial-gradient(circle, color-mix(in srgb, var(--color-sage) 6%, transparent), transparent 70%)", filter: "blur(50px)", pointerEvents: "none", zIndex: 0, animation: "float-orb-b 18s ease-in-out infinite" }} />
 
             <div className="max-w-6xl mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
@@ -321,14 +321,14 @@ export default function ContactPage() {
                         {/* Eyebrow pill */}
                         <div style={{
                             display: "inline-flex", alignItems: "center", gap: 7,
-                            background: "rgba(30,43,49,0.5)",
-                            border: "1px solid rgba(82,121,111,0.2)",
+                            background: "color-mix(in srgb, var(--color-neu-dark) 50%, transparent)",
+                            border: "1px solid color-mix(in srgb, var(--color-pine) 20%, transparent)",
                             borderRadius: "999px", padding: "6px 14px",
-                            boxShadow: "3px 3px 8px #1e2b31, -2px -2px 5px #3f5461",
+                            boxShadow: "3px 3px 8px var(--color-neu-dark), -2px -2px 5px var(--color-neu-light)",
                             marginBottom: 24, width: "fit-content",
                         }}>
-                            <Sparkles size={11} color="#84A98C" />
-                            <span style={{ fontSize: "10px", color: "#84A98C", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500 }}>
+                            <Sparkles size={11} color="var(--color-sage)" />
+                            <span style={{ fontSize: "10px", color: "var(--color-sage)", letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500 }}>
                                 free consultation
                             </span>
                         </div>
@@ -337,38 +337,38 @@ export default function ContactPage() {
                             fontFamily: "var(--font-headline)",
                             fontSize: "clamp(2.5rem, 6vw, 3.75rem)",
                             fontWeight: 700, lineHeight: 1.08,
-                            letterSpacing: "-0.03em", color: "#CAD2C5", marginBottom: 16,
+                            letterSpacing: "-0.03em", color: "var(--color-mist)", marginBottom: 16,
                         }}>
                             let&apos;s talk.
                         </h1>
 
-                        <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "rgba(202,210,197,0.6)", maxWidth: "40ch", marginBottom: 40 }}>
+                        <p style={{ fontSize: "1rem", lineHeight: 1.75, color: "color-mix(in srgb, var(--color-mist) 60%, transparent)", maxWidth: "40ch", marginBottom: 40 }}>
                             tell us what you&apos;re building — we&apos;ll get back within one business day
                             with a tailored plan.
                         </p>
 
                         {/* Info chips */}
                         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 40 }}>
-                            <InfoChip icon={<Mail size={14} color="#84A98C" />} label="Direct inquiries" value="hello@defnix.com" />
-                            <InfoChip icon={<MapPin size={14} color="#52796F" />} label="Location" value="Bengaluru, India" />
+                            <InfoChip icon={<Mail size={14} color="var(--color-sage)" />} label="Direct inquiries" value="hello@defnix.com" />
+                            <InfoChip icon={<MapPin size={14} color="var(--color-pine)" />} label="Location" value="Bengaluru, India" />
                         </div>
 
                         {/* Promise items */}
                         <div style={{
                             padding: "20px 24px", borderRadius: "16px",
-                            background: "linear-gradient(145deg, #2a3d45, #2F3E46)",
-                            border: "1px solid rgba(82,121,111,0.18)",
-                            boxShadow: "inset 3px 3px 8px #1e2b31, inset -2px -2px 5px #3f5461",
+                            background: "linear-gradient(145deg, var(--color-glass-mid), var(--color-surface))",
+                            border: "1px solid color-mix(in srgb, var(--color-pine) 18%, transparent)",
+                            boxShadow: "inset 3px 3px 8px var(--color-neu-dark), inset -2px -2px 5px var(--color-neu-light)",
                         }}>
-                            <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "rgba(202,210,197,0.3)", marginBottom: 14, fontWeight: 600 }}>what to expect</p>
+                            <p style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "0.14em", color: "color-mix(in srgb, var(--color-mist) 30%, transparent)", marginBottom: 14, fontWeight: 600 }}>what to expect</p>
                             {[
                                 "Response within 1 business day",
                                 "Free 30-minute discovery call",
                                 "Tailored recommendation for your goals",
                             ].map((item) => (
                                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                                    <div style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "#84A98C", boxShadow: "0 0 5px rgba(132,169,140,0.6)", flexShrink: 0 }} />
-                                    <span style={{ fontSize: "13px", color: "rgba(202,210,197,0.6)" }}>{item}</span>
+                                    <div style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "var(--color-sage)", boxShadow: "0 0 5px color-mix(in srgb, var(--color-sage) 60%, transparent)", flexShrink: 0 }} />
+                                    <span style={{ fontSize: "13px", color: "color-mix(in srgb, var(--color-mist) 60%, transparent)" }}>{item}</span>
                                 </div>
                             ))}
                         </div>
@@ -384,14 +384,14 @@ export default function ContactPage() {
                             borderRadius: "24px",
                             padding: "clamp(28px, 5vw, 44px)",
                             position: "relative", overflow: "hidden",
-                            background: "linear-gradient(145deg, #354F52, #2d4449)",
-                            border: "1px solid rgba(82,121,111,0.22)",
-                            boxShadow: "8px 8px 24px #1e2b31, -4px -4px 16px #3f5461",
+                            background: "linear-gradient(145deg, var(--color-secondary), var(--color-glass-mid))",
+                            border: "1px solid color-mix(in srgb, var(--color-pine) 22%, transparent)",
+                            boxShadow: "8px 8px 24px var(--color-neu-dark), -4px -4px 16px var(--color-neu-light)",
                         }}>
                             {/* Top accent */}
-                            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, #84A98C, #52796F, transparent)" }} />
+                            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: "linear-gradient(90deg, transparent, var(--color-sage), var(--color-pine), transparent)" }} />
                             {/* Corner glow */}
-                            <div style={{ position: "absolute", top: 0, right: 0, width: 160, height: 160, background: "radial-gradient(circle at top right, rgba(132,169,140,0.08), transparent 65%)", pointerEvents: "none" }} />
+                            <div style={{ position: "absolute", top: 0, right: 0, width: 160, height: 160, background: "radial-gradient(circle at top right, color-mix(in srgb, var(--color-sage) 8%, transparent), transparent 65%)", pointerEvents: "none" }} />
 
                             <ContactFormInline />
                         </div>

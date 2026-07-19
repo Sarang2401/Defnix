@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 export default function AISocAnalystPage() {
     return (
         <SolutionPageLayout
+            slug="ai-soc-analyst"
             iconName="Brain"
             label="AI-Driven Security Automation"
             title="AI Enhanced SOC Analyst"

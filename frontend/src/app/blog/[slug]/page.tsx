@@ -386,7 +386,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                 // Handle inline code
                 const rendered = line.replace(
                     /`([^`]+)`/g,
-                    '<code style="color: var(--color-mist); background: rgba(132,169,140,0.12);" class="text-sm px-1.5 py-0.5 rounded">$1</code>'
+                    '<code style="color: var(--color-mist); background: color-mix(in srgb, var(--color-sage) 12%, transparent);" class="text-sm px-1.5 py-0.5 rounded">$1</code>'
                 );
                 elements.push(
                     <p
@@ -431,7 +431,7 @@ export default async function BlogDetailPage({ params }: PageProps) {
                                 <span
                                     key={tag}
                                     className="flex items-center gap-1 text-xs tracking-wider uppercase px-3 py-1 rounded-full"
-                                    style={{ color: "var(--color-sage)", backgroundColor: "rgba(132,169,140,0.12)" }}
+                                    style={{ color: "var(--color-sage)", backgroundColor: "color-mix(in srgb, var(--color-sage) 12%, transparent)" }}
                                 >
                                     <Tag size={10} />
                                     {tag}
